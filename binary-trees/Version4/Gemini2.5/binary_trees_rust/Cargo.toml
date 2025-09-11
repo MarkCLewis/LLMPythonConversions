@@ -1,0 +1,12 @@
+[package]
+name = "binary_trees_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rayon = "1.10.0"
+
+# Add this for optimized release builds
+[profile.release]
+lto = true
+codegen-units = 1
