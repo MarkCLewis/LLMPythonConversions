@@ -1,0 +1,3 @@
+[dependencies]
+regex = "1"
+rayon = "1"
