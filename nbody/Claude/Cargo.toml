@@ -1,0 +1,23 @@
+[package]
+name = "nbody"
+version = "0.1.0"
+edition = "2021"
+authors = ["Claude"]
+
+# Define multiple binaries for different implementations
+[[bin]]
+name = "nbody"
+path = "src/nbody.rs"
+
+[[bin]]
+name = "nbody_optimized"
+path = "src/nbody_optimized.rs"
+
+# No external dependencies needed for the standard version
+
+# Optimization settings for release builds
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"

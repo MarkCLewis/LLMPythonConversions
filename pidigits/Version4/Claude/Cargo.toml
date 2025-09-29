@@ -1,0 +1,36 @@
+[package]
+name = "pidigits"
+version = "0.1.0"
+edition = "2021"
+authors = ["Claude"]
+
+# We'll define multiple binaries for different implementations
+[[bin]]
+name = "pidigits"
+path = "src/pidigits.rs"
+
+[[bin]]
+name = "pidigits_gmp"
+path = "src/pidigits_gmp.rs"
+
+# Dependencies for the num_bigint implementation
+[dependencies]
+num-bigint = "0.4.4"
+num-traits = "0.2.17"
+
+# Dependencies for the GMP implementation (optional)
+[dependencies.gmp]
+version = "0.5.0"
+optional = true
+
+# Features for different implementations
+[features]
+default = []
+gmp = ["dep:gmp"]
+
+# Optimization settings for release builds
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"

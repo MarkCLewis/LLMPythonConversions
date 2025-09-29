@@ -1,0 +1,15 @@
+[package]
+name = "regex-redux"
+version = "0.1.0"
+edition = "2021"
+authors = ["Claude"]
+
+[dependencies]
+regex = { version = "1.10.2", features = ["unicode", "perf"] }
+rayon = "1.8.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
