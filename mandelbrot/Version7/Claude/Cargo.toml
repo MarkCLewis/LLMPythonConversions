@@ -1,0 +1,22 @@
+[package]
+name = "mandelbrot"
+version = "0.1.0"
+edition = "2021"
+authors = ["Claude"]
+
+# Add dependencies
+[dependencies]
+num-complex = "0.4"
+rayon = "1.7"
+num_cpus = "1.16"
+
+# SIMD optimized version needs unstable features
+[features]
+simd = []
+
+# Optimization for release build
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
