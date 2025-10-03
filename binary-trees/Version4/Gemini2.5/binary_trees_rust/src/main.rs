@@ -2,87 +2,83 @@ use rayon::prelude::*;
 use std::cmp::max;
 use std::env;
 
-// A binary tree node.
-// `Box` is used for heap allocation, allowing recursive types.
-// `Option` allows for a child to be absent (i.e., `None`).
-struct Tree {
-    left: Option<Box<Tree>>,
-    right: Option<Box<Tree>>,
+// A simple binary tree structure.
+// 'Option<Box<TreeNode>>' is the idiomatic way to represent a nullable,
+// heap-allocated child node in Rust. 'Box' is a smart pointer for heap allocation.
+struct TreeNode {
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
 }
 
-/// Recursively builds a binary tree of a given depth.
-fn make_tree(depth: i32) -> Tree {
+// Builds a perfect binary tree of a given depth.
+fn make_tree(depth: i32) -> Box<TreeNode> {
     if depth > 0 {
-        let d = depth - 1;
-        Tree {
-            left: Some(Box::new(make_tree(d))),
-            right: Some(Box::new(make_tree(d))),
+        Box::new(TreeNode {
+            left: Some(make_tree(depth - 1)),
+            right: Some(make_tree(depth - 1)),
+        })
+    } else {
+        Box::new(TreeNode {
+            left: None,
+            right: None,
+        })
+    }
+}
+
+// Recursively traverses the tree and counts all nodes.
+fn check_tree(node: &TreeNode) -> i32 {
+    // The 'match' statement checks if the children exist.
+    // If they do (Some(...)), it recurses. Otherwise, it's a leaf.
+    match (&node.left, &node.right) {
+        (Some(left_box), Some(right_box)) => {
+            // Dereferencing the Box smart pointer to get a reference to the TreeNode
+            1 + check_tree(&left_box) + check_tree(&right_box)
         }
-    } else {
-        // At depth 0, create a leaf node with no children.
-        Tree { left: None, right: None }
+        _ => 1, // Leaf node
     }
 }
 
-/// Recursively traverses the tree and counts all nodes.
-fn check_tree(node: &Tree) -> i32 {
-    // Check if there's a left child. In this problem, trees are symmetric,
-    // so if there's a left child, there's also a right one.
-    if let Some(left) = &node.left {
-        // The unwrap() is safe because we know the tree is symmetric.
-        let right = node.right.as_ref().unwrap();
-        // Count this node + all nodes in the left and right subtrees.
-        1 + check_tree(left) + check_tree(right)
-    } else {
-        // This is a leaf node.
-        1
-    }
-}
-
-/// A helper function that builds a tree and immediately checks it.
+// A helper function that combines making and checking a tree.
 fn make_check(depth: i32) -> i32 {
-    let tree = make_tree(depth);
-    check_tree(&tree)
+    check_tree(&make_tree(depth))
 }
 
 fn main() {
-    // Read the command-line argument 'n', defaulting to 10 if not provided or invalid.
-    let n = env::args_os()
+    // Read the command-line argument for 'n', defaulting to 10 if not provided or invalid.
+    let n: i32 = env::args()
         .nth(1)
-        .and_then(|s| s.into_string().ok())
         .and_then(|s| s.parse().ok())
         .unwrap_or(10);
 
-    // Define the minimum and maximum depths for the trees.
     let min_depth = 4;
     let max_depth = max(min_depth + 2, n);
-    let stretch_depth = max_depth + 1;
 
-    // 1. Create a "stretch" tree, check it, and print the result.
-    // This is a single, deep tree to test memory allocation.
+    // 1. Stretch Tree: create, check, and discard one very deep tree.
+    let stretch_depth = max_depth + 1;
     let check = make_check(stretch_depth);
     println!("stretch tree of depth {}\t check: {}", stretch_depth, check);
 
-    // 2. Create a long-lived tree that will be checked at the end.
+    // 2. Long-Lived Tree: create one tree that lives for the duration of the program.
     let long_lived_tree = make_tree(max_depth);
 
-    // 3. Create and check a forest of smaller trees in parallel.
+    // 3. Main Loop: create and check many trees of varying depths in parallel.
     let mmd = max_depth + min_depth;
-    // Iterate from min_depth up to max_depth, stepping by 2.
-    for depth in (min_depth..stretch_depth).step_by(2) {
-        // Calculate the number of trees to create for this depth.
-        let iterations = 1 << (mmd - depth);
-
-        // Use Rayon's `par_iter` to perform the checks in parallel.
-        let check_sum = (0..iterations)
+    for depth in (min_depth..=max_depth).step_by(2) {
+        let iterations = 1 << (mmd - depth); // Same as 2^(mmd - depth)
+        
+        // Use rayon to parallelize the work.
+        // `into_par_iter()` creates a parallel iterator.
+        // `map()` applies the `make_check` function to each item in parallel.
+        // `sum()` aggregates the results.
+        let check_sum: i32 = (0..iterations)
             .into_par_iter()
             .map(|_| make_check(depth))
-            .sum::<i32>();
+            .sum();
 
         println!("{}\t trees of depth {}\t check: {}", iterations, depth, check_sum);
     }
 
-    // 4. Check the long-lived tree and print the final result.
+    // 4. Final Check: check the long-lived tree that was created earlier.
     println!(
         "long lived tree of depth {}\t check: {}",
         max_depth,

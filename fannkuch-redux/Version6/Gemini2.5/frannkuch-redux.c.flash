@@ -1,0 +1,139 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+/* The Computer Language Benchmarks Game
+ * https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+ *
+ * Based on the Python version contributed by Isaac Gouy, Buck Golemon,
+ * and Justin Peel.
+ * Converted to C by a helpful AI assistant.
+ */
+
+// Global array pool for permutations to avoid excessive allocation/copying in hot loops
+// Note: This implementation assumes 'n' will not exceed 16 for typical competitive
+// benchmark constraints, as a static size is used. Max N for fannkuch is usually 12-13.
+#define MAX_N 16
+static int P[MAX_N], Q[MAX_N], Count[MAX_N];
+
+/**
+ * Executes the Fannkuch algorithm for a given size n.
+ *
+ * @param n The size of the permutation (e.g., 12 for the benchmark).
+ * @return The maximum number of flips found.
+ */
+int fannkuch(int n) {
+    int maxFlipsCount = 0;
+    int checksum = 0;
+    int permSign = 1; // 1 for True, 0 for False
+    int i, k, flipsCount, temp;
+    int nm = n - 1;
+
+    // Initialize P (perm1) and Count arrays
+    for (i = 0; i < n; i++) {
+        P[i] = i;
+        Count[i] = i;
+    }
+
+    // Main permutation generation loop
+    while (1) {
+        k = P[0];
+        if (k != 0) {
+            // Copy P to Q (perm) for flipping
+            for (i = 0; i < n; i++) {
+                Q[i] = P[i];
+            }
+
+            flipsCount = 1;
+
+            // Flipping routine
+            while (k != 0) {
+                // Reverse the first k+1 elements of Q
+                for (i = 0; i < (k + 1) / 2; i++) {
+                    temp = Q[i];
+                    Q[i] = Q[k - i];
+                    Q[k - i] = temp;
+                }
+                
+                k = Q[0]; // New k
+                flipsCount++;
+            }
+            
+            // The inner loop above does one extra increment, undo it.
+            flipsCount--;
+
+            if (maxFlipsCount < flipsCount) {
+                maxFlipsCount = flipsCount;
+            }
+            
+            // Checksum update
+            checksum += permSign ? flipsCount : -flipsCount;
+        }
+
+        // --- Use incremental change to generate another permutation ---
+
+        if (permSign) {
+            // perm1[0],perm1[1] = perm1[1],perm1[0]
+            temp = P[0];
+            P[0] = P[1];
+            P[1] = temp;
+            permSign = 0; // False
+        } else {
+            // perm1[1],perm1[2] = perm1[2],perm1[1]
+            temp = P[1];
+            P[1] = P[2];
+            P[2] = temp;
+            permSign = 1; // True
+            
+            // Loop for r in rxrange (2 to n-2)
+            int r;
+            for (r = 2; r < nm; r++) {
+                if (Count[r] != 0) {
+                    break;
+                }
+                Count[r] = r;
+                
+                // Rotation: perm1[:r+1] = perm1[1:r+2]; perm1[r+1] = perm0
+                int perm0 = P[0];
+                for (i = 0; i < r; i++) {
+                    P[i] = P[i+1];
+                }
+                P[r] = perm0;
+            }
+            
+            // Else block for the for-loop
+            if (r == nm) {
+                 if (Count[nm] == 0) { // Check for the last element's count
+                    printf("%d\n", checksum);
+                    return maxFlipsCount;
+                }
+            }
+            
+            Count[r]--;
+        }
+    }
+}
+
+/**
+ * Main function to read N from command line and run the algorithm.
+ */
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <N>\n", argv[0]);
+        return 1;
+    }
+    
+    int n = atoi(argv[1]);
+    
+    if (n < 3 || n > MAX_N) {
+        fprintf(stderr, "N must be between 3 and %d\n", MAX_N);
+        return 1;
+    }
+
+    int maxFlips = fannkuch(n);
+
+    printf("Pfannkuchen(%i) = %i\n", n, maxFlips);
+
+    return 0;
+}

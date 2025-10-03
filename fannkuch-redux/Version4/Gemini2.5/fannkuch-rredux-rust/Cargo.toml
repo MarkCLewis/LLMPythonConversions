@@ -1,13 +1,12 @@
 [package]
-name = "binary_trees_rust"
+name = "fannkuch-rredux-rust"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
 rayon = "1.10.0"
+num_cpus = "1.16.0"
 
-# Add this for optimized release builds
 [profile.release]
-lto = true
 codegen-units = 1
-panic = "abort"
+lto = true

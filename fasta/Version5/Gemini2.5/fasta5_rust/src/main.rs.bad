@@ -1,0 +1,159 @@
+use std::io::{self, Write, BufWriter};
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::cmp::min;
+
+const LINE_WIDTH: usize = 60;
+const IM: f64 = 139968.0;
+const IA: f64 = 3877.0;
+const IC: f64 = 29573.0;
+const SEED: f64 = 42.0;
+
+/// A linear congruential generator for producing pseudo-random numbers.
+struct Lcg {
+    seed: f64,
+}
+
+impl Lcg {
+    fn new(seed: f64) -> Self {
+        Lcg { seed }
+    }
+}
+
+impl Iterator for Lcg {
+    type Item = f64;
+    fn next(&mut self) -> Option<f64> {
+        self.seed = (self.seed * IA + IC) % IM;
+        Some(self.seed)
+    }
+}
+
+/// Finds the index for a random value in a cumulative probability distribution.
+/// This is equivalent to Python's `bisect`.
+fn find_index(probabilities: &[f64], value: f64) -> u8 {
+    probabilities.partition_point(|&p| p < value) as u8
+}
+
+/// Repeats a sequence to a specified length `n` and writes it to stdout.
+fn make_repeat_fasta(header: &[u8], sequence: &str, n: usize) {
+    let mut seq_bytes = Vec::with_capacity(n);
+    let pattern = sequence.as_bytes();
+    seq_bytes.extend(pattern.iter().cycle().take(n));
+
+    let stdout = io::stdout();
+    let mut handle = BufWriter::new(stdout.lock());
+    handle.write_all(header).unwrap();
+    for chunk in seq_bytes.chunks(LINE_WIDTH) {
+        handle.write_all(chunk).unwrap();
+        handle.write_all(b"\n").unwrap();
+    }
+}
+
+/// Generates a random FASTA sequence based on a probability distribution.
+fn make_random_fasta(header: &[u8], alphabet: &[(u8, f64)], n: usize, rng_stream: &mut dyn Iterator<Item = f64>) {
+    let mut probabilities = Vec::with_capacity(alphabet.len());
+    let mut acc = 0.0;
+    for &(_, p) in alphabet {
+        acc += p * IM;
+        probabilities.push(acc);
+    }
+
+    let mut output_bytes = Vec::with_capacity(n);
+    for rand_val in rng_stream.take(n) {
+        let index = find_index(&probabilities, rand_val);
+        output_bytes.push(alphabet[index as usize].0);
+    }
+
+    let stdout = io::stdout();
+    let mut handle = BufWriter::new(stdout.lock());
+    handle.write_all(header).unwrap();
+    for chunk in output_bytes.chunks(LINE_WIDTH) {
+        handle.write_all(chunk).unwrap();
+        handle.write_all(b"\n").unwrap();
+    }
+}
+
+fn fasta(n: usize) {
+    let alu = "GGCCGGGCGCGGTGGCTCACGCCTGTAATCCCAGCACTTTGGGAGGCCGAGGCGGGCGGATCACCTGAGGTCAGGAGTTCGAGACCAGCCTGGCCAACATGGTGAAACCCCGTCTCTACTAAAAATACAAAAATTAGCCGGGCGTGGTGGCGCGCGCCTGTAATCCCAGCTACTCGGGAGGCTGAGGCAGGAGAATCGCTTGAACCCGGGAGGCGGAGGTTGCAGTGAGCCGAGATCGCGCCACTGCACTCCAGCCTGGGCGACAGAGCGAGACTCCGTCTCAAAAA";
+
+    let iub: Vec<(u8, f64)> = vec![
+        (b'a', 0.27), (b'c', 0.12), (b'g', 0.12), (b't', 0.27),
+        (b'B', 0.02), (b'D', 0.02), (b'H', 0.02), (b'K', 0.02),
+        (b'M', 0.02), (b'N', 0.02), (b'R', 0.02), (b'S', 0.02),
+        (b'V', 0.02), (b'W', 0.02), (b'Y', 0.02),
+    ];
+
+    let homosapiens: Vec<(u8, f64)> = vec![
+        (b'a', 0.3029549426680),
+        (b'c', 0.1979883004921),
+        (b'g', 0.1975473066391),
+        (b't', 0.3015094502008),
+    ];
+
+    if num_cpus::get() < 2 {
+        // Sequential execution for single-core systems
+        make_repeat_fasta(b">ONE Homo sapiens alu\n", alu, n * 2);
+        let mut lcg = Lcg::new(SEED);
+        make_random_fasta(b">TWO IUB ambiguity codes\n", &iub, n * 3, &mut lcg);
+        make_random_fasta(b">THREE Homo sapiens frequency\n", &homosapiens, n * 5, &mut lcg);
+    } else {
+        // Parallel execution using threads and locks to control output order
+        let seed = Arc::new(Mutex::new(Lcg::new(SEED)));
+
+        // These locks replicate the Python version's synchronization logic.
+        // A lock is acquired before spawning the threads. The thread responsible for
+        // releasing it will allow the next thread that's waiting on it to proceed.
+        let written_1 = Arc::new(Mutex::new(()));
+        let seeded_2 = Arc::new(Mutex::new(()));
+        let written_2 = Arc::new(Mutex::new(()));
+
+        let l1 = written_1.lock().unwrap();
+        let l2 = seeded_2.lock().unwrap();
+        let l3 = written_2.lock().unwrap();
+
+        let mut handles = Vec::new();
+
+        // Task 1: ALU sequence
+        let w1_clone = Arc::clone(&written_1);
+        handles.push(thread::spawn(move || {
+            make_repeat_fasta(b">ONE Homo sapiens alu\n", alu, n * 2);
+            drop(l1); // Release lock to signal task 2 can write
+        }));
+
+        // Task 2: IUB random sequence
+        let s2_clone = Arc::clone(&seeded_2);
+        let w2_clone = Arc::clone(&written_2);
+        let seed_clone = Arc::clone(&seed);
+        handles.push(thread::spawn(move || {
+            let rng_values: Vec<f64> = seed_clone.lock().unwrap().by_ref().take(n * 3).collect();
+            drop(l2); // RNG is done, signal task 3 can use RNG
+
+            let _guard = w1_clone.lock().unwrap(); // Wait for task 1 to finish writing
+            make_random_fasta(b">TWO IUB ambiguity codes\n", &iub, n * 3, &mut rng_values.into_iter());
+            drop(l3); // Task 2 is done writing, signal task 3 can write
+        }));
+
+        // Task 3: Homo sapiens random sequence
+        let seed_clone2 = Arc::clone(&seed);
+        handles.push(thread::spawn(move || {
+            let _guard1 = s2_clone.lock().unwrap(); // Wait for task 2 to finish with the RNG
+            let rng_values: Vec<f64> = seed_clone2.lock().unwrap().by_ref().take(n * 5).collect();
+
+            let _guard2 = w2_clone.lock().unwrap(); // Wait for task 2 to finish writing
+            make_random_fasta(b">THREE Homo sapiens frequency\n", &homosapiens, n * 5, &mut rng_values.into_iter());
+        }));
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+    }
+}
+
+fn main() {
+    let n = std::env::args_os()
+        .nth(1)
+        .and_then(|s| s.into_string().ok())
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(1000);
+    fasta(n);
+}

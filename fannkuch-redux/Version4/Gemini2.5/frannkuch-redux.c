@@ -1,0 +1,213 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <string.h>
+
+// Struct to store the result from a single thread
+typedef struct {
+    long checksum;
+    int max_flips;
+} Result;
+
+// Struct to pass arguments to each thread
+typedef struct {
+    int n;
+    long start_index;
+    long count;
+    Result* result; // Pointer to where the thread stores its result
+} ThreadArgs;
+
+// --- Function Prototypes ---
+long factorial(int n);
+void* worker_thread(void* arg);
+void run_fannkuch(int n);
+
+// --- Main Function ---
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        printf("Usage: %s <n>\n", argv[0]);
+        return 1;
+    }
+    int n = atoi(argv[1]);
+    if (n < 1 || n > 16) { // Factorial overflows for larger n
+        fprintf(stderr, "Error: n must be between 1 and 16.\n");
+        return 1;
+    }
+
+    run_fannkuch(n);
+
+    return 0;
+}
+
+/**
+ * @brief Main logic to set up and run the Fannkuch benchmark.
+ * * It determines the number of available CPU cores, divides the total
+ * permutations into chunks, and creates a thread to process each chunk.
+ * After all threads complete, it aggregates their results and prints the
+ * final checksum and max flips count.
+ */
+void run_fannkuch(int n) {
+    int num_threads = sysconf(_SC_NPROCESSORS_ONLN);
+    long total_permutations = factorial(n);
+    
+    // Ensure chunk size is even, as the algorithm processes pairs of permutations
+    long chunk_size = (total_permutations + num_threads - 1) / num_threads;
+    if (chunk_size % 2 != 0) {
+        chunk_size++;
+    }
+
+    // For very small N, avoid threading overhead
+    if (n <= 7) {
+        num_threads = 1;
+        chunk_size = total_permutations;
+    }
+    
+    pthread_t threads[num_threads];
+    ThreadArgs args[num_threads];
+    Result results[num_threads];
+    
+    // --- FIX: Initialize the variable-sized array using memset ---
+    memset(results, 0, sizeof(results));
+
+    // Create and start threads
+    for (int i = 0; i < num_threads; ++i) {
+        args[i].n = n;
+        args[i].start_index = i * chunk_size;
+        
+        long remaining_perms = total_permutations - args[i].start_index;
+        args[i].count = (chunk_size < remaining_perms) ? chunk_size : remaining_perms;
+        args[i].result = &results[i];
+
+        if (args[i].count > 0) {
+            pthread_create(&threads[i], NULL, worker_thread, &args[i]);
+        }
+    }
+
+    // Wait for all threads to finish
+    for (int i = 0; i < num_threads; ++i) {
+        if (args[i].count > 0) {
+            pthread_join(threads[i], NULL);
+        }
+    }
+
+    // Aggregate results
+    long final_checksum = 0;
+    int final_max_flips = 0;
+    for (int i = 0; i < num_threads; ++i) {
+        final_checksum += results[i].checksum;
+        if (results[i].max_flips > final_max_flips) {
+            final_max_flips = results[i].max_flips;
+        }
+    }
+
+    printf("%ld\nPfannkuchen(%d) = %d\n", final_checksum, n, final_max_flips);
+}
+
+/**
+ * @brief The core worker function executed by each thread.
+ * * This function generates its assigned slice of permutations, calculates
+ * the flips count and checksum for each, and finds the maximum flips
+ * count within its slice.
+ */
+void* worker_thread(void* arg) {
+    ThreadArgs* args = (ThreadArgs*)arg;
+    int n = args->n;
+    long start_index = args->start_index;
+    long count = args->count;
+
+    int max_flips = 0;
+    long checksum = 0;
+
+    int* p = (int*)malloc(n * sizeof(int));
+    int* p_copy = (int*)malloc(n * sizeof(int));
+    int* count_arr = (int*)malloc(n * sizeof(int));
+    long factorials[n + 1];
+    
+    // Pre-calculate factorials
+    factorials[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        factorials[i] = factorials[i-1] * i;
+    }
+
+    // --- Initialize to the first permutation in this thread's chunk ---
+    for (int i = 0; i < n; ++i) p[i] = i;
+    for (int i = 0; i < n; ++i) count_arr[i] = 0;
+
+    long remainder = start_index;
+    for (int i = n - 1; i > 0; --i) {
+        count_arr[i] = remainder / factorials[i];
+        remainder %= factorials[i];
+
+        for (int j = 0; j < count_arr[i]; ++j) {
+            int temp = p[0];
+            memmove(&p[0], &p[1], i * sizeof(int));
+            p[i] = temp;
+        }
+    }
+    
+    // --- Main loop to process permutations ---
+    int alternating_factor = 1;
+    for (long i = 0; i < count; ++i) {
+        // --- Calculate flips for the current permutation p ---
+        int first = p[0];
+        if (first != 0) {
+            memcpy(p_copy, p, n * sizeof(int));
+            int flips_count = 1;
+            while (1) {
+                int f = p_copy[0];
+                // Reverse the block from 0 to f
+                for (int lo = 0, hi = f; lo < hi; ++lo, --hi) {
+                    int t = p_copy[lo];
+                    p_copy[lo] = p_copy[hi];
+                    p_copy[hi] = t;
+                }
+                if (p_copy[0] == 0) break;
+                flips_count++;
+            }
+            if (flips_count > max_flips) {
+                max_flips = flips_count;
+            }
+            checksum += flips_count * alternating_factor;
+        }
+
+        // --- Generate the next permutation ---
+        if (i < count - 1) { // Don't generate next after the last one
+             if (alternating_factor == 1) { // Fast-path swap for every other perm
+                int temp = p[0]; p[0] = p[1]; p[1] = temp;
+             } else { // Slower path rotation
+                int k = 2;
+                while (count_arr[k] >= k) {
+                    count_arr[k] = 0;
+                    k++;
+                }
+                count_arr[k]++;
+                // Left-rotate the first k+1 elements
+                int temp = p[0];
+                memmove(&p[0], &p[1], k * sizeof(int));
+                p[k] = temp;
+            }
+        }
+        alternating_factor = -alternating_factor;
+    }
+    
+    // Store results and clean up
+    args->result->checksum = checksum;
+    args->result->max_flips = max_flips;
+    free(p);
+    free(p_copy);
+    free(count_arr);
+
+    return NULL;
+}
+
+/**
+ * @brief Calculates the factorial of a number.
+ */
+long factorial(int n) {
+    long fact = 1;
+    for (int i = 2; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}

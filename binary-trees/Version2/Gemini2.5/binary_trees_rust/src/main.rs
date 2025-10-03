@@ -1,46 +1,43 @@
 use rayon::prelude::*;
+use std::cmp::max;
 use std::env;
 
-// An explicit tree structure is more idiomatic in Rust.
-// `Box` is used for heap allocation, necessary for recursive types.
-// `Option` allows children to be absent (for leaf nodes).
+// A tree node contains optional left and right children.
+// Box<T> is a smart pointer for heap allocation, necessary for recursive structs.
 struct TreeNode {
     left: Option<Box<TreeNode>>,
     right: Option<Box<TreeNode>>,
 }
 
-/// Recursively builds a binary tree of a given depth.
-fn make_tree(depth: i32) -> TreeNode {
+// Recursively builds a binary tree of a given depth.
+// A tree of depth 0 is a single leaf node (with no children).
+// A tree of depth > 0 has a left and a right subtree of depth - 1.
+fn make_tree(depth: i32) -> Box<TreeNode> {
     if depth > 0 {
-        TreeNode {
-            left: Some(Box::new(make_tree(depth - 1))),
-            right: Some(Box::new(make_tree(depth - 1))),
-        }
+        Box::new(TreeNode {
+            left: Some(make_tree(depth - 1)),
+            right: Some(make_tree(depth - 1)),
+        })
     } else {
-        TreeNode {
-            left: None,
-            right: None,
-        }
+        Box::new(TreeNode { left: None, right: None })
     }
 }
 
-/// Recursively traverses the tree and returns a checksum (the count of all nodes).
+// Recursively walks the tree and computes a checksum.
 fn check_tree(node: &TreeNode) -> i32 {
-    // Match on the left child to determine if it's a leaf node.
-    match &node.left {
-        Some(left_node) => {
-            // It's not a leaf, so add 1 for the current node
-            // and recurse into the left and right children.
-            // The right node is guaranteed to exist if the left one does.
-            1 + check_tree(left_node) + check_tree(node.right.as_ref().unwrap())
-        }
-        // If there's no left child, it's a leaf node.
-        None => 1,
+    // If 'left' is Some, it's an inner node. If it's None, it's a leaf.
+    if let Some(left_node) = &node.left {
+        // We assume if left exists, right does too, as per make_tree's logic.
+        let right_node = node.right.as_ref().unwrap();
+        1 + check_tree(left_node) + check_tree(right_node)
+    } else {
+        // Leaf node
+        1
     }
 }
 
 fn main() {
-    // Read the max_depth from command-line arguments, default to 10.
+    // Read the tree depth from the command-line arguments. Default to 10.
     let n = env::args_os()
         .nth(1)
         .and_then(|s| s.into_string().ok())
@@ -48,28 +45,29 @@ fn main() {
         .unwrap_or(10);
 
     let min_depth = 4;
-    let max_depth = n.max(min_depth + 2);
-
-    // 1. Stretch Tree: Create a tree one level deeper than max_depth.
+    let max_depth = max(min_depth + 2, n);
     let stretch_depth = max_depth + 1;
+
+    // 1. Create a "stretch" tree of great depth to check memory allocation.
     let stretch_tree = make_tree(stretch_depth);
     println!(
         "stretch tree of depth {}\t check: {}",
         stretch_depth,
         check_tree(&stretch_tree)
     );
+    // The stretch_tree is dropped here, freeing its memory.
 
-    // 2. Long-lived tree: This tree is created once and kept in memory.
+    // 2. Create a long-lived tree that will stay in memory until the end.
     let long_lived_tree = make_tree(max_depth);
 
-    // 3. Main loop: Create and check many trees of varying depths.
+    // 3. Create, check, and deallocate many smaller trees in a loop.
+    // This loop is the core of the benchmark.
     for depth in (min_depth..=max_depth).step_by(2) {
         let iterations = 1 << (max_depth - depth + min_depth);
 
-        // This is the most performance-critical part.
-        // We use rayon's `into_par_iter()` to create and check trees in parallel.
-        // The `map` operation runs on multiple CPU cores simultaneously.
-        // The `sum()` at the end aggregates the results from all threads.
+        // This is the performance-critical section.
+        // We use rayon's parallel iterator (.into_par_iter()) to distribute
+        // the work across all available CPU cores.
         let check: i32 = (0..iterations)
             .into_par_iter()
             .map(|_| check_tree(&make_tree(depth)))
@@ -78,7 +76,7 @@ fn main() {
         println!("{}\t trees of depth {}\t check: {}", iterations, depth, check);
     }
 
-    // 4. Final check of the long-lived tree.
+    // 4. Finally, check the long-lived tree that was allocated at the start.
     println!(
         "long lived tree of depth {}\t check: {}",
         max_depth,

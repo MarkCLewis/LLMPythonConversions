@@ -1,0 +1,234 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// contributed by Joerg Baumann (Python)
+// translated to Rust and optimized for speed.
+
+use std::{
+    env,
+    thread,
+    sync::mpsc,
+    cmp,
+};
+
+// FACTORIALS table up to N=15. Fannkuch is typically run up to N=12.
+// The maximum N is usually small enough to pre-calculate factorials.
+const MAX_N: usize = 16;
+static mut FACTORIALS: [usize; MAX_N] = [0; MAX_N];
+
+fn precompute_factorials(n: usize) {
+    if n >= MAX_N {
+        panic!("N is too large for precomputed factorials.");
+    }
+    // Safety: Only initialized once in main
+    unsafe {
+        FACTORIALS[0] = 1;
+        for i in 1..=n {
+            FACTORIALS[i] = FACTORIALS[i - 1] * i;
+        }
+    }
+}
+
+// Helper to get factorial, safely access the static array
+fn factorial(n: usize) -> usize {
+    if n >= MAX_N {
+        panic!("Factorial requested for N > MAX_N.");
+    }
+    // Safety: FACTORIALS is guaranteed to be initialized in main
+    unsafe { FACTORIALS[n] }
+}
+
+/// Generates permutations starting from a given index, similar to the Python version.
+/// This implementation is simplified for Fannkuch-Redux's needs, avoiding the complex
+/// generator logic for size=2 used in the Python version, and focusing on the core
+/// iteration over a range of permutations.
+fn generate_permutations(n: usize, start: usize, size: usize) -> Vec<Vec<u8>> {
+    let mut permutations: Vec<Vec<u8>> = Vec::with_capacity(size);
+
+    let mut p: Vec<u8> = (0..n as u8).collect();
+    let mut count: Vec<usize> = vec![0; n];
+
+    // 1. Initialize to the 'start' index permutation
+    let mut remainder = start;
+    for v in (1..n).rev() {
+        let fv = factorial(v);
+        count[v] = remainder / fv;
+        remainder %= fv;
+
+        // Perform the initial rotations (optimized from Python's slice manipulation)
+        let num_rotations = count[v];
+        if num_rotations > 0 {
+            // This is a manual rotation: p[0] is moved to p[v] and p[1..v] shifts left.
+            // Simplified: Rotate the sub-slice p[0..=v] `num_rotations` times.
+            for _ in 0..num_rotations {
+                let first = p[0];
+                for i in 0..v {
+                    p[i] = p[i+1];
+                }
+                p[v] = first;
+            }
+        }
+    }
+
+    // 2. Generate the next 'size' permutations
+    for _ in 0..size {
+        permutations.push(p.clone());
+
+        // Find the rightmost count[i] < i and increment it.
+        let mut i = 1;
+        while i < n && count[i] >= i {
+            count[i] = 0;
+            i += 1;
+        }
+        
+        if i == n {
+            // All permutations exhausted (should not happen before 'size' is reached if total is larger)
+            break;
+        }
+
+        count[i] += 1;
+        
+        // Apply the corresponding rotation (optimized from Python's rotation_swaps)
+        // Rotate the sub-slice p[0..=i] by one position.
+        let first = p[0];
+        for j in 0..i {
+            p[j] = p[j+1];
+        }
+        p[i] = first;
+    }
+
+    permutations
+}
+
+/// Calculates the flips for one permutation and returns the alternating sum factor.
+fn calculate_flips(n: usize, mut p: Vec<u8>) -> (usize, isize) {
+    let mut flips_count = 0;
+    
+    // The Fannkuch core flip logic
+    loop {
+        let first = p[0] as usize;
+        if first == 0 {
+            break;
+        }
+        flips_count += 1;
+
+        // Optimized in-place reversal: p[0..=first] is reversed
+        p[0..=first].reverse();
+    }
+    
+    // The problem requires an alternating checksum: 
+    // checksum += flips * (1 or -1)
+    let alternating_factor = if flips_count % 2 == 0 { 1 } else { -1 };
+
+    (flips_count, alternating_factor)
+}
+
+/// The work unit for a single thread.
+fn task(n: usize, start: usize, size: usize) -> (isize, usize) {
+    let permutations = generate_permutations(n, start, size);
+
+    let mut checksum: isize = 0;
+    let mut maximum_flips: usize = 0;
+    
+    for (idx, p) in permutations.into_iter().enumerate() {
+        let (flips_count, alternating_factor) = calculate_flips(n, p);
+        
+        // Correcting for the alternating sum requirement in the original Python code:
+        // The Python code calculates flips_count * alternating_factor where
+        // alternating_factor is +1 for the 1st, 3rd, 5th... permutation in the block
+        // and -1 for the 2nd, 4th, 6th... permutation.
+        // This is separate from the flip count's parity.
+        let block_alternating_factor: isize = if idx % 2 == 0 { 1 } else { -1 };
+        
+        checksum += flips_count as isize * block_alternating_factor;
+        maximum_flips = cmp::max(maximum_flips, flips_count);
+    }
+
+    (checksum, maximum_flips)
+}
+
+/// Main Fannkuch-Redux logic.
+fn fannkuch(n: usize) {
+    // Check if N is within bounds
+    if n >= MAX_N {
+        panic!("N must be less than {}.", MAX_N);
+    }
+    
+    // Pre-calculate factorials before threading
+    precompute_factorials(n);
+
+    let task_count = thread::available_parallelism().map_or(1, |c| c.get());
+    let total = factorial(n);
+    let mut task_size = (total + task_count - 1) / task_count;
+
+    let mut num_tasks = task_count;
+
+    // Implementation of the Python logic for small total/task_size
+    if task_size < 20_000 {
+        task_size = total;
+        num_tasks = 1;
+    }
+    
+    // Ensure task_size is even (as per Python's assertion)
+    if task_size % 2 != 0 {
+        task_size += 1; // This might slightly overshoot 'total' for the last task
+    }
+    
+    // Channel for communicating results from workers
+    let (tx, rx) = mpsc::channel();
+    let mut threads = vec![];
+
+    // Create tasks arguments
+    let mut actual_num_tasks = 0;
+    for i in 0..num_tasks {
+        let start = i * task_size;
+        if start >= total {
+            break;
+        }
+        
+        let size = cmp::min(task_size, total - start);
+
+        let tx = tx.clone();
+        
+        // Spawn the worker thread
+        let handle = thread::spawn(move || {
+            let (checksum, maximum) = task(n, start, size);
+            tx.send((checksum, maximum)).unwrap();
+        });
+        threads.push(handle);
+        actual_num_tasks += 1;
+    }
+
+    // Drop the main thread's transmitter to ensure 'rx' closes when all workers are done
+    drop(tx);
+    
+    let mut total_checksum: isize = 0;
+    let mut overall_maximum: usize = 0;
+
+    // Collect results from the workers
+    for (checksum, maximum) in rx {
+        total_checksum += checksum;
+        overall_maximum = cmp::max(overall_maximum, maximum);
+    }
+
+    // Wait for all threads to finish (optional, as mpsc::Receiver naturally waits)
+    for handle in threads {
+        handle.join().unwrap();
+    }
+
+    // Print the final result in the required format
+    println!("{total_checksum}\nPfannkuchen({n}) = {overall_maximum}");
+}
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() != 2 {
+        eprintln!("Usage: {} <N>", args[0]);
+        return;
+    }
+    
+    match args[1].parse::<usize>() {
+        Ok(n) => fannkuch(n),
+        Err(_) => eprintln!("Invalid argument for N."),
+    }
+}
