@@ -260,3 +260,6 @@ Cargo.lock
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,rust,c,visualstudiocode
+
+output.txt
+*input*.txt

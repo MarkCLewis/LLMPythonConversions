@@ -16,10 +16,7 @@ do
 			then
 				mkdir Human
 			fi
-			if [ d "*.py" ]
-			then
-				mv *.py Human/
-			fi
+			mv *.py Human/
   		cd ..
 	done
 	cd ..

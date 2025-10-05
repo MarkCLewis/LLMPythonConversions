@@ -15,17 +15,10 @@ do
 		cd $version
 		for author in "${authors[@]}"
 		do
-			if [ -d "$author" ] 
-			then
-  				cd $author
-				make c
-				echo $bench $version $author $file # >> ../times-c.txt
-				for cnt in {1..7}
-				do
-					{ time make run-c ; } 2>> ../times-c.txt
-				done
-				cd ..
-			fi
+  			cd Human
+			make c
+			make run-c > ../output.txt
+			cd ..
 		done
   		cd ..
 	done
