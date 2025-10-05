@@ -1,0 +1,13 @@
+[package]
+name = "mandelbrot5_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+num-complex = "0.4"
+rayon = "1.10"
+
+# Enables compiler optimizations for speed in release builds
+[profile.release]
+codegen-units = 1
+lto = true

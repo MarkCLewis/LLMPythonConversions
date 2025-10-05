@@ -1,0 +1,84 @@
+//! The Computer Language Benchmarks Game
+//! https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//!
+//! Translated from Jeremy Zerfas's Python program.
+
+use rug::Integer;
+use std::env;
+
+/// Calculates floor((num * nth + acc) / den)
+fn extract_digit(nth: u32, num: &Integer, acc: &Integer, den: &Integer) -> u32 {
+    // FIX: Perform the calculation in steps to resolve the temporary type error.
+    let mut tmp = Integer::from(num * nth);
+    tmp += acc;
+    tmp /= den;
+    tmp.to_u32().unwrap()
+}
+
+/// Eliminates a digit's contribution to bring the stream to the next digit.
+fn eliminate_digit(d: u32, num: &mut Integer, acc: &mut Integer, den: &Integer) {
+    // FIX: The `isub_mul_ui` method was removed.
+    // This is the equivalent operation using standard traits.
+    *acc -= den * d;
+    *acc *= 10;
+    *num *= 10;
+}
+
+/// Produces the next term in the series.
+fn next_term(k: u32, num: &mut Integer, acc: &mut Integer, den: &mut Integer) {
+    // FIX: Removed unnecessary parentheses.
+    let k2 = k * 2 + 1;
+
+    // FIX: The `iadd_mul` method was removed.
+    // This is the equivalent operation using standard traits.
+    *acc += num * 2;
+    *acc *= k2;
+    *den *= k2;
+    *num *= k;
+}
+
+fn main() {
+    // Parse the number of digits from command-line arguments.
+    // FIX: Added an explicit type annotation `<u32>` to `parse`.
+    let n: u32 = env::args_os()
+        .nth(1)
+        .and_then(|s| s.into_string().ok())
+        .and_then(|s| s.parse::<u32>().ok())
+        .expect("Please provide the number of digits to generate.");
+
+    // Initialize the large integer variables.
+    let mut acc = Integer::from(0);
+    let mut den = Integer::from(1);
+    let mut num = Integer::from(1);
+
+    // FIX: Explicitly typed `i` as u32 to match `n`.
+    let mut i: u32 = 0;
+    let mut k: u32 = 0;
+
+    while i < n {
+        k += 1;
+        next_term(k, &mut num, &mut acc, &mut den);
+
+        // Continue producing terms until the next digit is ready.
+        if num > acc {
+            continue;
+        }
+
+        // Extract the digit and check if it's stable.
+        let d = extract_digit(3, &num, &acc, &den);
+        if d != extract_digit(4, &num, &acc, &den) {
+            continue;
+        }
+
+        // Print the stable digit.
+        print!("{}", (b'0' + d as u8) as char);
+        i += 1;
+
+        // Add tabulation and count every 10 digits, matching the original output.
+        if i % 10 == 0 {
+            println!("\t:{}", i);
+        }
+
+        eliminate_digit(d, &mut num, &mut acc, &den);
+    }
+}

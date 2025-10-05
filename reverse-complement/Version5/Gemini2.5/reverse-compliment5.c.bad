@@ -1,0 +1,258 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// Contributed by Jeremy Zerfas.
+// Converted to C by a helpful AI.
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <semaphore.h>
+
+// This controls the size of reads from the input.
+#define READ_SIZE 65536
+// This defines how many characters a full line of input should have.
+#define LINE_LENGTH 60
+
+// Complement lookup table.
+static const char COMPLEMENT_LOOKUP[256] = {
+      0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15,
+     16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
+     32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
+     48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,
+   /* A   B   C   D   E   F   G   H   I   J   K   L   M   N   O */
+     84,  86,  71,  72,  32,  32,  67,  68,  32,  32,  77,  32,  75,  78,  32,  32,
+   /* P   Q   R   S   T   U   V   W   X   Y   Z */
+     32,  32,  89,  83,  65,  65,  66,  87,  32,  82,  32,  91,  92,  93,  94,  95,
+   /* a   b   c   d   e   f   g   h   i   j   k   l   m   n   o */
+    116, 118, 103, 104,  32,  32,  99, 100,  32,  32, 109,  32, 107, 110,  32,  32,
+   /* p   q   r   s   t   u   v   w   x   y   z */
+     32,  32, 121, 115,  97,  97,  98, 119,  32, 114,  32, 123, 124, 125, 126, 127
+};
+
+
+// Struct to hold a chunk of file data and its associated sequence number.
+typedef struct {
+    char *data;
+    size_t size;
+    long sequence_number;
+} work_item;
+
+// Shared state for threads
+static work_item shared_work_item;
+static int work_item_present = 0;
+static pthread_mutex_t work_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t work_cond = PTHREAD_COND_INITIALIZER;
+
+static sem_t cpu_cores_available;
+static long next_sequence_to_output = 1;
+static pthread_mutex_t output_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t output_cond = PTHREAD_COND_INITIALIZER;
+
+
+// Reverses a string in place.
+static inline void reverse(char *start, size_t len) {
+    char *end = start + len - 1;
+    while (start < end) {
+        char temp = *start;
+        *start++ = *end;
+        *end-- = temp;
+    }
+}
+
+
+void *process_sequences(void *arg) {
+    // Buffers for holding sequence data.
+    char *sequence = NULL;
+    size_t sequence_cap = 0;
+    size_t sequence_len = 0;
+
+    // Main processing loop for each thread.
+    while (1) {
+        // === Get work from the shared work slot ===
+        pthread_mutex_lock(&work_mutex);
+        while (!work_item_present) {
+            pthread_cond_wait(&work_cond, &work_mutex);
+        }
+        
+        char *remaining_data = shared_work_item.data;
+        size_t remaining_len = shared_work_item.size;
+        long sequence_number = shared_work_item.sequence_number;
+        work_item_present = 0;
+        
+        pthread_mutex_unlock(&work_mutex);
+
+        if (remaining_data == NULL) { // Sentinel value: no more work.
+            pthread_mutex_lock(&work_mutex);
+            work_item_present = 1; // Put sentinel back for other threads.
+            pthread_cond_signal(&work_cond);
+            pthread_mutex_unlock(&work_mutex);
+            sem_post(&cpu_cores_available);
+            break;
+        }
+
+        // As in the Python code, ignore the first char (either junk or '>')
+        sequence_len = 0;
+        if (remaining_len > 0) {
+            remaining_data++;
+            remaining_len--;
+        }
+
+        // === Read and parse one full sequence ===
+        while (1) {
+            char *p = memchr(remaining_data, '>', remaining_len);
+            if (p) {
+                size_t preceding_len = p - remaining_data;
+                if (sequence_len + preceding_len > sequence_cap) {
+                    sequence_cap = (sequence_len + preceding_len) * 1.2 + 1024;
+                    sequence = realloc(sequence, sequence_cap);
+                }
+                memcpy(sequence + sequence_len, remaining_data, preceding_len);
+                sequence_len += preceding_len;
+
+                // Post leftover data for the next thread.
+                pthread_mutex_lock(&work_mutex);
+                shared_work_item.data = p;
+                shared_work_item.size = remaining_len - preceding_len;
+                shared_work_item.sequence_number = sequence_number + 1;
+                work_item_present = 1;
+                pthread_cond_signal(&work_cond);
+                pthread_mutex_unlock(&work_mutex);
+                break;
+            }
+
+            if (sequence_len + remaining_len > sequence_cap) {
+                sequence_cap = (sequence_len + remaining_len) * 1.2 + 1024;
+                sequence = realloc(sequence, sequence_cap);
+            }
+            memcpy(sequence + sequence_len, remaining_data, remaining_len);
+            sequence_len += remaining_len;
+            free(remaining_data - 1); // Free the original block from previous read/worker
+
+            char *read_buffer = malloc(READ_SIZE + 1);
+            ssize_t bytes_read = read(STDIN_FILENO, read_buffer, READ_SIZE);
+            if (bytes_read <= 0) {
+                // End of file. Post a NULL to signal completion.
+                pthread_mutex_lock(&work_mutex);
+                shared_work_item.data = NULL; // Sentinel
+                work_item_present = 1;
+                pthread_cond_signal(&work_cond);
+                pthread_mutex_unlock(&work_mutex);
+                free(read_buffer);
+                goto process_last_sequence; // Use goto to break outer loop
+            }
+            remaining_data = read_buffer;
+            remaining_len = bytes_read;
+        }
+        
+process_last_sequence:;
+
+        // Spawn a new worker if a core is available.
+        if (sequence_number > 0 && sem_trywait(&cpu_cores_available) == 0) {
+            pthread_t thread;
+            pthread_create(&thread, NULL, process_sequences, NULL);
+            pthread_detach(thread);
+        }
+
+        // === Process and print the captured sequence ===
+        if (sequence_number > 0) {
+            char *header_end = memchr(sequence, '\n', sequence_len);
+            if (!header_end) continue;
+
+            size_t header_len = header_end - sequence;
+            char *seq_data = header_end + 1;
+            size_t seq_data_len = sequence_len - header_len - 1;
+
+            char *modified_sequence_data = NULL;
+            size_t modified_len = 0;
+
+            // Fast path: all lines are LINE_LENGTH + 1
+            if (seq_data_len % (LINE_LENGTH + 1) == 0) {
+                modified_sequence_data = malloc(seq_data_len + 1);
+                char *dest = modified_sequence_data;
+                char *src = seq_data;
+                for (size_t i = 0; i < seq_data_len; ++i) {
+                     *dest++ = COMPLEMENT_LOOKUP[(unsigned char)*src++];
+                }
+                reverse(modified_sequence_data, seq_data_len);
+                modified_len = seq_data_len;
+                modified_sequence_data[modified_len++] = '\n';
+            } else { // Slow path
+                char *temp_seq = malloc(seq_data_len);
+                size_t temp_len = 0;
+                for (size_t i = 0; i < seq_data_len; ++i) {
+                    if (seq_data[i] != '\n') {
+                        temp_seq[temp_len++] = COMPLEMENT_LOOKUP[(unsigned char)seq_data[i]];
+                    }
+                }
+                reverse(temp_seq, temp_len);
+
+                modified_len = temp_len + temp_len / LINE_LENGTH + 2;
+                modified_sequence_data = malloc(modified_len);
+                size_t pos = 0;
+                modified_sequence_data[pos++] = '\n';
+                for (size_t i = 0; i < temp_len; i += LINE_LENGTH) {
+                    size_t chunk = (i + LINE_LENGTH < temp_len) ? LINE_LENGTH : temp_len - i;
+                    memcpy(modified_sequence_data + pos, temp_seq + i, chunk);
+                    pos += chunk;
+                    modified_sequence_data[pos++] = '\n';
+                }
+                modified_len = pos;
+                free(temp_seq);
+            }
+
+            // Synchronized output
+            pthread_mutex_lock(&output_mutex);
+            while (next_sequence_to_output < sequence_number) {
+                pthread_cond_wait(&output_cond, &output_mutex);
+            }
+
+            write(STDOUT_FILENO, sequence, header_len);
+            write(STDOUT_FILENO, modified_sequence_data, modified_len);
+
+            next_sequence_to_output++;
+            pthread_cond_broadcast(&output_cond);
+            pthread_mutex_unlock(&output_mutex);
+            
+            free(modified_sequence_data);
+        }
+    }
+
+    free(sequence);
+    return NULL;
+}
+
+
+int main() {
+    long n_cpus = sysconf(_SC_NPROCESSORS_ONLN);
+    if (n_cpus < 1) n_cpus = 1;
+
+    sem_init(&cpu_cores_available, 0, n_cpus - 1);
+
+    // Initial dummy work item.
+    // The initial malloc ensures the free() in the worker loop is always valid.
+    shared_work_item.data = malloc(1); 
+    *shared_work_item.data = ' '; // Give it some dummy content
+    shared_work_item.size = 1;
+    shared_work_item.sequence_number = 0;
+    work_item_present = 1;
+    
+    // The main thread also acts as a worker.
+    process_sequences(NULL);
+
+    // Wait for all other threads to finish by acquiring all semaphore slots.
+    for (int i = 0; i < n_cpus - 1; ++i) {
+        sem_wait(&cpu_cores_available);
+    }
+
+    sem_destroy(&cpu_cores_available);
+    pthread_mutex_destroy(&work_mutex);
+    pthread_cond_destroy(&work_cond);
+    pthread_mutex_destroy(&output_mutex);
+    pthread_cond_destroy(&output_cond);
+    
+    return 0;
+}

@@ -1,0 +1,17 @@
+[package]
+name = "kd_tree_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+core_simd = { git = "https://github.com/rust-lang/portable-simd" }
+fastrand = "1.4"
+
+[build]
+rustflags = ["-C", "target-cpu=native"]
+
+[profile.benchmark]
+inherits = "release"
+lto = true
+codegen-units = 1
+

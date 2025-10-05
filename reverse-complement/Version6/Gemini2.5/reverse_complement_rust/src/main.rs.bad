@@ -1,0 +1,136 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// contributed by Joerg Baumann (original Python)
+// converted to Rust by Gemini
+
+use rayon::prelude::*;
+use std::io::{self, BufRead, Write};
+
+/// A compile-time generated translation table for DNA complement.
+/// Maps each byte to its complement. Bytes not in the 'from' string are mapped to themselves,
+/// but later filtered out. This is more efficient than a runtime `HashMap`.
+const REVERSE_TRANSLATION: [u8; 256] = {
+    let mut table = [0u8; 256];
+    let mut i = 0u8;
+    // Initialize with identity mapping
+    loop {
+        table[i as usize] = i;
+        if i == 255 { break; }
+        i += 1;
+    }
+    // Define complement mapping for DNA characters
+    let from = b"ABCDGHKMNRSTUVWYabcdghkmnrstuvwy";
+    let to   = b"TVGHCDMKNYSAABWRTVGHCDMKNYSAABWR";
+    let mut j = 0;
+    while j < from.len() {
+        table[from[j] as usize] = to[j];
+        j += 1;
+    }
+    table
+};
+
+/// Computes the reverse complement of a DNA sequence.
+/// This function iterates through the input sequence in reverse, looks up the
+/// complement for each base, and filters out whitespace, all in a single pass.
+fn reverse_complement(sequence: &[u8]) -> Vec<u8> {
+    sequence
+        .iter()
+        .rev()
+        .filter_map(|&base| {
+            match base {
+                // Whitespace and newlines are skipped, similar to the Python version's filter.
+                b'\n' | b'\r' | b' ' => None,
+                _ => Some(REVERSE_TRANSLATION[base as usize]),
+            }
+        })
+        .collect()
+}
+
+/// Reads all FASTA-formatted records from a buffered reader into memory.
+/// This is more efficient for parallel processing than streaming record by record.
+fn read_all_sequences<R: BufRead>(mut reader: R) -> Vec<(Vec<u8>, Vec<u8>)> {
+    let mut records = Vec::new();
+    let mut buffer = Vec::new();
+
+    // Find and read the first header line.
+    reader.read_until(b'\n', &mut buffer).unwrap();
+    if buffer.is_empty() || buffer[0] != b'>' {
+        return records; // Exit if not a FASTA file or empty.
+    }
+
+    loop {
+        let header = buffer.clone();
+        let mut sequence = Vec::new();
+        buffer.clear();
+
+        // Read sequence lines until the next header `>` or end-of-file.
+        loop {
+            let bytes_read = reader.read_until(b'\n', &mut buffer).unwrap();
+            if bytes_read == 0 || buffer[0] == b'>' {
+                break; // Found next header or EOF.
+            }
+            sequence.extend_from_slice(&buffer);
+            buffer.clear();
+        }
+        records.push((header, sequence));
+
+        if buffer.is_empty() {
+            break; // Reached end of file.
+        }
+    }
+    records
+}
+
+/// Writes a single FASTA record (header and sequence) to a writer.
+/// The sequence is formatted into lines of 60 characters.
+fn write_fasta_record<W: Write>(writer: &mut W, header: &[u8], rev_comp_seq: &[u8]) -> io::Result<()> {
+    writer.write_all(header)?;
+    for chunk in rev_comp_seq.chunks(60) {
+        writer.write_all(chunk)?;
+        writer.write_all(b"\n")?;
+    }
+    Ok(())
+}
+
+
+fn main() {
+    // Lock stdin and stdout for buffered, high-performance I/O.
+    let stdin = io::stdin();
+    let stdout = io::stdout();
+    let mut stdout_lock = io::BufWriter::new(stdout.lock());
+
+    // Read all sequences into memory first. This allows `rayon` to efficiently
+    // parallelize the processing across all records.
+    let records = read_all_sequences(stdin.lock());
+
+    // Decide whether to run in parallel, mirroring the logic from the Python script.
+    // The check uses the length of the first sequence's raw byte buffer.
+    let use_parallel = num_cpus::get() > 1 && !records.is_empty() && records[0].1.len() >= 1_000_000;
+
+    let results: Vec<(Vec<u8>, Vec<u8>)> = if use_parallel {
+        // Parallel execution using rayon's `into_par_iter`.
+        // This is the high-performance path for multi-core systems.
+        records
+            .into_par_iter()
+            .map(|(header, sequence)| {
+                let rev_comp = reverse_complement(&sequence);
+                (header, rev_comp)
+            })
+            .collect()
+    } else {
+        // Sequential execution for single-core systems or small inputs.
+        records
+            .into_iter()
+            .map(|(header, sequence)| {
+                let rev_comp = reverse_complement(&sequence);
+                (header, rev_comp)
+            })
+            .collect()
+    };
+
+    // Write all the processed results to standard output.
+    for (header, rev_comp_seq) in results {
+        write_fasta_record(&mut stdout_lock, &header, &rev_comp_seq).unwrap();
+    }
+}

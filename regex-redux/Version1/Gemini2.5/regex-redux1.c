@@ -1,0 +1,203 @@
+// regex-redux-fixed.c
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// Converted from Python to C by Gemini
+// Uses PCRE2 for regex and Pthreads for parallelism.
+// FIXED: Added robust memory allocation checks to prevent crashes.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <pthread.h>
+
+// PCRE2_CODE_UNIT_WIDTH must be set to 8 for 8-bit character support.
+#define PCRE2_CODE_UNIT_WIDTH 8
+#include <pcre2.h>
+
+// A struct to hold the arguments for each counting thread
+typedef struct {
+    const char* pattern;
+    const char* subject;
+    size_t subject_len;
+    int result;
+} thread_args_t;
+
+// The function executed by each thread to count regex matches
+void* count_matches_thread(void* arg) {
+    thread_args_t* args = (thread_args_t*)arg;
+    int error_code;
+    PCRE2_SIZE error_offset;
+    pcre2_code* re;
+    pcre2_match_data* match_data;
+
+    // Compile the regex pattern
+    re = pcre2_compile(
+        (PCRE2_SPTR)args->pattern, // pattern string
+        PCRE2_ZERO_TERMINATED,     // pattern is null-terminated
+        0,                         // default options
+        &error_code,               // for error code
+        &error_offset,             // for error offset
+        NULL);                     // use default compile context
+
+    if (re == NULL) {
+        PCRE2_UCHAR buffer[256];
+        pcre2_get_error_message(error_code, buffer, sizeof(buffer));
+        fprintf(stderr, "PCRE2 compilation failed at offset %d: %s\n", (int)error_offset, buffer);
+        args->result = -1; // Indicate error
+        return NULL;
+    }
+
+    match_data = pcre2_match_data_create_from_pattern(re, NULL);
+    
+    int count = 0;
+    PCRE2_SIZE offset = 0;
+    while (pcre2_match(re, (PCRE2_SPTR)args->subject, args->subject_len, offset, 0, match_data, NULL) >= 0) {
+        PCRE2_SIZE* ovector = pcre2_get_ovector_pointer(match_data);
+        offset = ovector[1]; // Start next search after the end of the last match
+        count++;
+    }
+    
+    args->result = count;
+
+    // Free allocated resources
+    pcre2_match_data_free(match_data);
+    pcre2_code_free(re);
+
+    return NULL;
+}
+
+// A helper function to perform a regex substitution
+char* substitute(const char* subject, size_t subject_len, const char* pattern, const char* replacement, size_t* new_len) {
+    pcre2_code* re;
+    int error_code;
+    PCRE2_SIZE error_offset;
+    
+    re = pcre2_compile((PCRE2_SPTR)pattern, PCRE2_ZERO_TERMINATED, 0, &error_code, &error_offset, NULL);
+    if (re == NULL) {
+        fprintf(stderr, "PCRE2 compilation failed for substitution.\n");
+        return NULL;
+    }
+    
+    // PCRE2_SUBSTITUTE_GLOBAL replaces all occurrences.
+    // The required output buffer size is returned in new_len.
+    pcre2_substitute(re, (PCRE2_SPTR)subject, subject_len, 0, PCRE2_SUBSTITUTE_GLOBAL, NULL, NULL, (PCRE2_SPTR)replacement, PCRE2_ZERO_TERMINATED, NULL, new_len);
+    
+    char* result = malloc(*new_len + 1);
+    // ADDED: Check if malloc succeeded
+    if (result == NULL) {
+        fprintf(stderr, "Error: Failed to allocate memory for substitution result.\n");
+        pcre2_code_free(re);
+        return NULL;
+    }
+    
+    // Now perform the actual substitution
+    pcre2_substitute(re, (PCRE2_SPTR)subject, subject_len, 0, PCRE2_SUBSTITUTE_GLOBAL, NULL, NULL, (PCRE2_SPTR)replacement, PCRE2_ZERO_TERMINATED, (PCRE2_SPTR)result, new_len);
+    result[*new_len] = '\0'; // Null-terminate the string
+
+    pcre2_code_free(re);
+    return result;
+}
+
+
+int main() {
+    // 1. Read entire sequence from stdin
+    size_t capacity = 16 * 1024; // Start with a slightly larger buffer
+    char* seq = malloc(capacity);
+    // ADDED: Check if initial malloc succeeded
+    if (seq == NULL) {
+        fprintf(stderr, "Error: Failed to allocate initial memory buffer.\n");
+        return 1;
+    }
+    size_t ilen = 0; // initial length
+    size_t bytes_read;
+
+    while ((bytes_read = fread(seq + ilen, 1, capacity - ilen, stdin)) > 0) {
+        ilen += bytes_read;
+        if (ilen == capacity) {
+            capacity *= 2;
+            char* new_seq = realloc(seq, capacity);
+            // ADDED: Check if realloc succeeded
+            if (new_seq == NULL) {
+                fprintf(stderr, "Error: Failed to reallocate memory buffer to %zu bytes.\n", capacity);
+                free(seq);
+                return 1;
+            }
+            seq = new_seq;
+        }
+    }
+    
+    // 2. Remove FASTA headers and newlines
+    size_t clen; // cleaned length
+    char* cleaned_seq = substitute(seq, ilen, ">.*\\n|\\n", "", &clen);
+    free(seq); // Free the original buffer from stdin
+    
+    // ADDED: Check if the substitution was successful
+    if (cleaned_seq == NULL) {
+        return 1; // substitute() already printed an error
+    }
+    seq = cleaned_seq;
+
+    // 3. Perform parallel regex counting
+    const char* variants[] = {
+        "agggtaaa|tttaccct",
+        "[cgt]gggtaaa|tttaccc[acg]",
+        "a[act]ggtaaa|tttacc[agt]t",
+        "ag[act]gtaaa|tttac[agt]ct",
+        "agg[act]taaa|ttta[agt]cct",
+        "aggg[acg]aaa|ttt[cgt]ccct",
+        "agggt[cgt]aa|tt[acg]accct",
+        "agggta[cgt]a|t[acg]taccct",
+        "agggtaa[cgt]|[acg]ttaccct"
+    };
+    int num_variants = sizeof(variants) / sizeof(variants[0]);
+    pthread_t threads[num_variants];
+    thread_args_t thread_args[num_variants];
+
+    for (int i = 0; i < num_variants; ++i) {
+        thread_args[i] = (thread_args_t){
+            .pattern = variants[i], 
+            .subject = seq, 
+            .subject_len = clen, 
+            .result = 0
+        };
+        pthread_create(&threads[i], NULL, count_matches_thread, &thread_args[i]);
+    }
+
+    // Wait for all threads to finish and print results
+    for (int i = 0; i < num_variants; ++i) {
+        pthread_join(threads[i], NULL);
+        printf("%s %d\n", variants[i], thread_args[i].result);
+    }
+    
+    // 4. Perform sequential substitutions
+    const char* subst_patterns[] = {
+        "tHa[Nt]", "aND|caN|Ha[DS]|WaS", "a[NSt]|BY", 
+        "<[^>]*>", "\\|[^|][^|]*\\|"
+    };
+    const char* subst_repls[] = {
+        "<4>", "<3>", "<2>", "|", "-"
+    };
+    int num_substs = sizeof(subst_patterns) / sizeof(subst_patterns[0]);
+
+    char* temp_seq;
+    size_t current_len = clen;
+    for (int i = 0; i < num_substs; ++i) {
+        temp_seq = substitute(seq, current_len, subst_patterns[i], subst_repls[i], &current_len);
+        free(seq); // Free the old sequence buffer
+
+        // ADDED: Check if the substitution returned a valid pointer
+        if (temp_seq == NULL) {
+            fprintf(stderr, "Error during substitution sequence.\n");
+            return 1;
+        }
+        seq = temp_seq;
+    }
+
+    // 5. Print final lengths
+    printf("\n%zu\n%zu\n%zu\n", ilen, clen, current_len);
+    
+    free(seq);
+
+    return 0;
+}

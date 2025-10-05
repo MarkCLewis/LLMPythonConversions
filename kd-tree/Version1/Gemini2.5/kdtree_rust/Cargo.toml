@@ -1,11 +1,12 @@
 [package]
-name = "pidigits3-rust"
+name = "kdtree_rust"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-rug = "1.24"
+rand = "0.8.5"
 
 [profile.release]
 lto = true
 codegen-units = 1
+opt-level = 3

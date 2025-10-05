@@ -1,0 +1,13 @@
+[package]
+name = "regex_redux_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rayon = "1.8"
+regex = "1.10"
+
+# Optimize for performance in release builds
+[profile.release]
+codegen-units = 1
+lto = true

@@ -1,11 +1,11 @@
-c:	nbody.c
+c:
 	gcc -O3 nbody.c -lm
 
-rust:	nbody.rs
-	rustc -C opt-level=3 nbody.rs
+rust:
+	cd *_rust; cargo build --release
 
 run-c:
 	./a.out 50000000
 
 run-rust:
-	./a.out 50000000
+	./*_rust/target/release/*_rust 50000000

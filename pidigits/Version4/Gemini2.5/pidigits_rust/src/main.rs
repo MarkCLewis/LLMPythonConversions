@@ -1,107 +1,91 @@
-use num_bigint::BigInt;
-use num_traits::{One, Zero, ToPrimitive};
-use std::env;
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// Translated from Mr Ledrug's C program by Jeremy Zerfas.
+// Transliterated from GMP to built-in by Isaac Gouy.
+// Translated from Python to Rust by Gemini.
 
-/// This struct holds the state of the Pi digit generation stream,
-/// replacing the global variables used in the original Python script.
-struct PiDigitStream {
-    acc: BigInt,
-    den: BigInt,
-    num: BigInt,
+use num::bigint::BigInt;
+use num::traits::{One, Zero};
+use std::env;
+use std::io::{self, Write};
+
+/// Advances the state of the spigot algorithm to the next term.
+fn next_term(k: i32, acc: &mut BigInt, num: &mut BigInt, den: &mut BigInt) {
+    let k2 = (k as i64) * 2 + 1;
+    // Apply the fix here by reborrowing `num`
+    *acc += &*num * 2_i64;
+    *acc *= k2;
+    *den *= k2;
+    *num *= k as i64;
 }
 
-impl PiDigitStream {
-    /// Creates a new stream with the initial state values.
-    fn new() -> Self {
-        PiDigitStream {
-            acc: BigInt::zero(), // Corresponds to acc = 0
-            den: BigInt::one(),  // Corresponds to den = 1
-            num: BigInt::one(),  // Corresponds to num = 1
-        }
-    }
+/// Extracts a potential digit from the current state.
+fn extract_digit(nth: i64, num: &BigInt, acc: &BigInt, den: &BigInt) -> BigInt {
+    (num * nth + acc) / den
+}
 
-    /// Calculates the next term in the series, updating the state.
-    /// Corresponds to the `next_Term` function.
-    fn next_term(&mut self, k: u32) {
-        let k2 = (k as u64 * 2) + 1;
-        
-        self.acc += &self.num * 2u32;
-        self.acc *= k2;
-        self.den *= k2;
-        self.num *= k;
-    }
-    
-    /// Extracts a potential digit from the current state.
-    /// Corresponds to the `extract_Digit` function.
-    fn extract_digit(&self, nth: u32) -> BigInt {
-        // The operations are combined for efficiency.
-        let tmp = &self.num * nth + &self.acc;
-        tmp / &self.den
-    }
-
-    /// Consumes a confirmed digit, adjusting the state for the next iteration.
-    /// Corresponds to the `eliminate_Digit` function.
-    fn eliminate_digit(&mut self, d: &BigInt) {
-        self.acc -= &self.den * d;
-        self.acc *= 10u32;
-        self.num *= 10u32;
-    }
+/// "Consumes" a digit `d` from the state, preparing for the next one.
+fn eliminate_digit(d: &BigInt, acc: &mut BigInt, num: &mut BigInt, den: &BigInt) {
+    *acc -= den * d;
+    *acc *= 10_i64;
+    *num *= 10_i64;
 }
 
 fn main() {
-    // 1. Get the number of digits `n` from the command-line arguments.
-    //    Defaults to 27 if no argument is provided.
-    let n = env::args_os()
+    // 1. Get the number of digits `n` from command line arguments.
+    let n: i32 = env::args()
         .nth(1)
-        .and_then(|s| s.into_string().ok())
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(27);
+        .expect("Usage: pidigits <number_of_digits>")
+        .parse()
+        .expect("The argument must be a valid integer.");
 
-    // 2. Initialize the state and counters.
-    let mut pi_stream = PiDigitStream::new();
-    let mut i = 0;
-    let mut k = 0u32;
+    let mut stdout = io::stdout();
 
-    // 3. Main loop to generate and print digits.
+    // 2. Initialize the state variables for the algorithm.
+    let mut acc: BigInt = Zero::zero();
+    let mut den: BigInt = One::one();
+    let mut num: BigInt = One::one();
+
+    let mut i = 0; // Digits generated so far
+    let mut k = 0; // Term counter
+
+    // 3. Main loop to generate `n` digits.
     while i < n {
         k += 1;
-        pi_stream.next_term(k);
+        next_term(k, &mut acc, &mut num, &mut den);
 
-        // A key step in the spigot algorithm: continue consuming terms until
-        // the state is ready to produce a stable digit.
-        if pi_stream.num > pi_stream.acc {
+        // Wait until the state is ready for digit extraction.
+        if num > acc {
             continue;
         }
 
-        // Check if the 3rd and 4th extracted digits are the same.
-        // If they are, we can be confident the digit is correct.
-        let d = pi_stream.extract_digit(3);
-        if d != pi_stream.extract_digit(4) {
+        // 4. Check if the next digit is "safe" to produce.
+        // The algorithm is safe when the digit extracted with n=3 is the same as n=4.
+        let d = extract_digit(3, &num, &acc, &den);
+        if d != extract_digit(4, &num, &acc, &den) {
             continue;
         }
 
-        // We have a confirmed digit, so print it.
-        // `d` is a BigInt (e.g., 3), so we convert it to a u8, add the ASCII
-        // offset for '0', and cast it to a character for printing.
-        print!("{}", (d.to_u8().unwrap() + b'0') as char);
+        // 5. The digit is safe. Print it and update the state.
+        write!(stdout, "{}", d).unwrap();
         i += 1;
 
-        // Format the output with a tab and count every 10 digits.
+        // Format output with a newline and count every 10 digits.
         if i % 10 == 0 {
-            println!("\t:{}", i);
+            writeln!(stdout, "\t:{}", i).unwrap();
         }
 
-        // Consume the digit from the stream to prepare for the next one.
-        pi_stream.eliminate_digit(&d);
+        eliminate_digit(&d, &mut acc, &mut num, &den);
     }
-    
-    // If n is not a multiple of 10, pad the final line with spaces
-    // for clean alignment and print the final count.
+
+    // Pad the last line with spaces if it's not a full 10 digits.
+    // This is required by the benchmarks game rules.
     let remainder = n % 10;
     if remainder != 0 {
         for _ in 0..(10 - remainder) {
-            print!(" ");
+            write!(stdout, " ").unwrap();
         }
-        println!("\t:{}", n);
+        writeln!(stdout, "\t:{}", n).unwrap();
     }
 }

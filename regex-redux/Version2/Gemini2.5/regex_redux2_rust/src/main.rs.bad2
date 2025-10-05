@@ -1,0 +1,97 @@
+// No longer need to import `Regex` directly, as it's not used by name.
+use pcre2::bytes::RegexBuilder;
+use rayon::prelude::*;
+use std::io::{self, Read};
+
+fn main() {
+    // Read all input from stdin into a byte vector.
+    let mut input = Vec::new();
+    io::stdin().lock().read_to_end(&mut input).unwrap();
+    let initial_len = input.len();
+
+    // Task 1: Clean the input by removing FASTA sequence descriptions and newlines.
+    // FIX: The pattern for `.build()` must be a `&str`, not a `&[u8]`.
+    let cleaner_re = RegexBuilder::new().jit(true).build(">.*\\n|\\n").unwrap();
+
+    // FIX: Replacement methods are on a `Replacer` object, created with `.replacer()`.
+    let sequences = cleaner_re
+        .replacer(b"") // Create replacer with replacement bytes
+        .replace_all(&input) // Perform replacement on the input
+        .into_owned();
+    let cleaned_len = sequences.len();
+
+    // Task 2: Perform a series of replacements serially.
+    let final_len = {
+        // FIX: Explicitly type the array as a slice of tuples of byte slices (`&[u8]`)
+        // to allow patterns and replacements of different lengths.
+        let replacements: &[(&[u8], &[u8])] = &[
+            (b"tHa[Nt]", b"<4>"),
+            (b"aND|caN|Ha[DS]|WaS", b"<3>"),
+            (b"a[NSt]|BY", b"<2>"),
+            (b"<[^>]*>", b"|"),
+            (b"\\|[^|][^|]*\\|", b"-"),
+        ];
+
+        let mut buffer1 = sequences.clone();
+        let mut buffer2 = Vec::with_capacity(buffer1.len());
+
+        for (i, (pattern, replacement)) in replacements.iter().enumerate() {
+            // FIX: The pattern for `.build()` must be a `&str`.
+            let re = RegexBuilder::new()
+                .jit(true)
+                .build(std::str::from_utf8(pattern).unwrap()) // Convert pattern to &str
+                .unwrap();
+
+            if i % 2 == 0 {
+                // FIX: Use the `.replacer()` API for replacements.
+                re.replacer(replacement)
+                    .replace_all_to(&buffer1, &mut buffer2);
+            } else {
+                // FIX: Use the `.replacer()` API for replacements.
+                re.replacer(replacement)
+                    .replace_all_to(&buffer2, &mut buffer1);
+            }
+        }
+
+        if replacements.len() % 2 == 1 {
+            buffer2.len()
+        } else {
+            buffer1.len()
+        }
+    };
+
+    // Task 3: Count occurrences of various patterns in parallel.
+    // FIX: Explicitly type the array as a slice of byte slices.
+    let count_patterns: &[&[u8]] = &[
+        b"agggtaaa|tttaccct",
+        b"[cgt]gggtaaa|tttaccc[acg]",
+        b"a[act]ggtaaa|tttacc[agt]t",
+        b"ag[act]gtaaa|tttac[agt]ct",
+        b"agg[act]taaa|ttta[agt]cct",
+        b"aggg[acg]aaa|ttt[cgt]ccct",
+        b"agggt[cgt]aa|tt[acg]accct",
+        b"agggta[cgt]a|t[acg]taccct",
+        b"agggtaa[cgt]|[acg]ttaccct",
+    ];
+
+    let counts: Vec<usize> = count_patterns
+        .par_iter()
+        .map(|pattern| {
+            // FIX: The pattern for `.build()` must be a `&str`.
+            let re = RegexBuilder::new()
+                .jit(true)
+                .build(std::str::from_utf8(pattern).unwrap()) // Convert pattern to &str
+                .unwrap();
+            re.find_iter(&sequences).count()
+        })
+        .collect();
+
+    // Print the results in the required format.
+    for (pattern, count) in count_patterns.iter().zip(counts) {
+        println!("{} {}", String::from_utf8_lossy(pattern), count);
+    }
+    println!();
+    println!("{}", initial_len);
+    println!("{}", cleaned_len);
+    println!("{}", final_len);
+}
