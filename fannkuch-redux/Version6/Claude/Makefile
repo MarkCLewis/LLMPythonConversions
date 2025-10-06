@@ -1,11 +1,11 @@
-c:
-	gcc -O3 -Wall -std=c11 *.c -pthread
+#c:
+#	gcc -O3 -Wall -std=c11 *.c -pthread
 
-rust:
-	rustc -O *.rs
+#rust:
+#	cd *_rust; cargo build --release
 
-run-c:
-	./a.out 12
+#run-c:
+#	./a.out 12
 
-run-rust:
-	./main 12
+#run-rust:
+#	./*_rust/target/release/*_rust 12

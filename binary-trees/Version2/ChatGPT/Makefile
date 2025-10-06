@@ -2,10 +2,10 @@ c:
 	gcc -O3 *.c -lm
 
 rust:
-	cd binary_trees_rust; cargo build --release
+	rustc -C opt-level=3 -C target-cpu=native -C codegen-units=1 *.rs
 
 run-c:
 	./a.out 21
 
 run-rust:
-	./binary_trees_rust/target/release/binary_trees_rust 21
+	./binary-trees2 21

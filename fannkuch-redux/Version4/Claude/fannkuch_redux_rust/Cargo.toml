@@ -1,0 +1,12 @@
+[package]
+name = "fannkuch_redux_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+num_cpus = "1.16.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
