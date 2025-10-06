@@ -1,0 +1,16 @@
+[package]
+name = "quaoar-rings-rs"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = 3
+
+[dependencies]
+ndarray = "0.15"
+rayon = "1.10"
+rustfft = "6"
+num-complex = "0.4"
+csv = "1"
