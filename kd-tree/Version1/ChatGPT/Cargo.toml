@@ -1,0 +1,13 @@
+[package]
+name = "kd-tree-bh-rs"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = 3
+
+[dependencies]
+rayon = "1.10"
+rand = { version = "0.8", features = ["std"] }
