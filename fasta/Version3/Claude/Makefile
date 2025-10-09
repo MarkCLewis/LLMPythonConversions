@@ -1,11 +1,11 @@
-#c:
-#	gcc -O3 *.c -lm
+c:
+	gcc -O3 fasta3.c -lm
 
 rust:
-	rustc -C opt-level=3 -C target-cpu=native fasta3.rs
+	cd ./fasta3_rust; cargo build --release
 
-#run-c:
-#	./a.out 25000000
+run-c:
+	./a.out 25000000
 
 run-rust:
-	./fasta3 25000000
+	./fasta3_rust/target/release/fasta 25000000
