@@ -40,7 +40,7 @@ impl State {
         self.tmp1 = &self.tmp2 / &self.den;
         
         // Convert the result to u32
-        self.tmp1.to_u32().unwrap()
+        self.tmp1.to_i32().unwrap()
     }
     
     // Eliminate a digit

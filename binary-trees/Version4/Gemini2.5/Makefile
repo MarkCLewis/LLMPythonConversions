@@ -1,5 +1,5 @@
 c:
-	gcc -O3 -lpthread binary-trees4.c -lm
+	gcc -O3 -lpthread binary-trees4.c -lm -pthread
 
 rust:
 	cd binary_trees_rust; cargo build --release

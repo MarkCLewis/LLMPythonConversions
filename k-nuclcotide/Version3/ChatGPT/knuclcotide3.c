@@ -188,7 +188,7 @@ int main(void) {
         int k = (int)strlen(pat);
         uint64_t code = code_of(pat);
         uint64_t cnt  = count_k_specific(seq, n, k, code);
-        printf("%" PRIu64 "\t%s\n", cnt, pat);
+        printf("%d\t%s\n", cnt, pat);
     }
 
     free(seq);

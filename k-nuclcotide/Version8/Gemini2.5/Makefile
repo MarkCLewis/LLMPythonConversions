@@ -2,9 +2,9 @@ c:
 	gcc -O3 *.c -lm
 
 rust:
-	cd k_nuclcotide3_rust; cargo build --release
+	cd *_rust; cargo build --release
 run-c:
-	./a.out 0 < knucleotide-input25000000.txt
+	./a.out 0 < ../../knucleotide-input25000000.txt
 
 run-rust:
-	./k_nuclcotide8_rust/target/release/k_nuclcotide8_rust 0 < knucleotide-input25000000.txt
+	./*_rust/target/release/k_nuclcotide8_rust 0 < ../../knucleotide-input25000000.txt

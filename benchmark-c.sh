@@ -19,12 +19,17 @@ do
 			if [ -d "$author" ] 
 			then
   				cd $author
-				make c
-				echo $bench $version $author $file # >> ../times-c.txt
-				for cnt in {1..7}
-				do
-					{ time make run-c ; } 2>> ../times-c.txt
-				done
+				if grep "c:" Makefile | grep -v "#";
+				then
+					if make c;
+					then
+						echo $bench $version $author $file >> ../../../times-c.txt
+						for cnt in {1..7}
+						do
+							{ time make run-c > /dev/null ; } 2>> ../../../times-c.txt
+						done
+					fi
+				fi
 				cd ..
 			fi
 		done

@@ -1,0 +1,17 @@
+[package]
+name = "k_nuclcotide8_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rayon = "1.8.0"
+
+# For faster hash maps
+rustc-hash = "1.1.0"
+
+# Optimization settings for release build
+[profile.release]
+opt-level = 3             # Maximum optimization
+lto = true                # Link-time optimization
+codegen-units = 1         # Single-unit optimization
+panic = "abort"           # Smaller code size without unwinding on panics

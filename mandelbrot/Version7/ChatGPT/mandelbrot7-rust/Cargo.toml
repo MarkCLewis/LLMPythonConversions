@@ -1,5 +1,5 @@
 [package]
-name = "mandelbrot7_pbm"
+name = "mandelbrot7-rust"
 version = "0.1.0"
 edition = "2021"
 
