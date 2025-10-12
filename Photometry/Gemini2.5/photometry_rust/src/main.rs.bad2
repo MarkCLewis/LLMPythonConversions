@@ -1,0 +1,176 @@
+// src/main.rs
+
+use ndarray::{s, Array, Array1, Array2, Axis};
+use num_complex::Complex;
+use rustfft::{FftPlanner, num_traits::Zero};
+use std::f64::consts::PI;
+use std::time::Instant;
+use interpolator::{Interpolator, InterpolationType};
+use ndarray_stats::QuantileExt;
+
+/// Calculates the E-field in the observer's plane for an occultation.
+/// This version is corrected to use the `rustfft` crate directly.
+fn occ_lc(ap: &Array2<Complex<f64>>) -> Array2<f64> {
+    let npts = ap.shape()[0];
+    let n2 = (npts / 2) as f64;
+
+    // Create the exponential term
+    let e_term = Array2::from_shape_fn((npts, npts), |(y, x)| {
+        let y0 = y as f64 - n2;
+        let x0 = x as f64 - n2;
+        let phase = (PI / npts as f64) * (x0.powi(2) + y0.powi(2));
+        Complex::new(0.0, phase).exp()
+    });
+
+    let mut m = ap * &e_term;
+
+    // --- Perform 2D FFT using rustfft ---
+    let mut planner = FftPlanner::new();
+    let fft = planner.plan_fft_forward(npts);
+
+    // 1. FFT along rows
+    m.axis_iter_mut(Axis(0)).for_each(|mut row| {
+        // rustfft works on slices, so we get a mutable slice from the row
+        fft.process(row.as_slice_mut().unwrap());
+    });
+
+    // 2. Transpose the matrix
+    m.swap_axes(0, 1);
+
+    // 3. FFT along new rows (original columns)
+    m.axis_iter_mut(Axis(0)).for_each(|mut col| {
+        fft.process(col.as_slice_mut().unwrap());
+    });
+
+    // 4. Transpose back to original orientation
+    m.swap_axes(0, 1);
+    
+    let e_obs = m;
+
+    // Calculate intensity (power)
+    let p_obs = e_obs.mapv(|c| c.norm_sqr()); // norm_sqr() is |c|^2
+
+    // Manually perform a circular roll, equivalent to fftshift or np.roll
+    let n2_usize = npts / 2;
+    let mut p_rolled = Array2::zeros(p_obs.raw_dim());
+    p_rolled.slice_mut(s![0..n2_usize, 0..n2_usize]).assign(&p_obs.slice(s![n2_usize.., n2_usize..]));
+    p_rolled.slice_mut(s![0..n2_usize, n2_usize..]).assign(&p_obs.slice(s![n2_usize.., 0..n2_usize]));
+    p_rolled.slice_mut(s![n2_usize.., 0..n2_usize]).assign(&p_obs.slice(s![0..n2_usize, n2_usize..]));
+    p_rolled.slice_mut(s![n2_usize.., n2_usize..]).assign(&p_obs.slice(s![0..n2_usize, 0..n2_usize]));
+
+    p_rolled
+}
+
+
+/// Creates an aperture with a vertical ring segment running through it.
+/// (This function remains unchanged)
+fn ring_seg_ap(
+    lam: f64,
+    d: f64,
+    npts: usize,
+    wid: f64,
+    t_r: &Interpolator<f64, f64>,
+) -> (Array2<f64>, f64, f64) {
+    let lam_km = lam * 1e-9; // convert microns to km
+
+    let grid_sz = (lam_km * d / npts as f64).sqrt();
+    let fov = (lam_km * d * npts as f64).sqrt();
+    let npts2 = npts as f64 * 0.5;
+    let wid2 = wid * 0.5;
+
+    // Create a grid of x values, centered on zero.
+    let xv = Array::range(0.0, npts as f64, 1.0).mapv(|i| (i - npts2) * grid_sz);
+    let mut ap = Array2::ones((npts, npts));
+
+    // Iterate through columns to apply the transmission function
+    for mut col in ap.axis_iter_mut(Axis(1)).zip(xv.iter()) {
+        if col.1.abs() <= wid2 {
+            let transmission = t_r.interpolate(*col.1);
+            col.0.fill(transmission);
+        }
+    }
+
+    (ap, fov, grid_sz)
+}
+
+
+fn main() {
+    // --- Initial Setup for Four Profiles ---
+    // (This section remains unchanged)
+    let wid = 46.0; // Width of the ring (km)
+    let n_rad = 100;
+    let w_val = Array::linspace(-wid / 2.0, wid / 2.0, n_rad);
+
+    let tau_flat_01 = Array1::from_elem(n_rad, 0.1);
+    let tau_flat_10 = Array1::from_elem(n_rad, 1.0);
+
+    let pb = w_val.mapv(|x| x.powi(2));
+    let pb_max = *pb.max().unwrap();
+    let pb_min = *pb.min().unwrap();
+    
+    let m_cp = (0.0 - 0.1) / (pb_max - pb_min);
+    let b_cp = 0.0 - m_cp * pb_max;
+    let tau_cp = &pb * m_cp + b_cp;
+
+    let m_se = (0.1 - 0.0) / (pb_max - pb_min);
+    let b_se = 0.1 - m_se * pb_max;
+    let tau_se = &pb * m_se + b_se;
+    
+    let t_f1 = Interpolator::new(w_val.view(), tau_flat_01.mapv(|t| (-t).exp()).view(), InterpolationType::Linear).unwrap();
+    let t_f2 = Interpolator::new(w_val.view(), tau_flat_10.mapv(|t| (-t).exp()).view(), InterpolationType::Linear).unwrap();
+    let t_cp = Interpolator::new(w_val.view(), tau_cp.mapv(|t| (-t).exp()).view(), InterpolationType::Linear).unwrap();
+    let t_se = Interpolator::new(w_val.view(), tau_se.mapv(|t| (-t).exp()).view(), InterpolationType::Linear).unwrap();
+
+    let lam = 0.5;
+    let d = 43.0 * 150e6;
+    let npts_initial = 4096;
+    
+    let (ap_f1, fov, grid_sz) = ring_seg_ap(lam, d, npts_initial, wid, &t_f1);
+    let (ap_f2, _, _) = ring_seg_ap(lam, d, npts_initial, wid, &t_f2);
+    let (ap_f3, _, _) = ring_seg_ap(lam, d, npts_initial, wid, &t_cp);
+    let (ap_f4, _, _) = ring_seg_ap(lam, d, npts_initial, wid, &t_se);
+
+    let mut op_f1 = occ_lc(&ap_f1.mapv(|v| Complex::new(v, 0.0)));
+    let mut op_f2 = occ_lc(&ap_f2.mapv(|v| Complex::new(v, 0.0)));
+    let mut op_f3 = occ_lc(&ap_f3.mapv(|v| Complex::new(v, 0.0)));
+    let mut op_f4 = occ_lc(&ap_f4.mapv(|v| Complex::new(v, 0.0)));
+    
+    let bg1 = *op_f1.slice(s![2048, 0..100]).to_owned().median_mut().unwrap();
+    let bg2 = *op_f2.slice(s![2048, 0..100]).to_owned().median_mut().unwrap();
+    let bg3 = *op_f3.slice(s![2048, 0..100]).to_owned().median_mut().unwrap();
+    let bg4 = *op_f4.slice(s![2048, 0..100]).to_owned().median_mut().unwrap();
+
+    op_f1.mapv_inplace(|v| v / bg1);
+    op_f2.mapv_inplace(|v| v / bg2);
+    op_f3.mapv_inplace(|v| v / bg3);
+    op_f4.mapv_inplace(|v| v / bg4);
+
+    println!("--- Initial Model (npts=4096) ---");
+    println!("Field of View: {:.2} km, Grid Sample Size: {:.4} km\n", fov, grid_sz);
+
+    // --- Benchmarking Section ---
+    // (This section remains unchanged)
+    println!("--- Starting Performance Benchmarks ---");
+    let wid_w = 100.0;
+    let n_rad_w = 200;
+    let w_val_w = Array::linspace(-wid_w / 2.0, wid_w / 2.0, n_rad_w);
+    let tau_flat_w = Array1::from_elem(n_rad_w, 0.1);
+    let t_f1w = Interpolator::new(w_val_w.view(), tau_flat_w.mapv(|t| (-t).exp()).view(), InterpolationType::Linear).unwrap();
+
+    for i in 1..=3 {
+        let npts = 4096 * i;
+        println!("\nRunning simulation with npts = {}", npts);
+        
+        let start_time = Instant::now();
+
+        let (ap, fov, grid_sz) = ring_seg_ap(lam, d, npts, wid_w, &t_f1w);
+        let mut op = occ_lc(&ap.mapv(|v| Complex::new(v, 0.0)));
+        
+        let bg = *op.slice(s![npts/2, 0..100]).to_owned().median_mut().unwrap();
+        op.mapv_inplace(|v| v / bg);
+
+        let elapsed = start_time.elapsed();
+        println!("--- {:.4} seconds ---", elapsed.as_secs_f64());
+        println!("Field of View: {:.2} km, Grid Sample Size: {:.4} km", fov, grid_sz);
+    }
+}

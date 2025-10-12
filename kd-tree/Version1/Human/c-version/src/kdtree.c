@@ -187,6 +187,7 @@ void print_tree(int step, const KDTree_array_t *tree,
     fprintf(stderr, "Step too big!\n");
     exit(EXIT_FAILURE);
   }
+
   char name[8 + 7];
   snprintf(name, 8 + 7, "tree%d.txt", step);
 
@@ -232,9 +233,9 @@ void simple_sim(Particle_array_t *bodies, double dt, int steps) {
     }
 
     build_tree(&indices, 0, bodies->size, bodies, 0, &tree);
-    if (step % 10 == 0) {
-      print_tree(step, &tree, bodies);
-    }
+//    if (step % 10 == 0) {
+//      print_tree(step, &tree, bodies);
+//    }
     for (size_t i = 0; i < bodies->size; ++i) {
       calc_accel(i, bodies, &tree, acc.ptr[i].v);
     }

@@ -1,0 +1,158 @@
+// src/main.rs
+
+use ndarray::{s, Array, Array1, Array2, Axis};
+use num_complex::Complex;
+use rustfft::FftPlanner;
+use std::f64::consts::PI;
+use std::time::Instant;
+// Corrected path to the spline crate's types
+use spline::interpolate::{Key, Spline};
+
+/// Calculates the median of a slice of f64 values.
+fn calculate_median(data: &[f64]) -> f64 {
+    let mut sorted_data = data.to_vec();
+    sorted_data.sort_unstable_by(|a, b| a.partial_cmp(b).unwrap());
+    let mid = sorted_data.len() / 2;
+    sorted_data[mid]
+}
+
+/// Calculates the E-field in the observer's plane for an occultation.
+fn occ_lc(ap: &Array2<Complex<f64>>) -> Array2<f64> {
+    let npts = ap.shape()[0];
+    let n2 = (npts / 2) as f64;
+
+    let e_term = Array2::from_shape_fn((npts, npts), |(y, x)| {
+        let y0 = y as f64 - n2;
+        let x0 = x as f64 - n2;
+        let phase = (PI / npts as f64) * (x0.powi(2) + y0.powi(2));
+        Complex::new(0.0, phase).exp()
+    });
+
+    let mut m = ap * &e_term;
+
+    let mut planner = FftPlanner::new();
+    let fft = planner.plan_fft_forward(npts);
+
+    m.axis_iter_mut(Axis(0)).for_each(|mut row| {
+        fft.process(row.as_slice_mut().unwrap());
+    });
+    m.swap_axes(0, 1);
+    m.axis_iter_mut(Axis(0)).for_each(|mut col| {
+        fft.process(col.as_slice_mut().unwrap());
+    });
+    m.swap_axes(0, 1);
+    
+    let e_obs = m;
+    let p_obs = e_obs.mapv(|c| c.norm_sqr());
+
+    let n2_usize = npts / 2;
+    let mut p_rolled = Array2::zeros(p_obs.raw_dim());
+    p_rolled.slice_mut(s![0..n2_usize, 0..n2_usize]).assign(&p_obs.slice(s![n2_usize.., n2_usize..]));
+    p_rolled.slice_mut(s![0..n2_usize, n2_usize..]).assign(&p_obs.slice(s![n2_usize.., 0..n2_usize]));
+    p_rolled.slice_mut(s![n2_usize.., 0..n2_usize]).assign(&p_obs.slice(s![0..n2_usize, n2_usize..]));
+    p_rolled.slice_mut(s![n2_usize.., n2_usize..]).assign(&p_obs.slice(s![0..n2_usize, 0..n2_usize]));
+
+    p_rolled
+}
+
+/// Creates an aperture with a vertical ring segment running through it.
+fn ring_seg_ap(
+    lam: f64,
+    d: f64,
+    npts: usize,
+    wid: f64,
+    t_r: &Spline<f64, f64>,
+) -> (Array2<f64>, f64, f64) {
+    let lam_km = lam * 1e-9;
+    let grid_sz = (lam_km * d / npts as f64).sqrt();
+    let fov = (lam_km * d * npts as f64).sqrt();
+    let npts2 = npts as f64 * 0.5;
+    let wid2 = wid * 0.5;
+
+    let xv = Array::range(0.0, npts as f64, 1.0).mapv(|i| (i - npts2) * grid_sz);
+    let mut ap = Array2::ones((npts, npts));
+
+    for mut col in ap.axis_iter_mut(Axis(1)).zip(xv.iter()) {
+        if col.1.abs() <= wid2 {
+            let transmission = t_r.sample(*col.1).unwrap_or(1.0);
+            col.0.fill(transmission);
+        }
+    }
+    (ap, fov, grid_sz)
+}
+
+fn main() {
+    let wid = 46.0;
+    let n_rad = 100;
+    let w_val = Array::linspace(-wid / 2.0, wid / 2.0, n_rad);
+
+    let tau_flat_01 = Array1::from_elem(n_rad, 0.1);
+    let tau_flat_10 = Array1::from_elem(n_rad, 1.0);
+
+    let pb = w_val.mapv(|x: f64| x.powi(2));
+    let pb_max = pb.iter().fold(f64::NEG_INFINITY, |a, &b| a.max(b));
+    let pb_min = pb.iter().fold(f64::INFINITY, |a, &b| a.min(b));
+    
+    let m_cp = (0.0 - 0.1) / (pb_max - pb_min);
+    let b_cp = 0.0 - m_cp * pb_max;
+    let tau_cp = &pb * m_cp + b_cp;
+
+    let m_se = (0.1 - 0.0) / (pb_max - pb_min);
+    let b_se = 0.1 - m_se * pb_max;
+    let tau_se = &pb * m_se + b_se;
+    
+    // Create interpolation splines using the corrected paths
+    let t_f1 = Spline::from_vec(w_val.iter().zip(tau_flat_01.mapv(|t: f64| (-t).exp()).iter()).map(|(&x, &y)| Key::new(x, y, spline::interpolate::Interpolation::Linear)).collect());
+    let t_f2 = Spline::from_vec(w_val.iter().zip(tau_flat_10.mapv(|t: f64| (-t).exp()).iter()).map(|(&x, &y)| Key::new(x, y, spline::interpolate::Interpolation::Linear)).collect());
+    let t_cp = Spline::from_vec(w_val.iter().zip(tau_cp.mapv(|t: f64| (-t).exp()).iter()).map(|(&x, &y)| Key::new(x, y, spline::interpolate::Interpolation::Linear)).collect());
+    let t_se = Spline::from_vec(w_val.iter().zip(tau_se.mapv(|t: f64| (-t).exp()).iter()).map(|(&x, &y)| Key::new(x, y, spline::interpolate::Interpolation::Linear)).collect());
+
+    let lam = 0.5;
+    let d = 43.0 * 150e6;
+    let npts_initial = 4096;
+    
+    let (ap_f1, fov, grid_sz) = ring_seg_ap(lam, d, npts_initial, wid, &t_f1);
+    let (ap_f2, _, _) = ring_seg_ap(lam, d, npts_initial, wid, &t_f2);
+    let (ap_f3, _, _) = ring_seg_ap(lam, d, npts_initial, wid, &t_cp);
+    let (ap_f4, _, _) = ring_seg_ap(lam, d, npts_initial, wid, &t_se);
+
+    let mut op_f1 = occ_lc(&ap_f1.mapv(|v| Complex::new(v, 0.0)));
+    let mut op_f2 = occ_lc(&ap_f2.mapv(|v| Complex::new(v, 0.0)));
+    let mut op_f3 = occ_lc(&ap_f3.mapv(|v| Complex::new(v, 0.0)));
+    let mut op_f4 = occ_lc(&ap_f4.mapv(|v| Complex::new(v, 0.0)));
+    
+    let bg1 = calculate_median(op_f1.slice(s![2048, 0..100]).to_slice().unwrap());
+    let bg2 = calculate_median(op_f2.slice(s![2048, 0..100]).to_slice().unwrap());
+    let bg3 = calculate_median(op_f3.slice(s![2048, 0..100]).to_slice().unwrap());
+    let bg4 = calculate_median(op_f4.slice(s![2048, 0..100]).to_slice().unwrap());
+
+    op_f1.mapv_inplace(|v| v / bg1);
+    op_f2.mapv_inplace(|v| v / bg2);
+    op_f3.mapv_inplace(|v| v / bg3);
+    op_f4.mapv_inplace(|v| v / bg4);
+
+    println!("--- Initial Model (npts=4096) ---");
+    println!("Field of View: {:.2} km, Grid Sample Size: {:.4} km\n", fov, grid_sz);
+
+    println!("--- Starting Performance Benchmarks ---");
+    let wid_w = 100.0;
+    let n_rad_w = 200;
+    let w_val_w = Array::linspace(-wid_w / 2.0, wid_w / 2.0, n_rad_w);
+    let tau_flat_w = Array1::from_elem(n_rad_w, 0.1);
+    let t_f1w = Spline::from_vec(w_val_w.iter().zip(tau_flat_w.mapv(|t: f64| (-t).exp()).iter()).map(|(&x, &y)| Key::new(x, y, spline::interpolate::Interpolation::Linear)).collect());
+
+    for i in 1..=3 {
+        let npts = 4096 * i;
+        println!("\nRunning simulation with npts = {}", npts);
+        
+        let start_time = Instant::now();
+        let (ap, fov, grid_sz) = ring_seg_ap(lam, d, npts, wid_w, &t_f1w);
+        let mut op = occ_lc(&ap.mapv(|v| Complex::new(v, 0.0)));
+        let bg = calculate_median(op.slice(s![npts/2, 0..100]).to_slice().unwrap());
+        op.mapv_inplace(|v| v / bg);
+
+        let elapsed = start_time.elapsed();
+        println!("--- {:.4} seconds ---", elapsed.as_secs_f64());
+        println!("Field of View: {:.2} km, Grid Sample Size: {:.4} km", fov, grid_sz);
+    }
+}

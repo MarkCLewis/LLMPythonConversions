@@ -124,7 +124,7 @@ fn generate_transmission_profile(
         w_val[i] = -wid2 + (i as f64) * (2.0 * wid2) / ((n_rad - 1) as f64);
     }
     
-    (w_val, w_val.clone())
+    (w_val.clone(), w_val.clone())
 }
 
 /// Linear interpolation function
@@ -171,7 +171,7 @@ fn main() {
     let mut tr_flat_01 = vec![0.0; n_rad];
     for i in 0..n_rad {
         tau_flat_01[i] = 0.1;
-        tr_flat_01[i] = (-tau_flat_01[i]).exp();
+        tr_flat_01[i] = ((-tau_flat_01[i]) as f64).exp();
     }
     
     // 2. Flat profile with tau = 1.0
@@ -179,7 +179,7 @@ fn main() {
     let mut tr_flat_10 = vec![0.0; n_rad];
     for i in 0..n_rad {
         tau_flat_10[i] = 1.0;
-        tr_flat_10[i] = (-tau_flat_10[i]).exp();
+        tr_flat_10[i] = ((-tau_flat_10[i]) as f64).exp();
     }
     
     // 3. Centrally peaked profile
@@ -299,7 +299,7 @@ fn main() {
     
     for i in 0..n_rad {
         tau_flat_01_w[i] = 0.1;
-        tr_flat_01_w[i] = (-tau_flat_01_w[i]).exp();
+        tr_flat_01_w[i] = ((-tau_flat_01_w[i]) as f64).exp();
     }
     
     let t_f1_w = |x: f64| -> f64 { interp1d(&w_val_w, &tr_flat_01_w, x) };

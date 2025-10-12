@@ -17,6 +17,8 @@
 #include <float.h>
 #include <time.h>
 
+#define DEMO_MAIN
+
 #ifdef _OPENMP
   #include <omp.h>
 #endif
@@ -344,12 +346,12 @@ static void simple_sim(Particle* bodies, int n, double dt, int steps, int print_
 
 // ===== Demo main =============================================================
 #ifdef DEMO_MAIN
-int main(void){
+int main(int argc, char **argv){
     srand((unsigned)time(NULL));
 
-    int n = 20000;            // adjust as desired
+    int n = atoi(argv[1]);            // adjust as desired
     double dt = 1e-3;
-    int steps = 5;
+    int steps = atoi(argv[2]);
 
     Particle* bodies = (Particle*)malloc(sizeof(Particle)*n);
     // random ring-like cloud

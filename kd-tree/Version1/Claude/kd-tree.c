@@ -517,11 +517,11 @@ void recur_test_tree_struct(int node, KDTree* nodes, Particle* particles, F64x3 
 }
 
 // Example usage
-int main() {
+int main(int argc, char **argv) {
     srand(time(NULL));
     
     // Create some test particles
-    const int NUM_PARTICLES = 1000;
+    const int NUM_PARTICLES = atoi(argv[1]);
     Particle* particles = (Particle*)malloc(sizeof(Particle) * NUM_PARTICLES);
     
     // Initialize particles (random positions)
@@ -537,7 +537,7 @@ int main() {
     
     // Run simulation
     double dt = 0.1;
-    int steps = 100;
+    int steps = atoi(argv[2]);
     clock_t start = clock();
     simple_sim(particles, NUM_PARTICLES, dt, steps, true);
     clock_t end = clock();

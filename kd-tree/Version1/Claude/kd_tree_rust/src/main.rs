@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::Write;
 use std::time::Instant;
 use rand::Rng;
+use std::env;
 
 // Constants
 const MAX_PARTS: usize = 7;
@@ -492,7 +493,8 @@ fn recur_test_tree_struct(
 
 fn main() {
     // Create some test particles
-    let num_particles = 1000;
+	let args: Vec<String> = env::args().collect();
+    let num_particles: usize = args[1].parse().expect("Failed to parse string into a number!");
     let mut particles = Vec::with_capacity(num_particles);
     let mut rng = rand::thread_rng();
 
@@ -515,7 +517,7 @@ fn main() {
 
     // Run simulation
     let dt = 0.1;
-    let steps = 100;
+    let steps: usize = args[2].parse().expect("Failed to parse string into a number!");
     let start = Instant::now();
     simple_sim(&mut particles, dt, steps, true);
     let duration = start.elapsed();

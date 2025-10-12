@@ -74,8 +74,7 @@ void occ_lc(int npts, double *ap, double *out) {
     fftw_free(outfft);
 }
 
-int main() {
-    int npts = 1024;          // Smaller than Python (4096) for testing
+void do_run(int npts) {
     double lam = 0.5;         // microns
     double D = 43 * 150e6;    // km
     double wid = 46;          // km
@@ -102,5 +101,11 @@ int main() {
 
     free(ap);
     free(obs);
-    return 0;
+}
+
+int main() {
+    do_run(4096*1);
+    do_run(4096*2);
+    do_run(4096*3);
+	return 0;
 }

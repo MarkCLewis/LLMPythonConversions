@@ -1,0 +1,250 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <complex.h>
+#include <fftw3.h>
+#include <time.h>
+#include <string.h>
+
+// For sorting, used to calculate the median
+int compare_doubles(const void *a, const void *b) {
+    double da = *(const double *)a;
+    double db = *(const double *)b;
+    return (da > db) - (da < db);
+}
+
+// Calculates the median of a double array
+double median(double *data, int n) {
+    double *sorted_data = (double *)malloc(n * sizeof(double));
+    if (!sorted_data) {
+        perror("Failed to allocate memory for sorting");
+        return 0.0;
+    }
+    memcpy(sorted_data, data, n * sizeof(double));
+    qsort(sorted_data, n, sizeof(double), compare_doubles);
+    
+    double med;
+    if (n % 2 == 0) {
+        med = (sorted_data[n / 2 - 1] + sorted_data[n / 2]) / 2.0;
+    } else {
+        med = sorted_data[n / 2];
+    }
+    free(sorted_data);
+    return med;
+}
+
+
+// A simple linear interpolation function to replace scipy.interp1d
+double linear_interp(double x, const double *x_vals, const double *y_vals, int n) {
+    if (x <= x_vals[0]) return y_vals[0];
+    if (x >= x_vals[n - 1]) return y_vals[n - 1];
+
+    int i = 0;
+    while (x > x_vals[i + 1]) i++;
+
+    double x0 = x_vals[i], y0 = y_vals[i];
+    double x1 = x_vals[i + 1], y1 = y_vals[i + 1];
+
+    return y0 + (y1 - y0) * (x - x0) / (x1 - x0);
+}
+
+
+// Transmission function for a flat ring profile (tau = 0.1)
+// This function encapsulates the data and interpolation logic
+double transmission_flat_wide(double r_km) {
+    const int nRad = 200;
+    const double widW = 100.0;
+    const double wid2 = 0.5 * widW;
+    
+    // Static arrays to avoid re-calculating them on every call
+    static double wVal[nRad];
+    static double trans_vals[nRad];
+    static int initialized = 0;
+
+    if (!initialized) {
+        double tau_flat = 0.1;
+        for (int i = 0; i < nRad; ++i) {
+            wVal[i] = -wid2 + i * (widW / (nRad - 1));
+            trans_vals[i] = exp(-tau_flat);
+        }
+        initialized = 1;
+    }
+    
+    // Since this profile is flat, interpolation is trivial, but we use the
+    // function for consistency and to show how it would work for other profiles.
+    return linear_interp(r_km, wVal, trans_vals, nRad);
+}
+
+
+// Corresponds to Python's RingSeg_ap function
+void RingSeg_ap(double lam, double D, int npts, double wid, 
+                double (*t_r)(double), 
+                double *ap, double *FOV, double *gridSz) {
+    
+    double lam_km = lam * 1e-9; // microns to km
+    *gridSz = sqrt(lam_km * D / npts);
+    *FOV = sqrt(lam_km * D * npts);
+    double wid2 = 0.5 * wid;
+    double npts2 = 0.5 * npts;
+
+    for (int j = 0; j < npts; ++j) {
+        double xv = (j - npts2) * (*gridSz);
+        double transmission = 1.0;
+        if (fabs(xv) <= wid2) {
+            transmission = t_r(xv);
+        }
+        for (int i = 0; i < npts; ++i) {
+            ap[i * npts + j] = transmission;
+        }
+    }
+}
+
+
+// Performs the fftshift (quadrant swap) on the power spectrum
+void fftshift_2d(double *data, int n) {
+    int n2 = n / 2;
+    double *temp = (double *)malloc(n2 * n2 * sizeof(double));
+
+    for (int i = 0; i < n2; i++) {
+        for (int j = 0; j < n2; j++) {
+            // Top-left <-> Bottom-right
+            double tl = data[i * n + j];
+            data[i * n + j] = data[(i + n2) * n + (j + n2)];
+            data[(i + n2) * n + (j + n2)] = tl;
+            
+            // Top-right <-> Bottom-left
+            double tr = data[i * n + (j + n2)];
+            data[i * n + (j + n2)] = data[(i + n2) * n + j];
+            data[(i + n2) * n + j] = tr;
+        }
+    }
+    // This simple swap doesn't work for all cases. A full swap is needed.
+    // A correct implementation:
+    // 1. Swap top-left with bottom-right
+    for (int i = 0; i < n2; i++) {
+        for (int j = 0; j < n2; j++) {
+            temp[i * n2 + j] = data[i * n + j]; // Save top-left
+            data[i * n + j] = data[(i + n2) * n + (j + n2)]; // Move bottom-right to top-left
+            data[(i + n2) * n + (j + n2)] = temp[i * n2 + j]; // Move saved top-left to bottom-right
+        }
+    }
+    // 2. Swap top-right with bottom-left
+    for (int i = 0; i < n2; i++) {
+        for (int j = 0; j < n2; j++) {
+            temp[i * n2 + j] = data[i * n + (j + n2)]; // Save top-right
+            data[i * n + (j + n2)] = data[(i + n2) * n + j]; // Move bottom-left to top-right
+            data[(i + n2) * n + j] = temp[i * n2 + j]; // Move saved top-right to bottom-left
+        }
+    }
+    free(temp);
+}
+
+
+// Corresponds to Python's occ_lc function
+void occ_lc(double *ap, int npts, double *pObs) {
+    fftw_complex *M, *E_obs;
+    fftw_plan plan;
+
+    M = (fftw_complex *)fftw_malloc(sizeof(fftw_complex) * npts * npts);
+    E_obs = (fftw_complex *)fftw_malloc(sizeof(fftw_complex) * npts * npts);
+
+    if (!M || !E_obs) {
+        fprintf(stderr, "Failed to allocate FFTW memory.\n");
+        return;
+    }
+
+    // Create the "Modified Aperture" M
+    double n2 = (double)npts / 2.0;
+    for (int i = 0; i < npts; ++i) {
+        for (int j = 0; j < npts; ++j) {
+            long long index = (long long)i * npts + j;
+            double y = i - n2;
+            double x = j - n2;
+            double complex eTerm = cexp((M_PI * I / npts) * (x * x + y * y));
+            M[index] = ap[index] * eTerm;
+        }
+    }
+
+    // Create and execute the FFT plan
+    plan = fftw_plan_dft_2d(npts, npts, M, E_obs, FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_execute(plan);
+
+    // Calculate observer plane power and perform fftshift
+    for (long long i = 0; i < (long long)npts * npts; ++i) {
+        pObs[i] = creal(E_obs[i] * conj(E_obs[i]));
+    }
+    
+    // The Python code uses np.roll, which is equivalent to fftshift for power spectra
+    fftshift_2d(pObs, npts);
+
+    fftw_destroy_plan(plan);
+    fftw_free(M);
+    fftw_free(E_obs);
+}
+
+
+// Main simulation driver
+void run_simulation(int npts) {
+    printf("Running simulation for npts = %d\n", npts);
+
+    // --- Simulation Parameters ---
+    const double lam = 0.5;      // Wavelength (microns)
+    const double D = 43 * 150e6; // Quaoar at 43 AU (km)
+    const double widW = 100.0;   // Ring width (km)
+    const double v_event = 5.8;  // Event velocity (km/s)
+
+    // --- Memory Allocation ---
+    long long array_size = (long long)npts * npts;
+    double *apF1 = (double *)malloc(sizeof(double) * array_size);
+    double *opF1 = (double *)malloc(sizeof(double) * array_size);
+    if (!apF1 || !opF1) {
+        fprintf(stderr, "Failed to allocate main arrays.\n");
+        return;
+    }
+
+    // --- Run Simulation ---
+    double FOV, gridSz;
+    clock_t start = clock();
+
+    RingSeg_ap(lam, D, npts, widW, transmission_flat_wide, apF1, &FOV, &gridSz);
+    occ_lc(apF1, npts, opF1);
+
+    // --- Normalization ---
+    int mid_row_idx = npts / 2;
+    double bg1 = median(&opF1[(long long)mid_row_idx * npts], 100);
+    
+    // Normalize the entire middle row
+    for(int i = 0; i < npts; ++i) {
+        opF1[(long long)mid_row_idx * npts + i] /= bg1;
+    }
+    
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("--- %f seconds ---\n", time_spent);
+    printf("FOV: %.2f km, Grid Size: %.4f km\n\n", FOV, gridSz);
+    
+    // --- Save Output to File ---
+    FILE *fp = fopen("lightcurve.txt", "w");
+    if (fp == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    fprintf(fp, "# Time (s), Normalized Flux\n");
+    for (int i = 0; i < npts; ++i) {
+        double r_km = gridSz * (i - npts / 2.0);
+        double t_sec = r_km / v_event;
+        fprintf(fp, "%f, %f\n", t_sec, opF1[(long long)mid_row_idx * npts + i]);
+    }
+    fclose(fp);
+    printf("Output saved to lightcurve.txt\n");
+
+    // --- Cleanup ---
+    free(apF1);
+    free(opF1);
+}
+
+int main() {
+    // Replicate the final benchmark from the Python script
+    run_simulation(4096 * 3);
+    return 0;
+}

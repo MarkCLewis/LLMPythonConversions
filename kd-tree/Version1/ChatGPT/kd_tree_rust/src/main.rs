@@ -2,6 +2,7 @@ use rand::prelude::*;
 use rayon::prelude::*;
 use std::cmp::Ordering;
 use std::f64::consts::PI;
+use std::env;
 
 // ===== parameters (match the Python) =========================================
 const MAX_PARTS: usize = 7;   // leaf threshold
@@ -240,17 +241,17 @@ fn step_system(parts: &mut [Particle], dt: f64) {
 
 // ===== Demo main =============================================================
 fn main() {
-    // Small demo; adjust N/steps to taste
-    let n = 20_000usize;
-    let steps = 5usize;
+	let args: Vec<String> = env::args().collect();
+    let n: usize = args[1].parse().expect("Failed to parse string into a number!");
+    let steps: usize = args[2].parse().expect("Failed to parse string into a number!");
     let dt = 1e-3_f64;
 
     let mut rng = StdRng::seed_from_u64(42);
     let mut bodies: Vec<Particle> = (0..n).map(|_| {
         // Put points in a noisy ring for something nontrivial
-        let r = 50.0 + 10.0 * (rng.gen::<f64>() - 0.5);
-        let ang = 2.0 * PI * rng.gen::<f64>();
-        let z = 2.0 * (rng.gen::<f64>() - 0.5);
+        let r = 50.0 + 10.0 * (rng.r#gen::<f64>() - 0.5);
+        let ang = 2.0 * PI * rng.r#gen::<f64>();
+        let z = 2.0 * (rng.r#gen::<f64>() - 0.5);
         Particle {
             p: Vec3::new(r * ang.cos(), r * ang.sin(), z),
             v: Vec3::new(0.0, 0.0, 0.0),

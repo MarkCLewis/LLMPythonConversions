@@ -1,0 +1,14 @@
+[package]
+name = "photometry_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ndarray = "0.15"
+num-complex = "0.4"
+rustfft = "6.1"
+interp1d = "0.2.0"       # Correct library for 1D interpolation
+
+[profile.release]
+codegen-units = 1
+lto = true

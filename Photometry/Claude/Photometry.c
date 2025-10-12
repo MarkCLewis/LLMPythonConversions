@@ -173,14 +173,13 @@ void generate_se_profile(double *wVal, int nRad, double *tau, double *trans) {
     free(pb);
 }
 
-int main() {
+void do_run(int npts) {
     clock_t start_time, end_time;
     double cpu_time_used;
     
     // Parameters
     double lam = 0.5;              // wavelength (microns)
     double D = 43 * 150e6;         // Quaoar at 43 AU (km)
-    int npts = 4096;               // number of points across the array
     double wid = 46;               // Width of the ring (km)
     
     // For wider ring simulation
@@ -269,6 +268,10 @@ int main() {
     fftw_cleanup();
     
     printf("All simulations completed. Results written to files.\n");
-    
-    return 0;
+}
+
+int main() {
+	do_run(4096*1);
+	do_run(4096*2);
+	do_run(4096*3);
 }
