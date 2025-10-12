@@ -9,3 +9,6 @@ run-c:
 
 run-rust:
 	./nbody 50000000
+
+run-python:
+	python3 nbody3.py 50000000
