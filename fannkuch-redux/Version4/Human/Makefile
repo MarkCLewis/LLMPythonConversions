@@ -2,7 +2,7 @@ c:
 	gcc -pipe -Wall -O3 -fomit-frame-pointer -march=native -pthread -std=c11 *.c -pthread
 
 rust:
-	cd *-rust; cargo build --release
+	cd *_rust; cargo build --release
 
 run-c:
 	./a.out 12

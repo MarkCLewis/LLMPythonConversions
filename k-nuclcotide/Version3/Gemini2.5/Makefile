@@ -1,5 +1,5 @@
-c:
-	gcc -O3 *.c -lm
+#c:
+#	gcc -O3 *.c -lm
 
 rust:
 	cd k_nuclcotide3_rust; cargo build --release

@@ -1,0 +1,1276 @@
+k-nuclcotide Version3 ChatGPT c
+
+real	0m1.053s
+user	0m0.973s
+sys	0m0.080s
+
+real	0m1.053s
+user	0m1.016s
+sys	0m0.038s
+
+real	0m1.053s
+user	0m0.989s
+sys	0m0.064s
+
+real	0m1.054s
+user	0m1.005s
+sys	0m0.049s
+
+real	0m1.057s
+user	0m0.970s
+sys	0m0.088s
+
+real	0m1.056s
+user	0m0.979s
+sys	0m0.077s
+
+real	0m1.055s
+user	0m0.996s
+sys	0m0.060s
+k-nuclcotide Version3 Human c
+
+real	0m1.213s
+user	0m7.140s
+sys	0m1.002s
+
+real	0m1.236s
+user	0m7.580s
+sys	0m0.073s
+
+real	0m1.208s
+user	0m7.655s
+sys	0m0.060s
+
+real	0m1.219s
+user	0m7.679s
+sys	0m0.187s
+
+real	0m1.198s
+user	0m7.677s
+sys	0m0.067s
+
+real	0m1.216s
+user	0m7.145s
+sys	0m0.889s
+
+real	0m1.230s
+user	0m7.565s
+sys	0m0.369s
+k-nuclcotide Version8 ChatGPT c
+
+real	0m1.091s
+user	0m1.037s
+sys	0m0.053s
+
+real	0m1.087s
+user	0m1.015s
+sys	0m0.072s
+
+real	0m1.086s
+user	0m1.033s
+sys	0m0.054s
+
+real	0m1.093s
+user	0m1.009s
+sys	0m0.084s
+
+real	0m1.088s
+user	0m1.024s
+sys	0m0.064s
+
+real	0m1.092s
+user	0m1.047s
+sys	0m0.045s
+
+real	0m1.087s
+user	0m1.019s
+sys	0m0.068s
+k-nuclcotide Version8 Gemini2.5 c
+
+real	0m2.150s
+user	0m2.105s
+sys	0m0.045s
+
+real	0m2.139s
+user	0m2.090s
+sys	0m0.048s
+
+real	0m2.149s
+user	0m2.108s
+sys	0m0.040s
+
+real	0m2.142s
+user	0m2.106s
+sys	0m0.036s
+
+real	0m2.141s
+user	0m2.115s
+sys	0m0.026s
+
+real	0m2.157s
+user	0m2.129s
+sys	0m0.028s
+
+real	0m2.139s
+user	0m2.085s
+sys	0m0.054s
+spectral-norm Version4 ChatGPT c
+
+real	0m0.140s
+user	0m38.956s
+sys	0m0.052s
+
+real	0m0.111s
+user	0m31.725s
+sys	0m0.335s
+
+real	0m0.103s
+user	0m25.100s
+sys	0m0.795s
+
+real	0m0.099s
+user	0m24.513s
+sys	0m1.822s
+
+real	0m0.103s
+user	0m25.983s
+sys	0m1.535s
+
+real	0m0.101s
+user	0m24.917s
+sys	0m1.864s
+
+real	0m0.103s
+user	0m25.937s
+sys	0m1.767s
+spectral-norm Version4 Claude c
+
+real	0m0.324s
+user	0m1.258s
+sys	0m0.003s
+
+real	0m0.324s
+user	0m1.256s
+sys	0m0.000s
+
+real	0m0.324s
+user	0m1.257s
+sys	0m0.000s
+
+real	0m0.324s
+user	0m1.255s
+sys	0m0.002s
+
+real	0m0.328s
+user	0m1.272s
+sys	0m0.000s
+
+real	0m0.328s
+user	0m1.270s
+sys	0m0.001s
+
+real	0m0.328s
+user	0m1.272s
+sys	0m0.000s
+spectral-norm Version4 Gemini2.5 c
+
+real	0m0.202s
+user	0m57.745s
+sys	0m1.551s
+
+real	0m0.110s
+user	0m28.592s
+sys	0m1.550s
+
+real	0m0.094s
+user	0m23.540s
+sys	0m0.125s
+
+real	0m0.107s
+user	0m28.444s
+sys	0m0.020s
+
+real	0m0.115s
+user	0m27.758s
+sys	0m1.278s
+
+real	0m0.114s
+user	0m28.770s
+sys	0m1.144s
+
+real	0m0.092s
+user	0m21.802s
+sys	0m1.538s
+spectral-norm Version4 Human c
+
+real	0m0.234s
+user	1m8.118s
+sys	0m1.566s
+
+real	0m0.085s
+user	0m22.229s
+sys	0m0.125s
+
+real	0m0.133s
+user	0m34.004s
+sys	0m1.571s
+
+real	0m0.083s
+user	0m21.444s
+sys	0m0.020s
+
+real	0m0.115s
+user	0m27.138s
+sys	0m1.431s
+
+real	0m0.096s
+user	0m24.186s
+sys	0m0.326s
+
+real	0m0.105s
+user	0m25.769s
+sys	0m0.336s
+spectral-norm Version6 ChatGPT c
+
+real	0m1.071s
+user	0m1.071s
+sys	0m0.000s
+
+real	0m1.070s
+user	0m1.070s
+sys	0m0.000s
+
+real	0m1.069s
+user	0m1.069s
+sys	0m0.000s
+
+real	0m1.070s
+user	0m1.070s
+sys	0m0.000s
+
+real	0m1.070s
+user	0m1.069s
+sys	0m0.000s
+
+real	0m1.072s
+user	0m1.072s
+sys	0m0.000s
+
+real	0m1.070s
+user	0m1.068s
+sys	0m0.002s
+spectral-norm Version6 Claude c
+
+real	0m0.344s
+user	0m1.304s
+sys	0m0.021s
+
+real	0m0.345s
+user	0m1.287s
+sys	0m0.034s
+
+real	0m0.350s
+user	0m1.298s
+sys	0m0.033s
+
+real	0m0.346s
+user	0m1.290s
+sys	0m0.033s
+
+real	0m0.359s
+user	0m1.338s
+sys	0m0.025s
+
+real	0m0.352s
+user	0m1.325s
+sys	0m0.031s
+
+real	0m0.349s
+user	0m1.321s
+sys	0m0.027s
+spectral-norm Version6 Gemini2.5 c
+
+real	0m1.131s
+user	0m1.131s
+sys	0m0.000s
+
+real	0m1.128s
+user	0m1.124s
+sys	0m0.004s
+
+real	0m1.128s
+user	0m1.124s
+sys	0m0.004s
+
+real	0m1.130s
+user	0m1.130s
+sys	0m0.000s
+
+real	0m1.126s
+user	0m1.126s
+sys	0m0.000s
+
+real	0m1.129s
+user	0m1.129s
+sys	0m0.000s
+
+real	0m1.129s
+user	0m1.129s
+sys	0m0.000s
+binary-trees Version2 ChatGPT c
+
+real	0m4.275s
+user	0m4.246s
+sys	0m0.028s
+
+real	0m4.204s
+user	0m4.167s
+sys	0m0.036s
+
+real	0m4.167s
+user	0m4.138s
+sys	0m0.028s
+
+real	0m4.183s
+user	0m4.156s
+sys	0m0.027s
+
+real	0m4.232s
+user	0m4.209s
+sys	0m0.022s
+
+real	0m4.172s
+user	0m4.159s
+sys	0m0.012s
+
+real	0m4.269s
+user	0m4.228s
+sys	0m0.040s
+binary-trees Version2 Claude c
+
+real	0m0.903s
+user	0m4.666s
+sys	0m0.044s
+
+real	0m0.960s
+user	0m4.714s
+sys	0m0.048s
+
+real	0m0.923s
+user	0m4.678s
+sys	0m0.056s
+
+real	0m0.904s
+user	0m4.664s
+sys	0m0.044s
+
+real	0m0.923s
+user	0m4.689s
+sys	0m0.040s
+
+real	0m0.948s
+user	0m4.723s
+sys	0m0.050s
+
+real	0m0.903s
+user	0m4.659s
+sys	0m0.050s
+binary-trees Version2 Gemini2.5 c
+
+real	0m0.582s
+user	0m0.561s
+sys	0m0.021s
+
+real	0m0.570s
+user	0m0.558s
+sys	0m0.012s
+
+real	0m0.574s
+user	0m0.554s
+sys	0m0.020s
+
+real	0m0.580s
+user	0m0.556s
+sys	0m0.024s
+
+real	0m0.577s
+user	0m0.565s
+sys	0m0.012s
+
+real	0m0.575s
+user	0m0.563s
+sys	0m0.012s
+
+real	0m0.582s
+user	0m0.566s
+sys	0m0.016s
+binary-trees Version2 Human c
+
+real	0m1.405s
+user	0m1.352s
+sys	0m0.052s
+
+real	0m1.392s
+user	0m1.331s
+sys	0m0.060s
+
+real	0m1.392s
+user	0m1.319s
+sys	0m0.072s
+
+real	0m1.417s
+user	0m1.355s
+sys	0m0.062s
+
+real	0m1.391s
+user	0m1.323s
+sys	0m0.068s
+
+real	0m1.391s
+user	0m1.317s
+sys	0m0.074s
+
+real	0m1.385s
+user	0m1.321s
+sys	0m0.064s
+binary-trees Version4 ChatGPT c
+
+real	0m3.154s
+user	0m3.138s
+sys	0m0.016s
+
+real	0m3.222s
+user	0m3.201s
+sys	0m0.020s
+
+real	0m3.206s
+user	0m3.177s
+sys	0m0.028s
+
+real	0m3.274s
+user	0m3.253s
+sys	0m0.020s
+
+real	0m3.182s
+user	0m3.169s
+sys	0m0.012s
+
+real	0m3.203s
+user	0m3.169s
+sys	0m0.034s
+
+real	0m3.168s
+user	0m3.160s
+sys	0m0.008s
+binary-trees Version4 Claude c
+
+real	0m7.015s
+user	0m20.768s
+sys	1m11.849s
+
+real	0m6.750s
+user	0m23.007s
+sys	1m6.259s
+
+real	0m6.647s
+user	0m21.422s
+sys	1m7.626s
+
+real	0m6.674s
+user	0m23.019s
+sys	1m4.793s
+
+real	0m6.704s
+user	0m22.554s
+sys	1m5.539s
+
+real	0m7.499s
+user	0m21.719s
+sys	1m23.608s
+
+real	0m7.264s
+user	0m23.693s
+sys	1m22.912s
+binary-trees Version4 Gemini2.5 c
+
+real	0m0.228s
+user	0m1.444s
+sys	0m2.013s
+
+real	0m0.238s
+user	0m1.600s
+sys	0m2.218s
+
+real	0m0.205s
+user	0m1.764s
+sys	0m0.975s
+
+real	0m0.213s
+user	0m1.871s
+sys	0m1.084s
+
+real	0m0.236s
+user	0m1.449s
+sys	0m2.354s
+
+real	0m0.211s
+user	0m1.829s
+sys	0m0.916s
+
+real	0m0.231s
+user	0m1.422s
+sys	0m2.033s
+mandelbrot Version5 ChatGPT c
+
+real	0m0.128s
+user	0m19.889s
+sys	0m0.976s
+
+real	0m0.123s
+user	0m20.098s
+sys	0m0.309s
+
+real	0m0.124s
+user	0m19.491s
+sys	0m0.785s
+
+real	0m0.122s
+user	0m19.703s
+sys	0m0.460s
+
+real	0m0.121s
+user	0m19.798s
+sys	0m0.263s
+
+real	0m0.126s
+user	0m19.196s
+sys	0m1.011s
+
+real	0m0.126s
+user	0m20.168s
+sys	0m0.022s
+mandelbrot Version5 Gemini2.5 c
+
+real	0m0.111s
+user	0m21.519s
+sys	0m1.138s
+
+real	0m0.107s
+user	0m21.009s
+sys	0m0.025s
+
+real	0m0.109s
+user	0m21.130s
+sys	0m0.371s
+
+real	0m0.114s
+user	0m20.517s
+sys	0m1.221s
+
+real	0m0.112s
+user	0m20.932s
+sys	0m0.061s
+
+real	0m0.108s
+user	0m21.318s
+sys	0m0.052s
+
+real	0m0.114s
+user	0m20.438s
+sys	0m0.884s
+mandelbrot Version5 Human c
+
+real	0m0.046s
+user	0m6.482s
+sys	0m0.814s
+
+real	0m0.050s
+user	0m7.076s
+sys	0m1.162s
+
+real	0m0.044s
+user	0m6.951s
+sys	0m0.124s
+
+real	0m0.042s
+user	0m5.836s
+sys	0m0.866s
+
+real	0m0.051s
+user	0m7.412s
+sys	0m0.194s
+
+real	0m0.047s
+user	0m7.163s
+sys	0m0.034s
+
+real	0m0.047s
+user	0m7.159s
+sys	0m1.151s
+mandelbrot Version7 ChatGPT c
+
+real	0m0.098s
+user	0m16.176s
+sys	0m0.042s
+
+real	0m0.097s
+user	0m15.292s
+sys	0m1.131s
+
+real	0m0.098s
+user	0m15.804s
+sys	0m0.025s
+
+real	0m0.101s
+user	0m15.653s
+sys	0m0.396s
+
+real	0m0.098s
+user	0m14.741s
+sys	0m1.341s
+
+real	0m0.102s
+user	0m15.715s
+sys	0m0.233s
+
+real	0m0.098s
+user	0m16.109s
+sys	0m0.052s
+mandelbrot Version7 Gemini2.5 c
+
+real	0m0.112s
+user	0m21.926s
+sys	0m0.427s
+
+real	0m0.116s
+user	0m20.717s
+sys	0m1.623s
+
+real	0m0.110s
+user	0m20.744s
+sys	0m1.367s
+
+real	0m0.115s
+user	0m20.540s
+sys	0m1.357s
+
+real	0m0.117s
+user	0m20.682s
+sys	0m1.319s
+
+real	0m0.117s
+user	0m20.559s
+sys	0m1.359s
+
+real	0m0.113s
+user	0m22.193s
+sys	0m0.031s
+fannkuch-redux Version4 ChatGPT c
+
+real	0m28.249s
+user	0m28.247s
+sys	0m0.000s
+
+real	0m28.336s
+user	0m28.333s
+sys	0m0.000s
+
+real	0m28.587s
+user	0m28.582s
+sys	0m0.002s
+
+real	0m28.323s
+user	0m28.316s
+sys	0m0.004s
+
+real	0m28.565s
+user	0m28.562s
+sys	0m0.001s
+
+real	0m28.551s
+user	0m28.548s
+sys	0m0.000s
+
+real	0m28.561s
+user	0m28.558s
+sys	0m0.001s
+fannkuch-redux Version4 Human c
+
+real	0m2.158s
+user	0m8.524s
+sys	0m0.004s
+
+real	0m2.158s
+user	0m8.531s
+sys	0m0.002s
+
+real	0m2.159s
+user	0m8.533s
+sys	0m0.004s
+
+real	0m2.156s
+user	0m8.531s
+sys	0m0.000s
+
+real	0m2.158s
+user	0m8.533s
+sys	0m0.000s
+
+real	0m2.158s
+user	0m8.533s
+sys	0m0.002s
+
+real	0m2.155s
+user	0m8.537s
+sys	0m0.000s
+nbody Version1 ChatGPT c
+
+real	0m2.498s
+user	0m2.496s
+sys	0m0.002s
+
+real	0m2.498s
+user	0m2.498s
+sys	0m0.000s
+
+real	0m2.498s
+user	0m2.496s
+sys	0m0.002s
+
+real	0m2.499s
+user	0m2.498s
+sys	0m0.001s
+
+real	0m2.497s
+user	0m2.497s
+sys	0m0.000s
+
+real	0m2.500s
+user	0m2.495s
+sys	0m0.004s
+
+real	0m2.496s
+user	0m2.496s
+sys	0m0.000s
+nbody Version1 Claude c
+
+real	0m2.376s
+user	0m2.375s
+sys	0m0.000s
+
+real	0m2.367s
+user	0m2.360s
+sys	0m0.007s
+
+real	0m2.369s
+user	0m2.368s
+sys	0m0.000s
+
+real	0m2.367s
+user	0m2.366s
+sys	0m0.001s
+
+real	0m2.374s
+user	0m2.373s
+sys	0m0.000s
+
+real	0m2.372s
+user	0m2.372s
+sys	0m0.000s
+
+real	0m2.375s
+user	0m2.373s
+sys	0m0.003s
+nbody Version1 Gemini2.5 c
+
+real	0m4.044s
+user	0m4.042s
+sys	0m0.002s
+
+real	0m4.044s
+user	0m4.042s
+sys	0m0.002s
+
+real	0m4.043s
+user	0m4.041s
+sys	0m0.002s
+
+real	0m4.043s
+user	0m4.039s
+sys	0m0.004s
+
+real	0m4.043s
+user	0m4.042s
+sys	0m0.000s
+
+real	0m4.046s
+user	0m4.045s
+sys	0m0.000s
+
+real	0m4.044s
+user	0m4.043s
+sys	0m0.000s
+nbody Version1 Human c
+
+real	0m1.065s
+user	0m1.064s
+sys	0m0.000s
+
+real	0m1.066s
+user	0m1.062s
+sys	0m0.004s
+
+real	0m1.065s
+user	0m1.065s
+sys	0m0.000s
+
+real	0m1.065s
+user	0m1.065s
+sys	0m0.000s
+
+real	0m1.063s
+user	0m1.059s
+sys	0m0.004s
+
+real	0m1.064s
+user	0m1.064s
+sys	0m0.000s
+
+real	0m1.062s
+user	0m1.062s
+sys	0m0.000s
+regex-redux Version1 Claude c
+
+real	0m2.505s
+user	0m8.056s
+sys	0m0.048s
+
+real	0m2.489s
+user	0m8.024s
+sys	0m0.034s
+
+real	0m2.484s
+user	0m8.023s
+sys	0m0.038s
+
+real	0m2.502s
+user	0m8.072s
+sys	0m0.028s
+
+real	0m2.528s
+user	0m8.080s
+sys	0m0.028s
+
+real	0m2.510s
+user	0m8.042s
+sys	0m0.052s
+
+real	0m2.485s
+user	0m8.011s
+sys	0m0.042s
+regex-redux Version1 Human c
+
+real	0m0.472s
+user	0m8.708s
+sys	0m2.001s
+
+real	0m0.472s
+user	0m8.536s
+sys	0m1.978s
+
+real	0m0.465s
+user	0m7.401s
+sys	0m1.433s
+
+real	0m0.483s
+user	0m7.565s
+sys	0m1.497s
+
+real	0m0.482s
+user	0m9.574s
+sys	0m1.072s
+
+real	0m0.463s
+user	0m7.877s
+sys	0m2.372s
+
+real	0m0.471s
+user	0m7.985s
+sys	0m1.726s
+regex-redux Version2 Claude c
+
+real	0m0.594s
+user	0m1.134s
+sys	0m0.053s
+
+real	0m0.581s
+user	0m1.122s
+sys	0m0.055s
+
+real	0m0.582s
+user	0m1.109s
+sys	0m0.052s
+
+real	0m0.588s
+user	0m1.138s
+sys	0m0.048s
+
+real	0m0.584s
+user	0m1.143s
+sys	0m0.045s
+
+real	0m0.580s
+user	0m1.146s
+sys	0m0.041s
+
+real	0m0.589s
+user	0m1.154s
+sys	0m0.049s
+regex-redux Version2 Gemini2.5 c
+
+real	0m0.588s
+user	0m1.133s
+sys	0m0.052s
+
+real	0m0.579s
+user	0m1.081s
+sys	0m0.080s
+
+real	0m0.592s
+user	0m1.169s
+sys	0m0.048s
+
+real	0m0.586s
+user	0m1.111s
+sys	0m0.067s
+
+real	0m0.592s
+user	0m1.136s
+sys	0m0.064s
+
+real	0m0.592s
+user	0m1.121s
+sys	0m0.061s
+
+real	0m0.589s
+user	0m1.147s
+sys	0m0.052s
+fasta Version3 Gemini2.5 c
+
+real	0m8.553s
+user	0m8.552s
+sys	0m0.000s
+
+real	0m8.552s
+user	0m8.535s
+sys	0m0.016s
+
+real	0m8.224s
+user	0m8.220s
+sys	0m0.004s
+
+real	0m8.540s
+user	0m8.537s
+sys	0m0.003s
+
+real	0m8.163s
+user	0m8.151s
+sys	0m0.012s
+
+real	0m8.467s
+user	0m8.466s
+sys	0m0.000s
+
+real	0m8.195s
+user	0m8.186s
+sys	0m0.009s
+fasta Version3 Human c
+
+real	0m0.538s
+user	0m0.530s
+sys	0m0.008s
+
+real	0m0.535s
+user	0m0.523s
+sys	0m0.012s
+
+real	0m0.537s
+user	0m0.533s
+sys	0m0.004s
+
+real	0m0.536s
+user	0m0.528s
+sys	0m0.008s
+
+real	0m0.536s
+user	0m0.532s
+sys	0m0.004s
+
+real	0m0.536s
+user	0m0.536s
+sys	0m0.000s
+
+real	0m0.536s
+user	0m0.531s
+sys	0m0.004s
+pidigits Version3 ChatGPT c
+
+real	0m0.473s
+user	0m0.437s
+sys	0m0.036s
+
+real	0m0.470s
+user	0m0.438s
+sys	0m0.032s
+
+real	0m0.471s
+user	0m0.449s
+sys	0m0.022s
+
+real	0m0.470s
+user	0m0.437s
+sys	0m0.034s
+
+real	0m0.471s
+user	0m0.450s
+sys	0m0.020s
+
+real	0m0.471s
+user	0m0.445s
+sys	0m0.026s
+
+real	0m0.470s
+user	0m0.433s
+sys	0m0.036s
+pidigits Version3 Claude c
+
+real	0m0.441s
+user	0m0.437s
+sys	0m0.004s
+
+real	0m0.441s
+user	0m0.435s
+sys	0m0.006s
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+
+real	0m0.441s
+user	0m0.441s
+sys	0m0.000s
+
+real	0m0.439s
+user	0m0.435s
+sys	0m0.004s
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+pidigits Version3 Gemini2.5 c
+
+real	0m0.443s
+user	0m0.443s
+sys	0m0.000s
+
+real	0m0.440s
+user	0m0.438s
+sys	0m0.002s
+
+real	0m0.443s
+user	0m0.442s
+sys	0m0.000s
+
+real	0m0.444s
+user	0m0.443s
+sys	0m0.000s
+
+real	0m0.442s
+user	0m0.437s
+sys	0m0.004s
+
+real	0m0.442s
+user	0m0.441s
+sys	0m0.001s
+
+real	0m0.442s
+user	0m0.441s
+sys	0m0.000s
+pidigits Version3 Human c
+
+real	0m0.402s
+user	0m0.402s
+sys	0m0.000s
+
+real	0m0.405s
+user	0m0.405s
+sys	0m0.000s
+
+real	0m0.406s
+user	0m0.403s
+sys	0m0.002s
+
+real	0m0.403s
+user	0m0.403s
+sys	0m0.000s
+
+real	0m0.404s
+user	0m0.402s
+sys	0m0.002s
+
+real	0m0.404s
+user	0m0.403s
+sys	0m0.000s
+
+real	0m0.404s
+user	0m0.404s
+sys	0m0.000s
+pidigits Version4 Claude c
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+
+real	0m0.439s
+user	0m0.439s
+sys	0m0.000s
+
+real	0m0.441s
+user	0m0.441s
+sys	0m0.000s
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+
+real	0m0.441s
+user	0m0.441s
+sys	0m0.000s
+
+real	0m0.442s
+user	0m0.442s
+sys	0m0.000s
+
+real	0m0.441s
+user	0m0.441s
+sys	0m0.000s
+pidigits Version4 Gemini2.5 c
+
+real	0m0.441s
+user	0m0.437s
+sys	0m0.004s
+
+real	0m0.439s
+user	0m0.439s
+sys	0m0.000s
+
+real	0m0.442s
+user	0m0.442s
+sys	0m0.000s
+
+real	0m0.441s
+user	0m0.439s
+sys	0m0.002s
+
+real	0m0.441s
+user	0m0.441s
+sys	0m0.000s
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+
+real	0m0.440s
+user	0m0.440s
+sys	0m0.000s
+reverse-complement Version5 Human c
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.004s
+user	0m0.003s
+sys	0m0.001s
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.001s
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.003s
+user	0m0.001s
+sys	0m0.002s
+reverse-complement Version6 ChatGPT c
+
+real	0m0.004s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.003s
+user	0m0.002s
+sys	0m0.002s
+
+real	0m0.003s
+user	0m0.001s
+sys	0m0.002s
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+
+real	0m0.003s
+user	0m0.002s
+sys	0m0.001s
+
+real	0m0.003s
+user	0m0.002s
+sys	0m0.001s
+reverse-complement Version6 Gemini2.5 c
+
+real	0m0.014s
+user	0m0.007s
+sys	0m0.014s
+
+real	0m0.014s
+user	0m0.006s
+sys	0m0.015s
+
+real	0m0.013s
+user	0m0.001s
+sys	0m0.019s
+
+real	0m0.013s
+user	0m0.010s
+sys	0m0.011s
+
+real	0m0.013s
+user	0m0.002s
+sys	0m0.018s
+
+real	0m0.014s
+user	0m0.002s
+sys	0m0.019s
+
+real	0m0.015s
+user	0m0.003s
+sys	0m0.019s

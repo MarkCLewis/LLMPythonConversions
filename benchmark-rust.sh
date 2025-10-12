@@ -7,10 +7,10 @@ authors=('ChatGPT' 'Claude' 'Gemini2.5' 'Human')
 
 VersionPattern="Version*"
 
+rm times-rust.txt
 for bench in "${benchmarks[@]}"
 do
 	cd $bench
-	rm times-rust.txt
 	for version in $VersionPattern
 	do
 		cd $version
@@ -23,7 +23,7 @@ do
 				then
 					if make rust;
 					then
-						echo $bench $version $author $file >> ../../../times-rust.txt
+						echo "$bench $version $author rust" >> ../../../times-rust.txt
 						for cnt in {1..7}
 						do
 							{ time make run-rust > /dev/null ; } 2>> ../../../times-rust.txt

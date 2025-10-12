@@ -3,11 +3,10 @@ benchmarks=('k-nuclcotide'  'spectral-norm'
   'fannkuch-redux'  'nbody'         'regex-redux'
   'fasta'           'pidigits'      'reverse-complement'
 )
-authors=('Human')
+authors=('ChatGPT' 'Claude' 'Gemini2.5' 'Human')
 
 VersionPattern="Version*"
 
-rm times-python.txt
 for bench in "${benchmarks[@]}"
 do
 	cd $bench
@@ -19,13 +18,14 @@ do
 			if [ -d "$author" ] 
 			then
   				cd $author
-				if grep "python:" Makefile | grep -v "#";
-                then
-					echo "$bench $version $author python" >> ../../../times-python.txt
-					for cnt in {1..7}
-					do
-						{ time make run-python > /dev/null ; } 2>> ../../../times-python.txt
-					done
+				echo "$bench $version $author"
+				if grep "c:" Makefile | grep -v "#";
+				then
+					make c
+				fi
+				if grep "rust:" Makefile | grep -v "#";
+				then
+					make rust
 				fi
 				cd ..
 			fi

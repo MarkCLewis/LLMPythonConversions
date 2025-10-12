@@ -1,0 +1,464 @@
+k-nuclcotide Version3 Human python
+
+real	0m1.158s
+user	2m5.365s
+sys	0m24.400s
+
+real	0m1.198s
+user	2m9.365s
+sys	0m25.589s
+
+real	0m1.209s
+user	2m15.833s
+sys	0m26.520s
+
+real	0m1.174s
+user	2m13.575s
+sys	0m24.596s
+
+real	0m1.213s
+user	2m7.131s
+sys	0m23.391s
+
+real	0m1.218s
+user	2m11.216s
+sys	0m25.040s
+
+real	0m1.162s
+user	2m8.867s
+sys	0m25.000s
+k-nuclcotide Version8 Human python
+
+real	1m16.311s
+user	1m16.198s
+sys	0m0.106s
+
+real	1m17.262s
+user	1m17.154s
+sys	0m0.100s
+
+real	1m17.046s
+user	1m16.900s
+sys	0m0.136s
+
+real	1m14.632s
+user	1m14.497s
+sys	0m0.125s
+
+real	1m17.164s
+user	1m17.004s
+sys	0m0.152s
+
+real	1m16.172s
+user	1m16.026s
+sys	0m0.136s
+
+real	1m16.145s
+user	1m15.995s
+sys	0m0.141s
+spectral-norm Version4 Human python
+
+real	0m23.771s
+user	1m34.517s
+sys	0m0.044s
+
+real	0m24.296s
+user	1m35.526s
+sys	0m0.040s
+
+real	0m23.754s
+user	1m34.477s
+sys	0m0.099s
+
+real	0m23.993s
+user	1m34.461s
+sys	0m0.090s
+
+real	0m24.520s
+user	1m35.118s
+sys	0m0.066s
+
+real	0m23.859s
+user	1m33.673s
+sys	0m0.055s
+
+real	0m24.048s
+user	1m33.981s
+sys	0m0.058s
+spectral-norm Version6 Human python
+
+real	1m41.578s
+user	1m41.566s
+sys	0m0.004s
+
+real	1m41.772s
+user	1m41.760s
+sys	0m0.004s
+
+real	1m41.448s
+user	1m41.431s
+sys	0m0.008s
+
+real	1m41.661s
+user	1m41.643s
+sys	0m0.008s
+
+real	1m42.646s
+user	1m42.632s
+sys	0m0.006s
+
+real	1m43.289s
+user	1m43.276s
+sys	0m0.004s
+
+real	1m42.685s
+user	1m42.672s
+sys	0m0.004s
+binary-trees Version2 Human python
+
+real	0m37.625s
+user	0m37.112s
+sys	0m0.508s
+
+real	0m37.885s
+user	0m37.292s
+sys	0m0.588s
+
+real	0m37.353s
+user	0m36.770s
+sys	0m0.580s
+
+real	0m37.563s
+user	0m36.919s
+sys	0m0.640s
+
+real	0m37.616s
+user	0m36.987s
+sys	0m0.624s
+
+real	0m37.551s
+user	0m36.962s
+sys	0m0.584s
+
+real	0m37.457s
+user	0m36.892s
+sys	0m0.560s
+binary-trees Version4 Human python
+
+real	0m2.545s
+user	1m36.637s
+sys	0m27.967s
+
+real	0m2.619s
+user	1m35.760s
+sys	0m26.170s
+
+real	0m2.585s
+user	1m33.759s
+sys	0m31.290s
+
+real	0m2.541s
+user	1m36.704s
+sys	0m28.930s
+
+real	0m2.621s
+user	1m35.939s
+sys	0m26.445s
+
+real	0m2.617s
+user	1m39.621s
+sys	0m27.070s
+
+real	0m2.553s
+user	1m36.072s
+sys	0m26.415s
+mandelbrot Version5 Human python
+
+real	0m2.777s
+user	15m28.730s
+sys	0m16.884s
+
+real	0m2.799s
+user	15m27.811s
+sys	0m17.677s
+
+real	0m2.796s
+user	15m7.929s
+sys	0m15.541s
+
+real	0m2.793s
+user	15m21.740s
+sys	0m16.126s
+
+real	0m2.804s
+user	15m36.018s
+sys	0m17.050s
+
+real	0m2.800s
+user	15m33.025s
+sys	0m17.610s
+
+real	0m2.804s
+user	15m33.669s
+sys	0m18.272s
+mandelbrot Version7 Human python
+
+real	0m2.104s
+user	9m48.238s
+sys	0m18.325s
+
+real	0m2.050s
+user	9m45.078s
+sys	0m19.651s
+
+real	0m2.135s
+user	9m25.461s
+sys	0m18.630s
+
+real	0m2.036s
+user	10m1.735s
+sys	0m18.327s
+
+real	0m2.050s
+user	9m51.310s
+sys	0m19.671s
+
+real	0m2.041s
+user	9m49.019s
+sys	0m18.025s
+
+real	0m2.013s
+user	9m54.877s
+sys	0m18.801s
+fannkuch-redux Version4 Human python
+
+real	0m3.542s
+user	13m35.971s
+sys	0m2.176s
+
+real	0m3.503s
+user	13m45.608s
+sys	0m2.403s
+
+real	0m3.572s
+user	13m41.298s
+sys	0m2.286s
+
+real	0m3.513s
+user	14m0.259s
+sys	0m2.511s
+
+real	0m3.448s
+user	13m44.202s
+sys	0m2.649s
+
+real	0m3.546s
+user	13m51.636s
+sys	0m1.535s
+
+real	0m3.439s
+user	13m57.545s
+sys	0m2.007s
+fannkuch-redux Version6 Human python
+
+real	5m6.215s
+user	5m6.187s
+sys	0m0.000s
+
+real	5m14.120s
+user	5m14.097s
+sys	0m0.000s
+
+real	5m15.576s
+user	5m15.546s
+sys	0m0.004s
+
+real	5m7.935s
+user	5m7.908s
+sys	0m0.000s
+
+real	5m28.208s
+user	5m28.169s
+sys	0m0.012s
+
+real	5m6.369s
+user	5m6.336s
+sys	0m0.004s
+
+real	5m7.731s
+user	5m7.699s
+sys	0m0.007s
+regex-redux Version1 Human python
+
+real	0m2.546s
+user	0m6.553s
+sys	0m0.457s
+
+real	0m2.549s
+user	0m6.481s
+sys	0m0.458s
+
+real	0m2.647s
+user	0m6.633s
+sys	0m0.503s
+
+real	0m2.554s
+user	0m6.487s
+sys	0m0.462s
+
+real	0m2.579s
+user	0m6.290s
+sys	0m4.195s
+
+real	0m2.569s
+user	0m6.448s
+sys	0m0.560s
+
+real	0m2.553s
+user	0m6.368s
+sys	0m0.717s
+fasta Version3 Human python
+
+real	0m18.995s
+user	0m18.984s
+sys	0m0.008s
+
+real	0m19.411s
+user	0m19.397s
+sys	0m0.012s
+
+real	0m19.221s
+user	0m19.212s
+sys	0m0.008s
+
+real	0m19.229s
+user	0m19.227s
+sys	0m0.000s
+
+real	0m18.910s
+user	0m18.901s
+sys	0m0.007s
+
+real	0m19.141s
+user	0m19.135s
+sys	0m0.004s
+
+real	0m19.038s
+user	0m19.024s
+sys	0m0.012s
+pidigits Version3 Human python
+
+real	0m0.551s
+user	0m0.551s
+sys	0m0.000s
+
+real	0m0.552s
+user	0m0.547s
+sys	0m0.006s
+
+real	0m0.551s
+user	0m0.548s
+sys	0m0.003s
+
+real	0m0.549s
+user	0m0.544s
+sys	0m0.006s
+
+real	0m0.549s
+user	0m0.543s
+sys	0m0.006s
+
+real	0m0.553s
+user	0m0.549s
+sys	0m0.004s
+
+real	0m0.549s
+user	0m0.541s
+sys	0m0.008s
+pidigits Version4 Human python
+
+real	0m1.975s
+user	0m1.960s
+sys	0m0.015s
+
+real	0m1.979s
+user	0m1.967s
+sys	0m0.012s
+
+real	0m1.973s
+user	0m1.934s
+sys	0m0.038s
+
+real	0m1.979s
+user	0m1.946s
+sys	0m0.032s
+
+real	0m1.978s
+user	0m1.953s
+sys	0m0.024s
+
+real	0m1.972s
+user	0m1.955s
+sys	0m0.016s
+
+real	0m1.977s
+user	0m1.957s
+sys	0m0.020s
+reverse-complement Version5 Human python
+
+real	0m0.034s
+user	0m0.030s
+sys	0m0.008s
+
+real	0m0.032s
+user	0m0.030s
+sys	0m0.006s
+
+real	0m0.032s
+user	0m0.017s
+sys	0m0.018s
+
+real	0m0.031s
+user	0m0.024s
+sys	0m0.009s
+
+real	0m0.030s
+user	0m0.020s
+sys	0m0.013s
+
+real	0m0.030s
+user	0m0.026s
+sys	0m0.008s
+
+real	0m0.033s
+user	0m0.023s
+sys	0m0.013s
+reverse-complement Version6 Human python
+
+real	0m0.010s
+user	0m0.007s
+sys	0m0.004s
+
+real	0m0.011s
+user	0m0.011s
+sys	0m0.000s
+
+real	0m0.009s
+user	0m0.006s
+sys	0m0.003s
+
+real	0m0.011s
+user	0m0.010s
+sys	0m0.000s
+
+real	0m0.009s
+user	0m0.006s
+sys	0m0.003s
+
+real	0m0.011s
+user	0m0.010s
+sys	0m0.001s
+
+real	0m0.009s
+user	0m0.009s
+sys	0m0.000s

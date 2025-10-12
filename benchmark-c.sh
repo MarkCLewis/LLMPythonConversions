@@ -7,10 +7,10 @@ authors=('ChatGPT' 'Claude' 'Gemini2.5' 'Human')
 
 VersionPattern="Version*"
 
+rm times-c.txt
 for bench in "${benchmarks[@]}"
 do
 	cd $bench
-	rm times-c.txt
 	for version in $VersionPattern
 	do
 		cd $version
@@ -23,7 +23,7 @@ do
 				then
 					if make c;
 					then
-						echo $bench $version $author $file >> ../../../times-c.txt
+						echo "$bench $version $author c" >> ../../../times-c.txt
 						for cnt in {1..7}
 						do
 							{ time make run-c > /dev/null ; } 2>> ../../../times-c.txt

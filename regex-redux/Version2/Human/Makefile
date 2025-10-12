@@ -10,5 +10,5 @@
 #run-rust:
 #	./*_rust/target/release/*_rust 0 < ../../regexredux-input5000000.txt
 
-run-python:
-	python3 regex-redux2.py 0 < ../../regexredux-input5000000.txt
+#run-python:
+#	python3 regex-redux2.py 0 < ../../regexredux-input5000000.txt
