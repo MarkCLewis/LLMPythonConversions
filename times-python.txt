@@ -404,61 +404,90 @@ sys	0m0.016s
 real	0m1.977s
 user	0m1.957s
 sys	0m0.020s
-reverse-complement Version5 Human python
+nbody Version1 Human python
 
-real	0m0.034s
-user	0m0.030s
-sys	0m0.008s
+real	1m53.569s
+user	1m53.563s
+sys	0m0.000s
 
-real	0m0.032s
-user	0m0.030s
+real	1m55.247s
+user	1m55.233s
 sys	0m0.006s
 
-real	0m0.032s
-user	0m0.017s
-sys	0m0.018s
-
-real	0m0.031s
-user	0m0.024s
-sys	0m0.009s
-
-real	0m0.030s
-user	0m0.020s
-sys	0m0.013s
-
-real	0m0.030s
-user	0m0.026s
+real	1m54.615s
+user	1m54.600s
 sys	0m0.008s
 
-real	0m0.033s
-user	0m0.023s
-sys	0m0.013s
-reverse-complement Version6 Human python
+real	1m54.259s
+user	1m54.243s
+sys	0m0.008s
 
-real	0m0.010s
-user	0m0.007s
+real	1m55.028s
+user	1m55.009s
+sys	0m0.010s
+
+real	2m5.086s
+user	2m5.074s
 sys	0m0.004s
 
-real	0m0.011s
-user	0m0.011s
+real	1m56.802s
+user	1m56.796s
 sys	0m0.000s
+reverse-complement Version5 Human python
 
-real	0m0.009s
-user	0m0.006s
-sys	0m0.003s
+real	0m0.642s
+user	0m0.530s
+sys	0m0.112s
 
-real	0m0.011s
-user	0m0.010s
-sys	0m0.000s
+real	0m0.646s
+user	0m0.502s
+sys	0m0.145s
 
-real	0m0.009s
-user	0m0.006s
-sys	0m0.003s
+real	0m0.635s
+user	0m0.526s
+sys	0m0.110s
 
-real	0m0.011s
-user	0m0.010s
-sys	0m0.001s
+real	0m0.631s
+user	0m0.503s
+sys	0m0.128s
 
-real	0m0.009s
-user	0m0.009s
-sys	0m0.000s
+real	0m0.632s
+user	0m0.509s
+sys	0m0.124s
+
+real	0m0.639s
+user	0m0.534s
+sys	0m0.105s
+
+real	0m0.632s
+user	0m0.505s
+sys	0m0.128s
+reverse-complement Version6 Human python
+
+real	0m0.959s
+user	0m0.838s
+sys	0m0.122s
+
+real	0m0.959s
+user	0m0.796s
+sys	0m0.165s
+
+real	0m0.955s
+user	0m0.781s
+sys	0m0.176s
+
+real	0m0.961s
+user	0m0.838s
+sys	0m0.124s
+
+real	0m0.984s
+user	0m0.858s
+sys	0m0.127s
+
+real	0m0.958s
+user	0m0.831s
+sys	0m0.128s
+
+real	0m0.957s
+user	0m0.836s
+sys	0m0.122s

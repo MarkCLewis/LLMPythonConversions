@@ -1189,88 +1189,88 @@ user	0m0.440s
 sys	0m0.000s
 reverse-complement Version5 Human c
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.150s
+user	0m0.092s
+sys	0m0.058s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.162s
+user	0m0.097s
+sys	0m0.065s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.152s
+user	0m0.089s
+sys	0m0.064s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.152s
+user	0m0.088s
+sys	0m0.064s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.152s
+user	0m0.085s
+sys	0m0.067s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.152s
+user	0m0.088s
+sys	0m0.065s
 
-real	0m0.003s
-user	0m0.001s
-sys	0m0.002s
+real	0m0.151s
+user	0m0.089s
+sys	0m0.062s
 reverse-complement Version6 ChatGPT c
 
-real	0m0.004s
-user	0m0.002s
-sys	0m0.002s
+real	0m0.447s
+user	0m0.347s
+sys	0m0.100s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.446s
+user	0m0.344s
+sys	0m0.102s
 
-real	0m0.003s
-user	0m0.002s
-sys	0m0.002s
+real	0m0.447s
+user	0m0.359s
+sys	0m0.088s
 
-real	0m0.003s
-user	0m0.001s
-sys	0m0.002s
+real	0m0.438s
+user	0m0.354s
+sys	0m0.084s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.447s
+user	0m0.359s
+sys	0m0.088s
 
-real	0m0.003s
-user	0m0.002s
-sys	0m0.001s
+real	0m0.443s
+user	0m0.355s
+sys	0m0.088s
 
-real	0m0.003s
-user	0m0.002s
-sys	0m0.001s
+real	0m0.444s
+user	0m0.356s
+sys	0m0.089s
 reverse-complement Version6 Gemini2.5 c
 
-real	0m0.014s
-user	0m0.007s
-sys	0m0.014s
+real	0m0.445s
+user	0m0.369s
+sys	0m0.092s
 
-real	0m0.014s
-user	0m0.006s
-sys	0m0.015s
+real	0m0.447s
+user	0m0.367s
+sys	0m0.095s
 
-real	0m0.013s
-user	0m0.001s
-sys	0m0.019s
+real	0m0.447s
+user	0m0.347s
+sys	0m0.114s
 
-real	0m0.013s
-user	0m0.010s
-sys	0m0.011s
+real	0m0.454s
+user	0m0.359s
+sys	0m0.110s
 
-real	0m0.013s
-user	0m0.002s
-sys	0m0.018s
+real	0m0.450s
+user	0m0.363s
+sys	0m0.102s
 
-real	0m0.014s
-user	0m0.002s
-sys	0m0.019s
+real	0m0.450s
+user	0m0.341s
+sys	0m0.125s
 
-real	0m0.015s
-user	0m0.003s
-sys	0m0.019s
+real	0m0.449s
+user	0m0.360s
+sys	0m0.104s

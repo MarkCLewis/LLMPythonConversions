@@ -1,1218 +1,1218 @@
 k-nuclcotide Version3 ChatGPT rust
 
-real	0m1.500s
-user	0m1.428s
-sys	0m0.072s
+real	0m1.482s
+user	0m1.425s
+sys	0m0.056s
 
-real	0m1.485s
+real	0m1.486s
 user	0m1.421s
 sys	0m0.064s
 
-real	0m1.482s
-user	0m1.430s
-sys	0m0.052s
-
-real	0m1.482s
-user	0m1.430s
-sys	0m0.052s
-
 real	0m1.479s
-user	0m1.423s
+user	0m1.434s
+sys	0m0.045s
+
+real	0m1.490s
+user	0m1.430s
+sys	0m0.060s
+
+real	0m1.478s
+user	0m1.422s
 sys	0m0.056s
 
-real	0m1.487s
-user	0m1.425s
-sys	0m0.062s
+real	0m1.491s
+user	0m1.447s
+sys	0m0.044s
 
-real	0m1.482s
-user	0m1.430s
-sys	0m0.052s
+real	0m1.477s
+user	0m1.428s
+sys	0m0.049s
 k-nuclcotide Version3 Gemini2.5 rust
 
-real	0m0.354s
-user	0m37.793s
-sys	0m0.809s
+real	0m0.365s
+user	0m41.911s
+sys	0m1.517s
 
-real	0m0.344s
-user	0m34.899s
-sys	0m1.519s
+real	0m0.419s
+user	1m1.370s
+sys	0m1.202s
+
+real	0m0.370s
+user	0m43.402s
+sys	0m1.649s
 
 real	0m0.360s
-user	0m40.256s
-sys	0m0.973s
+user	0m40.194s
+sys	0m2.023s
 
-real	0m0.330s
-user	0m32.711s
-sys	0m1.896s
+real	0m0.442s
+user	0m57.500s
+sys	0m1.148s
 
-real	0m0.291s
-user	0m21.107s
-sys	0m1.464s
+real	0m0.319s
+user	0m28.337s
+sys	0m1.309s
 
-real	0m0.289s
-user	0m20.817s
-sys	0m1.322s
-
-real	0m0.280s
-user	0m18.535s
-sys	0m0.877s
+real	0m0.464s
+user	1m8.011s
+sys	0m1.679s
 k-nuclcotide Version3 Human rust
 
-real	0m1.682s
-user	0m13.010s
-sys	1m47.502s
+real	0m1.693s
+user	0m12.398s
+sys	1m39.451s
 
-real	0m1.617s
-user	0m12.268s
-sys	1m36.077s
+real	0m1.661s
+user	0m11.156s
+sys	1m41.937s
 
-real	0m1.666s
-user	0m12.411s
-sys	1m52.212s
+real	0m1.649s
+user	0m12.426s
+sys	1m49.506s
 
-real	0m1.621s
-user	0m11.739s
-sys	1m48.435s
+real	0m1.679s
+user	0m12.153s
+sys	1m42.735s
 
-real	0m1.494s
-user	0m12.598s
-sys	1m37.845s
+real	0m1.662s
+user	0m11.851s
+sys	1m40.515s
 
-real	0m1.698s
-user	0m11.737s
-sys	1m50.425s
+real	0m1.657s
+user	0m11.395s
+sys	1m34.589s
 
-real	0m1.637s
-user	0m11.843s
-sys	1m49.302s
+real	0m1.704s
+user	0m11.930s
+sys	1m47.620s
 k-nuclcotide Version8 ChatGPT rust
 
-real	0m1.588s
-user	0m1.525s
-sys	0m0.062s
-
-real	0m1.577s
-user	0m1.519s
-sys	0m0.058s
-
-real	0m1.571s
-user	0m1.514s
-sys	0m0.056s
-
-real	0m1.581s
-user	0m1.525s
-sys	0m0.056s
-
-real	0m1.576s
-user	0m1.514s
-sys	0m0.062s
-
-real	0m1.579s
-user	0m1.517s
+real	0m1.574s
+user	0m1.513s
 sys	0m0.062s
 
 real	0m1.575s
-user	0m1.507s
-sys	0m0.068s
-k-nuclcotide Version8 Claude rust
-
-real	0m21.987s
-user	0m21.887s
-sys	0m0.099s
-
-real	0m22.024s
-user	0m21.961s
-sys	0m0.060s
-
-real	0m22.057s
-user	0m21.976s
-sys	0m0.079s
-
-real	0m22.169s
-user	0m22.089s
-sys	0m0.079s
-
-real	0m21.962s
-user	0m21.884s
-sys	0m0.076s
-
-real	0m22.171s
-user	0m22.101s
-sys	0m0.068s
-
-real	0m22.275s
-user	0m22.199s
-sys	0m0.074s
-k-nuclcotide Version8 Gemini2.5 rust
-
-real	0m0.556s
-user	1m10.593s
-sys	0m1.006s
-
-real	0m0.582s
-user	1m1.072s
-sys	0m0.834s
-
-real	0m0.604s
-user	1m20.822s
-sys	0m3.075s
-
-real	0m0.650s
-user	1m28.131s
-sys	0m1.295s
-
-real	0m0.652s
-user	1m30.209s
-sys	0m3.998s
-
-real	0m0.597s
-user	1m8.894s
-sys	0m1.670s
-
-real	0m0.611s
-user	1m17.185s
-sys	0m2.706s
-spectral-norm Version4 ChatGPT rust
-
-real	0m0.168s
-user	0m37.035s
-sys	0m2.538s
-
-real	0m0.139s
-user	0m29.249s
-sys	0m0.601s
-
-real	0m0.134s
-user	0m29.158s
-sys	0m1.955s
-
-real	0m0.182s
-user	0m42.633s
-sys	0m1.144s
-
-real	0m0.141s
-user	0m30.951s
-sys	0m1.872s
-
-real	0m0.154s
-user	0m32.996s
-sys	0m2.297s
-
-real	0m0.155s
-user	0m33.044s
-sys	0m2.251s
-spectral-norm Version4 Claude rust
-
-real	0m0.372s
-user	0m1.332s
-sys	0m0.065s
-
-real	0m0.368s
-user	0m1.339s
-sys	0m0.051s
-
-real	0m0.363s
-user	0m1.322s
-sys	0m0.049s
-
-real	0m0.364s
-user	0m1.361s
-sys	0m0.039s
-
-real	0m0.360s
-user	0m1.326s
-sys	0m0.056s
-
-real	0m0.361s
-user	0m1.328s
-sys	0m0.047s
-
-real	0m0.364s
-user	0m1.321s
-sys	0m0.072s
-spectral-norm Version4 Gemini2.5 rust
-
-real	0m0.206s
-user	0m46.318s
-sys	0m1.607s
-
-real	0m0.157s
-user	0m33.475s
-sys	0m2.277s
-
-real	0m0.163s
-user	0m36.702s
-sys	0m1.024s
-
-real	0m0.148s
-user	0m33.997s
-sys	0m0.965s
-
-real	0m0.153s
-user	0m33.568s
-sys	0m2.196s
-
-real	0m0.153s
-user	0m34.043s
-sys	0m2.253s
-
-real	0m0.140s
-user	0m29.426s
-sys	0m1.806s
-spectral-norm Version4 Human rust
-
-real	0m0.175s
-user	0m35.891s
-sys	0m2.079s
-
-real	0m0.126s
-user	0m28.047s
-sys	0m0.445s
-
-real	0m0.133s
-user	0m26.607s
-sys	0m2.164s
-
-real	0m0.169s
-user	0m36.648s
-sys	0m2.139s
-
-real	0m0.145s
-user	0m32.751s
-sys	0m0.993s
-
-real	0m0.129s
-user	0m26.154s
-sys	0m2.289s
-
-real	0m0.132s
-user	0m26.513s
-sys	0m1.619s
-spectral-norm Version6 ChatGPT rust
-
-real	0m0.214s
-user	0m47.239s
-sys	0m1.656s
-
-real	0m0.127s
-user	0m27.264s
-sys	0m0.611s
-
-real	0m0.144s
-user	0m31.366s
-sys	0m1.478s
-
-real	0m0.136s
-user	0m29.380s
-sys	0m0.580s
-
-real	0m0.151s
-user	0m32.850s
-sys	0m1.427s
-
-real	0m0.137s
-user	0m29.945s
-sys	0m1.277s
-
-real	0m0.145s
-user	0m32.112s
-sys	0m0.829s
-spectral-norm Version6 Gemini2.5 rust
-
-real	0m0.134s
-user	0m30.882s
-sys	0m1.791s
-
-real	0m0.155s
-user	0m35.585s
-sys	0m0.941s
-
-real	0m0.157s
-user	0m35.370s
-sys	0m1.074s
-
-real	0m0.160s
-user	0m35.468s
-sys	0m1.460s
-
-real	0m0.149s
-user	0m32.756s
-sys	0m1.744s
-
-real	0m0.162s
-user	0m37.917s
-sys	0m0.862s
-
-real	0m0.145s
-user	0m32.928s
-sys	0m2.001s
-binary-trees Version2 ChatGPT rust
-
-real	0m4.185s
-user	0m4.116s
-sys	0m0.068s
-
-real	0m4.149s
-user	0m4.087s
-sys	0m0.062s
-
-real	0m4.190s
-user	0m4.117s
-sys	0m0.072s
-
-real	0m4.138s
-user	0m4.099s
-sys	0m0.039s
-
-real	0m4.152s
-user	0m4.126s
-sys	0m0.025s
-
-real	0m4.103s
-user	0m4.058s
-sys	0m0.044s
-
-real	0m4.156s
-user	0m4.118s
-sys	0m0.038s
-binary-trees Version2 Gemini2.5 rust
-
-real	0m8.970s
-user	1m17.115s
-sys	1m12.023s
-
-real	0m9.076s
-user	1m25.103s
-sys	1m10.855s
-
-real	0m9.274s
-user	1m9.210s
-sys	1m17.957s
-
-real	0m9.110s
-user	1m19.326s
-sys	1m13.079s
-
-real	0m9.367s
-user	1m11.634s
-sys	1m14.288s
-
-real	0m9.183s
-user	1m13.593s
-sys	1m12.315s
-
-real	0m9.164s
-user	0m59.851s
-sys	1m16.133s
-binary-trees Version2 Human rust
-
-real	0m0.503s
-user	0m5.270s
-sys	0m29.598s
-
-real	0m0.505s
-user	0m5.790s
-sys	0m26.026s
-
-real	0m0.574s
-user	0m5.787s
-sys	0m34.792s
-
-real	0m0.551s
-user	0m5.737s
-sys	0m36.128s
-
-real	0m0.539s
-user	0m5.857s
-sys	0m31.528s
-
-real	0m0.544s
-user	0m5.076s
-sys	0m34.197s
-
-real	0m0.569s
-user	0m4.805s
-sys	0m33.009s
-binary-trees Version4 ChatGPT rust
-
-real	0m9.337s
-user	1m0.676s
-sys	1m18.141s
-
-real	0m8.997s
-user	1m10.608s
-sys	1m13.392s
-
-real	0m9.041s
-user	1m8.472s
-sys	1m13.014s
-
-real	0m9.062s
-user	1m17.485s
-sys	1m9.061s
-
-real	0m9.086s
-user	1m10.748s
-sys	1m10.212s
-
-real	0m9.097s
-user	1m14.278s
-sys	1m11.019s
-
-real	0m9.142s
-user	1m11.466s
-sys	1m14.931s
-binary-trees Version4 Gemini2.5 rust
-
-real	0m9.106s
-user	1m12.838s
-sys	1m13.466s
-
-real	0m9.151s
-user	1m15.766s
-sys	1m11.162s
-
-real	0m8.819s
-user	1m9.269s
-sys	1m7.794s
-
-real	0m8.841s
-user	1m18.921s
-sys	1m4.547s
-
-real	0m9.275s
-user	1m16.350s
-sys	1m16.393s
-
-real	0m8.854s
-user	1m16.703s
-sys	1m8.985s
-
-real	0m9.077s
-user	1m4.830s
-sys	1m12.319s
-mandelbrot Version5 ChatGPT rust
-
-real	0m0.125s
-user	0m19.827s
-sys	0m0.656s
-
-real	0m0.117s
-user	0m19.619s
-sys	0m1.635s
-
-real	0m0.121s
-user	0m21.619s
-sys	0m0.269s
-
-real	0m0.110s
-user	0m19.804s
-sys	0m1.560s
-
-real	0m0.121s
-user	0m20.328s
-sys	0m1.897s
-
-real	0m0.116s
-user	0m19.355s
-sys	0m1.680s
-
-real	0m0.123s
-user	0m19.395s
-sys	0m1.640s
-mandelbrot Version5 Gemini2.5 rust
-
-real	0m0.138s
-user	0m20.994s
-sys	0m1.257s
-
-real	0m0.122s
-user	0m20.208s
-sys	0m1.677s
-
-real	0m0.123s
-user	0m24.250s
-sys	0m0.117s
-
-real	0m0.126s
-user	0m23.750s
-sys	0m1.578s
-
-real	0m0.131s
-user	0m22.644s
-sys	0m2.215s
-
-real	0m0.126s
-user	0m22.129s
-sys	0m1.530s
-
-real	0m0.123s
-user	0m21.482s
-sys	0m2.022s
-mandelbrot Version5 Human rust
-
-real	0m0.079s
-user	0m8.967s
-sys	0m1.786s
-
-real	0m0.077s
-user	0m9.670s
-sys	0m0.760s
-
-real	0m0.075s
-user	0m9.168s
-sys	0m0.968s
-
-real	0m0.069s
-user	0m8.632s
-sys	0m0.606s
-
-real	0m0.075s
-user	0m9.649s
-sys	0m0.590s
-
-real	0m0.074s
-user	0m9.108s
-sys	0m1.524s
-
-real	0m0.088s
-user	0m13.427s
-sys	0m0.543s
-mandelbrot Version7 ChatGPT rust
-
-real	0m0.119s
-user	0m19.063s
-sys	0m0.694s
-
-real	0m0.116s
-user	0m17.657s
-sys	0m1.161s
-
-real	0m0.110s
-user	0m18.199s
-sys	0m0.639s
-
-real	0m0.106s
-user	0m16.810s
-sys	0m1.575s
-
-real	0m0.106s
-user	0m17.480s
-sys	0m1.863s
-
-real	0m0.102s
-user	0m19.487s
-sys	0m1.600s
-
-real	0m0.110s
-user	0m19.048s
-sys	0m1.030s
-mandelbrot Version7 Gemini2.5 rust
-
-real	0m1.601s
-user	0m45.072s
-sys	0m11.729s
-
-real	0m1.564s
-user	0m46.396s
-sys	0m10.364s
-
-real	0m1.580s
-user	0m42.566s
-sys	0m10.116s
-
-real	0m1.588s
-user	0m43.507s
-sys	0m11.347s
-
-real	0m1.553s
-user	0m42.037s
-sys	0m9.009s
-
-real	0m1.625s
-user	0m48.446s
-sys	0m8.554s
-
-real	0m1.528s
-user	0m40.194s
-sys	0m11.021s
-fannkuch-redux Version4 Human rust
-
-real	0m0.506s
-user	0m42.375s
-sys	0m0.454s
-
-real	0m0.520s
-user	0m42.266s
-sys	0m0.710s
-
-real	0m0.520s
-user	0m41.764s
-sys	0m0.817s
-
-real	0m0.519s
-user	0m42.307s
-sys	0m0.462s
-
-real	0m0.461s
-user	0m42.415s
-sys	0m0.325s
-
-real	0m0.506s
-user	0m42.525s
+user	0m1.520s
+sys	0m0.054s
+
+real	0m1.566s
+user	0m1.514s
 sys	0m0.052s
 
-real	0m0.502s
-user	0m42.459s
-sys	0m0.315s
-nbody Version1 ChatGPT rust
+real	0m1.571s
+user	0m1.509s
+sys	0m0.062s
 
-real	0m1.601s
-user	0m1.598s
+real	0m1.573s
+user	0m1.521s
+sys	0m0.052s
+
+real	0m1.570s
+user	0m1.504s
+sys	0m0.066s
+
+real	0m1.576s
+user	0m1.504s
+sys	0m0.072s
+k-nuclcotide Version8 Claude rust
+
+real	0m21.923s
+user	0m21.857s
+sys	0m0.064s
+
+real	0m22.228s
+user	0m22.130s
+sys	0m0.096s
+
+real	0m22.129s
+user	0m22.048s
+sys	0m0.080s
+
+real	0m21.998s
+user	0m21.923s
+sys	0m0.074s
+
+real	0m22.037s
+user	0m21.951s
+sys	0m0.084s
+
+real	0m21.995s
+user	0m21.921s
+sys	0m0.072s
+
+real	0m22.047s
+user	0m21.977s
+sys	0m0.068s
+k-nuclcotide Version8 Gemini2.5 rust
+
+real	0m0.641s
+user	1m21.147s
+sys	0m2.804s
+
+real	0m0.660s
+user	1m46.908s
+sys	0m3.046s
+
+real	0m0.627s
+user	1m13.784s
+sys	0m1.460s
+
+real	0m0.690s
+user	1m36.251s
+sys	0m3.615s
+
+real	0m0.611s
+user	1m7.064s
+sys	0m1.691s
+
+real	0m0.665s
+user	1m15.634s
+sys	0m1.908s
+
+real	0m0.658s
+user	1m7.769s
+sys	0m1.538s
+spectral-norm Version4 ChatGPT rust
+
+real	0m0.257s
+user	0m55.258s
+sys	0m2.169s
+
+real	0m0.164s
+user	0m35.861s
+sys	0m0.898s
+
+real	0m0.142s
+user	0m32.338s
+sys	0m0.770s
+
+real	0m0.174s
+user	0m37.928s
+sys	0m2.447s
+
+real	0m0.157s
+user	0m32.849s
+sys	0m1.747s
+
+real	0m0.173s
+user	0m37.548s
+sys	0m1.157s
+
+real	0m0.134s
+user	0m28.810s
+sys	0m2.004s
+spectral-norm Version4 Claude rust
+
+real	0m0.341s
+user	0m1.276s
+sys	0m0.025s
+
+real	0m0.327s
+user	0m1.266s
+sys	0m0.000s
+
+real	0m0.328s
+user	0m1.264s
 sys	0m0.002s
 
-real	0m1.597s
-user	0m1.593s
+real	0m0.332s
+user	0m1.282s
+sys	0m0.001s
+
+real	0m0.361s
+user	0m1.323s
+sys	0m0.018s
+
+real	0m0.359s
+user	0m1.335s
 sys	0m0.004s
+
+real	0m0.376s
+user	0m1.370s
+sys	0m0.002s
+spectral-norm Version4 Gemini2.5 rust
+
+real	0m0.274s
+user	0m58.485s
+sys	0m2.589s
+
+real	0m0.171s
+user	0m35.352s
+sys	0m1.461s
+
+real	0m0.155s
+user	0m33.026s
+sys	0m0.970s
+
+real	0m0.129s
+user	0m28.325s
+sys	0m2.131s
+
+real	0m0.167s
+user	0m35.946s
+sys	0m2.493s
+
+real	0m0.163s
+user	0m37.070s
+sys	0m0.598s
+
+real	0m0.210s
+user	0m49.633s
+sys	0m2.048s
+spectral-norm Version4 Human rust
+
+real	0m0.209s
+user	0m43.129s
+sys	0m2.211s
+
+real	0m0.157s
+user	0m32.153s
+sys	0m2.009s
+
+real	0m0.131s
+user	0m29.047s
+sys	0m0.604s
+
+real	0m0.162s
+user	0m34.544s
+sys	0m2.201s
+
+real	0m0.146s
+user	0m31.098s
+sys	0m1.945s
+
+real	0m0.137s
+user	0m28.295s
+sys	0m2.006s
+
+real	0m0.172s
+user	0m35.779s
+sys	0m2.242s
+spectral-norm Version6 ChatGPT rust
+
+real	0m0.212s
+user	0m47.083s
+sys	0m0.856s
+
+real	0m0.166s
+user	0m37.895s
+sys	0m0.713s
+
+real	0m0.174s
+user	0m40.623s
+sys	0m1.152s
+
+real	0m0.138s
+user	0m32.055s
+sys	0m1.150s
+
+real	0m0.148s
+user	0m32.486s
+sys	0m1.419s
+
+real	0m0.153s
+user	0m33.329s
+sys	0m1.511s
+
+real	0m0.141s
+user	0m30.939s
+sys	0m1.077s
+spectral-norm Version6 Gemini2.5 rust
+
+real	0m0.224s
+user	0m51.531s
+sys	0m1.513s
+
+real	0m0.171s
+user	0m39.530s
+sys	0m0.953s
+
+real	0m0.151s
+user	0m34.462s
+sys	0m1.023s
+
+real	0m0.149s
+user	0m34.079s
+sys	0m0.935s
+
+real	0m0.147s
+user	0m33.250s
+sys	0m0.694s
+
+real	0m0.128s
+user	0m29.636s
+sys	0m0.235s
+
+real	0m0.148s
+user	0m33.878s
+sys	0m0.552s
+binary-trees Version2 ChatGPT rust
+
+real	0m4.139s
+user	0m4.087s
+sys	0m0.052s
+
+real	0m4.195s
+user	0m4.138s
+sys	0m0.056s
+
+real	0m4.146s
+user	0m4.085s
+sys	0m0.060s
+
+real	0m4.106s
+user	0m4.071s
+sys	0m0.034s
+
+real	0m4.115s
+user	0m4.050s
+sys	0m0.065s
+
+real	0m4.174s
+user	0m4.138s
+sys	0m0.036s
+
+real	0m4.217s
+user	0m4.164s
+sys	0m0.052s
+binary-trees Version2 Gemini2.5 rust
+
+real	0m9.276s
+user	1m7.122s
+sys	1m14.720s
+
+real	0m8.883s
+user	1m6.449s
+sys	1m11.212s
+
+real	0m8.968s
+user	1m24.082s
+sys	1m9.805s
+
+real	0m9.118s
+user	1m14.123s
+sys	1m5.108s
+
+real	0m9.236s
+user	1m19.601s
+sys	1m13.701s
+
+real	0m9.029s
+user	1m13.796s
+sys	1m11.695s
+
+real	0m8.979s
+user	1m15.715s
+sys	1m11.686s
+binary-trees Version2 Human rust
+
+real	0m0.505s
+user	0m4.226s
+sys	0m24.263s
+
+real	0m0.440s
+user	0m3.636s
+sys	0m18.191s
+
+real	0m0.515s
+user	0m4.821s
+sys	0m25.995s
+
+real	0m0.515s
+user	0m5.395s
+sys	0m24.444s
+
+real	0m0.485s
+user	0m4.439s
+sys	0m21.432s
+
+real	0m0.490s
+user	0m5.793s
+sys	0m24.227s
+
+real	0m0.538s
+user	0m5.160s
+sys	0m30.831s
+binary-trees Version4 ChatGPT rust
+
+real	0m9.427s
+user	1m12.910s
+sys	1m12.331s
+
+real	0m9.372s
+user	1m2.013s
+sys	1m13.934s
+
+real	0m9.169s
+user	1m10.097s
+sys	1m9.329s
+
+real	0m9.071s
+user	1m14.254s
+sys	1m11.116s
+
+real	0m9.012s
+user	1m4.544s
+sys	1m16.308s
+
+real	0m9.145s
+user	1m14.115s
+sys	1m13.933s
+
+real	0m9.284s
+user	1m18.966s
+sys	1m14.087s
+binary-trees Version4 Gemini2.5 rust
+
+real	0m8.952s
+user	1m20.676s
+sys	1m9.361s
+
+real	0m9.038s
+user	1m7.954s
+sys	1m14.522s
+
+real	0m9.167s
+user	1m19.166s
+sys	1m12.564s
+
+real	0m9.104s
+user	1m17.052s
+sys	1m12.644s
+
+real	0m8.828s
+user	1m7.025s
+sys	1m10.732s
+
+real	0m9.137s
+user	1m16.404s
+sys	1m7.621s
+
+real	0m9.278s
+user	1m5.592s
+sys	1m16.382s
+mandelbrot Version5 ChatGPT rust
+
+real	0m0.144s
+user	0m21.004s
+sys	0m0.648s
+
+real	0m0.136s
+user	0m20.892s
+sys	0m1.149s
+
+real	0m0.124s
+user	0m20.005s
+sys	0m0.591s
+
+real	0m0.125s
+user	0m20.730s
+sys	0m1.803s
+
+real	0m0.115s
+user	0m20.016s
+sys	0m1.614s
+
+real	0m0.115s
+user	0m21.461s
+sys	0m0.673s
+
+real	0m0.106s
+user	0m20.745s
+sys	0m1.555s
+mandelbrot Version5 Gemini2.5 rust
+
+real	0m0.153s
+user	0m21.966s
+sys	0m1.613s
+
+real	0m0.137s
+user	0m21.951s
+sys	0m0.564s
+
+real	0m0.128s
+user	0m21.699s
+sys	0m0.356s
+
+real	0m0.125s
+user	0m21.202s
+sys	0m1.907s
+
+real	0m0.125s
+user	0m23.574s
+sys	0m0.305s
+
+real	0m0.130s
+user	0m22.171s
+sys	0m2.153s
+
+real	0m0.116s
+user	0m24.790s
+sys	0m0.710s
+mandelbrot Version5 Human rust
+
+real	0m0.086s
+user	0m12.525s
+sys	0m1.571s
+
+real	0m0.072s
+user	0m8.968s
+sys	0m1.252s
+
+real	0m0.072s
+user	0m9.105s
+sys	0m0.540s
+
+real	0m0.075s
+user	0m10.725s
+sys	0m0.495s
+
+real	0m0.075s
+user	0m10.624s
+sys	0m0.231s
+
+real	0m0.070s
+user	0m8.437s
+sys	0m1.454s
+
+real	0m0.074s
+user	0m9.832s
+sys	0m0.540s
+mandelbrot Version7 ChatGPT rust
+
+real	0m0.120s
+user	0m19.209s
+sys	0m0.217s
+
+real	0m0.108s
+user	0m16.961s
+sys	0m0.756s
+
+real	0m0.110s
+user	0m18.076s
+sys	0m0.745s
+
+real	0m0.105s
+user	0m17.135s
+sys	0m1.493s
+
+real	0m0.108s
+user	0m19.004s
+sys	0m0.254s
+
+real	0m0.109s
+user	0m19.061s
+sys	0m0.280s
+
+real	0m0.103s
+user	0m16.994s
+sys	0m1.828s
+mandelbrot Version7 Gemini2.5 rust
+
+real	0m1.525s
+user	0m48.061s
+sys	0m9.723s
+
+real	0m1.539s
+user	0m40.814s
+sys	0m11.366s
+
+real	0m1.571s
+user	0m44.208s
+sys	0m10.586s
+
+real	0m1.561s
+user	0m48.732s
+sys	0m9.516s
+
+real	0m1.594s
+user	0m44.240s
+sys	0m10.887s
+
+real	0m1.589s
+user	0m45.291s
+sys	0m11.491s
+
+real	0m1.592s
+user	0m42.645s
+sys	0m13.814s
+fannkuch-redux Version4 Human rust
+
+real	0m0.519s
+user	0m41.857s
+sys	0m0.834s
+
+real	0m0.518s
+user	0m41.651s
+sys	0m0.850s
+
+real	0m0.518s
+user	0m41.689s
+sys	0m0.835s
+
+real	0m0.504s
+user	0m42.140s
+sys	0m0.557s
+
+real	0m0.523s
+user	0m42.792s
+sys	0m0.157s
+
+real	0m0.520s
+user	0m42.517s
+sys	0m0.233s
+
+real	0m0.516s
+user	0m42.504s
+sys	0m0.218s
+nbody Version1 ChatGPT rust
+
+real	0m1.599s
+user	0m1.599s
+sys	0m0.000s
+
+real	0m1.597s
+user	0m1.596s
+sys	0m0.000s
+
+real	0m1.601s
+user	0m1.599s
+sys	0m0.001s
+
+real	0m1.604s
+user	0m1.601s
+sys	0m0.003s
+
+real	0m1.600s
+user	0m1.598s
+sys	0m0.002s
 
 real	0m1.600s
 user	0m1.600s
 sys	0m0.000s
 
 real	0m1.598s
-user	0m1.597s
-sys	0m0.001s
-
-real	0m1.598s
-user	0m1.598s
-sys	0m0.000s
-
-real	0m1.601s
-user	0m1.601s
-sys	0m0.000s
-
-real	0m1.599s
-user	0m1.597s
+user	0m1.596s
 sys	0m0.002s
 nbody Version1 Claude rust
 
-real	0m2.192s
-user	0m2.191s
-sys	0m0.000s
-
-real	0m2.190s
-user	0m2.186s
-sys	0m0.004s
-
-real	0m2.191s
-user	0m2.189s
-sys	0m0.002s
-
-real	0m2.191s
-user	0m2.190s
-sys	0m0.001s
-
-real	0m2.190s
-user	0m2.189s
-sys	0m0.000s
-
 real	0m2.163s
-user	0m2.163s
-sys	0m0.000s
-
-real	0m2.190s
-user	0m2.190s
-sys	0m0.000s
-nbody Version1 Gemini2.5 rust
-
-real	0m2.083s
-user	0m2.082s
-sys	0m0.000s
-
-real	0m2.083s
-user	0m2.081s
-sys	0m0.002s
-
-real	0m2.084s
-user	0m2.083s
-sys	0m0.000s
-
-real	0m2.084s
-user	0m2.083s
-sys	0m0.001s
-
-real	0m2.084s
-user	0m2.083s
-sys	0m0.001s
-
-real	0m2.085s
-user	0m2.081s
-sys	0m0.004s
-
-real	0m2.084s
-user	0m2.082s
-sys	0m0.002s
-nbody Version1 Human rust
-
-real	0m1.102s
-user	0m1.099s
+user	0m2.159s
 sys	0m0.003s
 
-real	0m1.095s
-user	0m1.092s
-sys	0m0.002s
-
-real	0m1.093s
-user	0m1.089s
-sys	0m0.004s
-
-real	0m1.095s
-user	0m1.095s
+real	0m2.167s
+user	0m2.167s
 sys	0m0.000s
 
-real	0m1.094s
-user	0m1.089s
-sys	0m0.006s
+real	0m2.203s
+user	0m2.200s
+sys	0m0.002s
+
+real	0m2.201s
+user	0m2.199s
+sys	0m0.002s
+
+real	0m2.196s
+user	0m2.195s
+sys	0m0.000s
+
+real	0m2.204s
+user	0m2.203s
+sys	0m0.000s
+
+real	0m2.211s
+user	0m2.209s
+sys	0m0.003s
+nbody Version1 Gemini2.5 rust
+
+real	0m2.087s
+user	0m2.085s
+sys	0m0.001s
+
+real	0m2.088s
+user	0m2.086s
+sys	0m0.002s
+
+real	0m2.091s
+user	0m2.091s
+sys	0m0.000s
+
+real	0m2.085s
+user	0m2.085s
+sys	0m0.000s
+
+real	0m2.085s
+user	0m2.085s
+sys	0m0.000s
+
+real	0m2.088s
+user	0m2.087s
+sys	0m0.001s
+
+real	0m2.088s
+user	0m2.087s
+sys	0m0.001s
+nbody Version1 Human rust
+
+real	0m1.098s
+user	0m1.098s
+sys	0m0.000s
+
+real	0m1.097s
+user	0m1.095s
+sys	0m0.002s
+
+real	0m1.099s
+user	0m1.098s
+sys	0m0.000s
+
+real	0m1.097s
+user	0m1.095s
+sys	0m0.002s
+
+real	0m1.096s
+user	0m1.096s
+sys	0m0.000s
 
 real	0m1.094s
 user	0m1.094s
 sys	0m0.000s
 
-real	0m1.094s
-user	0m1.090s
-sys	0m0.004s
+real	0m1.305s
+user	0m1.299s
+sys	0m0.006s
 regex-redux Version1 ChatGPT rust
 
-real	0m0.623s
-user	0m1.040s
-sys	0m0.139s
+real	0m2.975s
+user	0m3.020s
+sys	0m0.695s
 
-real	0m0.617s
-user	0m1.026s
-sys	0m0.116s
+real	0m2.981s
+user	0m3.151s
+sys	0m0.653s
 
-real	0m0.630s
-user	0m0.558s
-sys	0m0.616s
+real	0m2.936s
+user	0m2.747s
+sys	0m0.880s
 
-real	0m0.619s
-user	0m0.578s
-sys	0m0.593s
+real	0m2.958s
+user	0m3.282s
+sys	0m0.425s
 
-real	0m0.625s
-user	0m0.960s
-sys	0m0.216s
+real	0m2.942s
+user	0m2.897s
+sys	0m0.847s
 
-real	0m0.630s
-user	0m1.082s
-sys	0m0.088s
+real	0m2.962s
+user	0m3.402s
+sys	0m0.244s
 
-real	0m0.620s
-user	0m0.763s
-sys	0m0.398s
+real	0m2.949s
+user	0m3.328s
+sys	0m0.288s
 regex-redux Version1 Claude rust
 
-real	0m0.619s
-user	0m0.724s
-sys	0m0.428s
+real	0m2.917s
+user	0m3.050s
+sys	0m0.550s
 
-real	0m0.617s
-user	0m0.518s
-sys	0m0.596s
+real	0m2.966s
+user	0m3.360s
+sys	0m0.248s
 
-real	0m0.614s
-user	0m0.508s
-sys	0m0.612s
+real	0m2.973s
+user	0m3.368s
+sys	0m0.273s
 
-real	0m0.618s
-user	0m0.739s
-sys	0m0.405s
+real	0m2.961s
+user	0m2.798s
+sys	0m0.902s
 
-real	0m0.627s
-user	0m0.641s
-sys	0m0.496s
+real	0m2.946s
+user	0m3.045s
+sys	0m0.658s
 
-real	0m0.624s
-user	0m0.514s
-sys	0m0.598s
+real	0m2.974s
+user	0m3.081s
+sys	0m0.639s
 
-real	0m0.620s
-user	0m0.853s
-sys	0m0.389s
+real	0m2.988s
+user	0m3.134s
+sys	0m0.498s
 regex-redux Version1 Gemini2.5 rust
 
-real	0m0.617s
-user	0m0.817s
-sys	0m0.349s
+real	0m2.920s
+user	0m2.717s
+sys	0m0.890s
 
-real	0m0.619s
-user	0m0.676s
-sys	0m0.483s
+real	0m2.949s
+user	0m2.900s
+sys	0m0.968s
 
-real	0m0.626s
-user	0m0.804s
-sys	0m0.406s
+real	0m2.907s
+user	0m2.917s
+sys	0m0.665s
 
-real	0m0.616s
-user	0m0.583s
-sys	0m0.581s
-
-real	0m0.633s
-user	0m0.805s
-sys	0m0.478s
-
-real	0m0.625s
-user	0m0.934s
-sys	0m0.231s
-
-real	0m0.623s
-user	0m0.732s
-sys	0m0.530s
-regex-redux Version1 Human rust
-
-real	0m0.551s
-user	0m1.041s
-sys	0m0.094s
-
-real	0m0.557s
-user	0m0.744s
-sys	0m0.440s
-
-real	0m0.554s
-user	0m0.576s
-sys	0m0.539s
-
-real	0m0.558s
-user	0m0.556s
+real	0m2.900s
+user	0m3.112s
 sys	0m0.559s
 
-real	0m0.561s
-user	0m0.746s
-sys	0m0.479s
+real	0m2.881s
+user	0m3.287s
+sys	0m0.283s
 
-real	0m0.584s
-user	0m0.638s
-sys	0m0.528s
+real	0m2.954s
+user	0m3.147s
+sys	0m0.609s
 
-real	0m0.554s
-user	0m0.999s
-sys	0m0.103s
+real	0m2.918s
+user	0m3.071s
+sys	0m0.678s
+regex-redux Version1 Human rust
+
+real	0m2.628s
+user	0m3.035s
+sys	0m0.328s
+
+real	0m2.637s
+user	0m2.714s
+sys	0m0.778s
+
+real	0m2.633s
+user	0m3.034s
+sys	0m0.326s
+
+real	0m2.633s
+user	0m2.905s
+sys	0m0.498s
+
+real	0m2.642s
+user	0m2.721s
+sys	0m0.767s
+
+real	0m2.629s
+user	0m3.223s
+sys	0m0.128s
+
+real	0m2.639s
+user	0m2.596s
+sys	0m0.756s
 fasta Version3 ChatGPT rust
 
-real	0m9.647s
-user	0m9.378s
-sys	0m0.268s
+real	0m9.968s
+user	0m9.675s
+sys	0m0.292s
 
-real	0m9.973s
-user	0m9.736s
-sys	0m0.236s
+real	0m9.679s
+user	0m9.394s
+sys	0m0.284s
 
-real	0m9.947s
-user	0m9.670s
-sys	0m0.277s
+real	0m9.649s
+user	0m9.368s
+sys	0m0.280s
 
-real	0m9.934s
-user	0m9.602s
-sys	0m0.332s
+real	0m9.618s
+user	0m9.333s
+sys	0m0.284s
 
-real	0m9.954s
-user	0m9.659s
-sys	0m0.294s
+real	0m9.661s
+user	0m9.389s
+sys	0m0.272s
 
-real	0m9.997s
-user	0m9.620s
-sys	0m0.376s
+real	0m9.642s
+user	0m9.330s
+sys	0m0.312s
 
-real	0m10.016s
-user	0m9.656s
-sys	0m0.360s
+real	0m9.677s
+user	0m9.362s
+sys	0m0.314s
 fasta Version3 Claude rust
 
-real	0m9.132s
-user	0m9.129s
-sys	0m0.003s
-
-real	0m9.415s
-user	0m9.412s
-sys	0m0.003s
-
-real	0m9.423s
-user	0m9.414s
-sys	0m0.008s
-
-real	0m9.129s
-user	0m9.128s
+real	0m9.416s
+user	0m9.415s
 sys	0m0.000s
 
-real	0m9.414s
-user	0m9.413s
-sys	0m0.001s
+real	0m9.224s
+user	0m9.223s
+sys	0m0.000s
 
-real	0m9.348s
-user	0m9.343s
+real	0m9.131s
+user	0m9.127s
 sys	0m0.004s
 
-real	0m9.406s
-user	0m9.406s
+real	0m9.099s
+user	0m9.094s
+sys	0m0.004s
+
+real	0m9.438s
+user	0m9.435s
+sys	0m0.002s
+
+real	0m9.433s
+user	0m9.430s
+sys	0m0.003s
+
+real	0m9.160s
+user	0m9.159s
 sys	0m0.000s
 fasta Version3 Gemini2.5 rust
 
 real	0m9.058s
-user	0m9.053s
-sys	0m0.004s
-
-real	0m9.286s
-user	0m9.277s
+user	0m9.050s
 sys	0m0.008s
 
-real	0m9.280s
-user	0m9.273s
-sys	0m0.006s
-
-real	0m9.048s
-user	0m9.038s
-sys	0m0.010s
-
-real	0m9.276s
-user	0m9.269s
-sys	0m0.006s
-
-real	0m9.060s
-user	0m9.051s
+real	0m9.063s
+user	0m9.055s
 sys	0m0.008s
 
-real	0m9.041s
-user	0m9.041s
-sys	0m0.000s
-fasta Version3 Human rust
-
-real	0m0.665s
-user	0m1.317s
-sys	0m0.006s
-
-real	0m1.421s
-user	0m2.832s
-sys	0m0.004s
-
-real	0m0.664s
-user	0m1.314s
+real	0m9.057s
+user	0m9.049s
 sys	0m0.008s
 
-real	0m0.952s
-user	0m1.888s
+real	0m9.251s
+user	0m9.242s
+sys	0m0.008s
+
+real	0m9.078s
+user	0m9.065s
 sys	0m0.012s
 
-real	0m0.695s
-user	0m1.380s
+real	0m9.046s
+user	0m9.046s
+sys	0m0.000s
+
+real	0m9.056s
+user	0m9.044s
+sys	0m0.011s
+fasta Version3 Human rust
+
+real	0m0.668s
+user	0m1.330s
+sys	0m0.000s
+
+real	0m0.661s
+user	0m1.304s
+sys	0m0.014s
+
+real	0m1.009s
+user	0m2.009s
 sys	0m0.004s
+
+real	0m0.859s
+user	0m1.706s
+sys	0m0.006s
+
+real	0m3.769s
+user	0m7.521s
+sys	0m0.012s
+
+real	0m1.246s
+user	0m2.475s
+sys	0m0.012s
 
 real	0m0.662s
-user	0m1.308s
-sys	0m0.010s
-
-real	0m0.761s
-user	0m1.514s
-sys	0m0.004s
+user	0m1.317s
+sys	0m0.002s
 fasta Version5 Gemini2.5 rust
 
-real	0m8.620s
-user	0m8.812s
-sys	0m0.132s
+real	0m8.771s
+user	0m8.997s
+sys	0m0.096s
 
-real	0m8.820s
+real	0m8.638s
+user	0m8.802s
+sys	0m0.157s
+
+real	0m8.813s
+user	0m8.984s
+sys	0m0.150s
+
+real	0m8.355s
+user	0m8.534s
+sys	0m0.144s
+
+real	0m8.815s
+user	0m9.001s
+sys	0m0.138s
+
+real	0m8.506s
+user	0m8.677s
+sys	0m0.149s
+
+real	0m8.800s
 user	0m9.008s
-sys	0m0.132s
-
-real	0m8.808s
-user	0m9.000s
-sys	0m0.130s
-
-real	0m8.803s
-user	0m8.996s
-sys	0m0.130s
-
-real	0m8.631s
-user	0m8.848s
-sys	0m0.104s
-
-real	0m8.794s
-user	0m8.963s
-sys	0m0.152s
-
-real	0m8.820s
-user	0m8.993s
-sys	0m0.147s
+sys	0m0.112s
 pidigits Version3 Gemini2.5 rust
 
 real	0m0.465s
-user	0m0.461s
+user	0m0.460s
 sys	0m0.004s
 
-real	0m0.467s
-user	0m0.465s
+real	0m0.468s
+user	0m0.466s
 sys	0m0.002s
 
-real	0m0.466s
-user	0m0.462s
-sys	0m0.004s
+real	0m0.469s
+user	0m0.468s
+sys	0m0.001s
 
-real	0m0.466s
-user	0m0.465s
+real	0m0.467s
+user	0m0.467s
 sys	0m0.000s
 
 real	0m0.465s
-user	0m0.465s
-sys	0m0.000s
-
-real	0m0.470s
-user	0m0.469s
-sys	0m0.001s
+user	0m0.457s
+sys	0m0.008s
 
 real	0m0.467s
-user	0m0.463s
-sys	0m0.004s
+user	0m0.467s
+sys	0m0.000s
+
+real	0m0.467s
+user	0m0.466s
+sys	0m0.001s
 pidigits Version3 Human rust
 
 real	0m0.414s
-user	0m0.413s
-sys	0m0.000s
+user	0m0.412s
+sys	0m0.002s
 
 real	0m0.414s
+user	0m0.414s
+sys	0m0.000s
+
+real	0m0.413s
 user	0m0.413s
-sys	0m0.001s
+sys	0m0.000s
 
 real	0m0.412s
-user	0m0.411s
-sys	0m0.002s
-
-real	0m0.415s
-user	0m0.414s
-sys	0m0.000s
-
-real	0m0.414s
 user	0m0.408s
-sys	0m0.006s
+sys	0m0.004s
 
-real	0m0.414s
-user	0m0.414s
+real	0m0.411s
+user	0m0.411s
 sys	0m0.000s
 
 real	0m0.414s
-user	0m0.410s
-sys	0m0.004s
+user	0m0.413s
+sys	0m0.000s
+
+real	0m0.413s
+user	0m0.413s
+sys	0m0.001s
 pidigits Version4 Gemini2.5 rust
 
-real	0m0.898s
-user	0m0.822s
-sys	0m0.076s
-
 real	0m0.899s
-user	0m0.842s
+user	0m0.866s
+sys	0m0.032s
+
+real	0m0.900s
+user	0m0.856s
+sys	0m0.044s
+
+real	0m0.900s
+user	0m0.843s
 sys	0m0.056s
 
-real	0m0.902s
-user	0m0.807s
-sys	0m0.094s
-
-real	0m0.897s
-user	0m0.825s
-sys	0m0.072s
-
-real	0m0.900s
-user	0m0.823s
-sys	0m0.076s
+real	0m0.901s
+user	0m0.852s
+sys	0m0.048s
 
 real	0m0.899s
-user	0m0.816s
-sys	0m0.082s
+user	0m0.862s
+sys	0m0.036s
 
-real	0m0.900s
-user	0m0.823s
-sys	0m0.076s
+real	0m0.902s
+user	0m0.821s
+sys	0m0.080s
+
+real	0m0.901s
+user	0m0.831s
+sys	0m0.069s
 reverse-complement Version5 ChatGPT rust
 
-real	0m0.004s
-user	0m0.002s
-sys	0m0.002s
+real	0m0.618s
+user	0m0.537s
+sys	0m0.080s
 
-real	0m0.003s
-user	0m0.002s
-sys	0m0.001s
+real	0m0.616s
+user	0m0.536s
+sys	0m0.080s
 
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
+real	0m0.618s
+user	0m0.530s
+sys	0m0.088s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.618s
+user	0m0.528s
+sys	0m0.090s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.615s
+user	0m0.527s
+sys	0m0.088s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.614s
+user	0m0.534s
+sys	0m0.080s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.618s
+user	0m0.532s
+sys	0m0.086s
 reverse-complement Version5 Human rust
 
-real	0m0.025s
-user	0m0.171s
-sys	0m0.312s
+real	0m0.126s
+user	0m6.037s
+sys	0m0.557s
 
-real	0m0.024s
-user	0m0.107s
-sys	0m0.328s
+real	0m0.126s
+user	0m3.805s
+sys	0m0.877s
 
-real	0m0.024s
-user	0m0.397s
-sys	0m0.062s
+real	0m0.131s
+user	0m4.827s
+sys	0m0.964s
 
-real	0m0.026s
-user	0m0.347s
-sys	0m0.107s
+real	0m0.123s
+user	0m3.267s
+sys	0m0.734s
 
-real	0m0.025s
-user	0m0.210s
-sys	0m0.269s
+real	0m0.143s
+user	0m7.449s
+sys	0m0.575s
 
-real	0m0.025s
-user	0m0.093s
-sys	0m0.379s
+real	0m0.138s
+user	0m6.519s
+sys	0m0.785s
 
-real	0m0.025s
-user	0m0.348s
-sys	0m0.085s
+real	0m0.139s
+user	0m5.791s
+sys	0m1.090s
 reverse-complement Version6 ChatGPT rust
 
-real	0m0.004s
-user	0m0.002s
-sys	0m0.001s
+real	0m0.512s
+user	0m0.413s
+sys	0m0.099s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.505s
+user	0m0.425s
+sys	0m0.080s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.512s
+user	0m0.439s
+sys	0m0.073s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.513s
+user	0m0.409s
+sys	0m0.105s
 
-real	0m0.003s
-user	0m0.002s
-sys	0m0.001s
+real	0m0.505s
+user	0m0.435s
+sys	0m0.070s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.512s
+user	0m0.439s
+sys	0m0.072s
 
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
+real	0m0.527s
+user	0m0.443s
+sys	0m0.084s
