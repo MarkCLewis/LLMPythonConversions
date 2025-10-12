@@ -1,6 +1,6 @@
 import java.io.File
 
-val lineRegex = """([A-Za-z0-9\.]+) ([A-Za-z0-9\._]+) ([A-Za-z0-9\._]+) ([A-Za-z0-9\._]+)|(real|user)\s+(\d+)m(\d+.\d+)s""".r
+val lineRegex = """([A-Za-z0-9\.\-]+) ([A-Za-z0-9\._]+) ([A-Za-z0-9\._]+) ([A-Za-z0-9\._]+)|(real|user)\s+(\d+)m(\d+.\d+)s""".r
 
 def stats(times: List[Double]): (Double, Double) = {
   val avg = times.sum / times.length
