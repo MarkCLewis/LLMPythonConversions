@@ -6,7 +6,8 @@ val lineRegex = """([A-Za-z0-9\.\-]+) ([A-Za-z0-9\._]+) ([A-Za-z0-9\._]+) ([A-Za
 val benchmarks = List("k-nuclcotide", "spectral-norm",
   "binary-trees",   "mandelbrot",
   "fannkuch-redux", "nbody",        "regex-redux",
-  "fasta",          "pidigits",     "reverse-complement"
+  "fasta",          "pidigits",     "reverse-complement",
+  "photometry",     "kd-tree"
 ).sorted
 
 val authors = List("Human", "Gemini2.5", "ChatGPT", "Claude")
