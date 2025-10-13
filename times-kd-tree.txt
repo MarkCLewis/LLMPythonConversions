@@ -1,0 +1,340 @@
+kd-tree Version1 ChatGPT c
+
+real	0m7.698s
+user	0m7.694s
+sys	0m0.004s
+
+real	0m7.686s
+user	0m7.681s
+sys	0m0.004s
+
+real	0m7.546s
+user	0m7.541s
+sys	0m0.004s
+
+real	0m7.629s
+user	0m7.624s
+sys	0m0.004s
+
+real	0m7.811s
+user	0m7.802s
+sys	0m0.009s
+
+real	0m7.653s
+user	0m7.652s
+sys	0m0.000s
+
+real	0m7.655s
+user	0m7.647s
+sys	0m0.008s
+kd-tree Version1 ChatGPT rust
+
+real	0m0.583s
+user	1m28.596s
+sys	0m3.194s
+
+real	0m0.548s
+user	1m21.385s
+sys	0m3.222s
+
+real	0m0.551s
+user	1m22.470s
+sys	0m3.398s
+
+real	0m0.573s
+user	1m22.285s
+sys	0m5.448s
+
+real	0m0.548s
+user	1m22.503s
+sys	0m3.547s
+
+real	0m0.627s
+user	1m36.576s
+sys	0m2.312s
+
+real	0m0.588s
+user	1m31.840s
+sys	0m3.838s
+kd-tree Version1 ChatGPT python
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+kd-tree Version1 Claude c
+
+real	0m21.911s
+user	0m21.906s
+sys	0m0.004s
+
+real	0m22.203s
+user	0m22.199s
+sys	0m0.002s
+
+real	0m25.428s
+user	0m25.426s
+sys	0m0.000s
+
+real	0m23.517s
+user	0m23.512s
+sys	0m0.004s
+
+real	0m22.036s
+user	0m22.031s
+sys	0m0.002s
+
+real	0m28.636s
+user	0m28.627s
+sys	0m0.007s
+
+real	0m22.035s
+user	0m22.026s
+sys	0m0.007s
+kd-tree Version1 Claude rust
+
+real	0m21.391s
+user	0m21.380s
+sys	0m0.008s
+
+real	0m21.339s
+user	0m21.330s
+sys	0m0.008s
+
+real	0m27.249s
+user	0m27.248s
+sys	0m0.001s
+
+real	0m21.175s
+user	0m21.170s
+sys	0m0.004s
+
+real	0m21.375s
+user	0m21.373s
+sys	0m0.000s
+
+real	0m22.601s
+user	0m22.593s
+sys	0m0.007s
+
+real	0m23.100s
+user	0m23.091s
+sys	0m0.008s
+kd-tree Version1 Claude python
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.001s
+user	0m0.001s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.001s
+user	0m0.001s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+kd-tree Version1 Gemini2.5 c
+
+real	0m13.365s
+user	0m13.359s
+sys	0m0.004s
+
+real	0m13.441s
+user	0m13.440s
+sys	0m0.000s
+
+real	0m13.316s
+user	0m13.309s
+sys	0m0.007s
+
+real	0m13.319s
+user	0m13.314s
+sys	0m0.004s
+
+real	0m13.382s
+user	0m13.379s
+sys	0m0.002s
+
+real	0m13.337s
+user	0m13.332s
+sys	0m0.004s
+
+real	0m13.493s
+user	0m13.488s
+sys	0m0.004s
+kd-tree Version1 Gemini2.5 rust
+
+real	0m5.588s
+user	0m5.579s
+sys	0m0.008s
+
+real	0m5.418s
+user	0m5.410s
+sys	0m0.008s
+
+real	0m5.406s
+user	0m5.405s
+sys	0m0.000s
+
+real	0m5.577s
+user	0m5.577s
+sys	0m0.000s
+
+real	0m5.562s
+user	0m5.557s
+sys	0m0.005s
+
+real	0m5.432s
+user	0m5.430s
+sys	0m0.002s
+
+real	0m5.564s
+user	0m5.556s
+sys	0m0.008s
+kd-tree Version1 Gemini2.5 python
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.002s
+sys	0m0.000s
+make: *** No rule to make target 'run-python'.  Stop.
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.002s
+kd-tree Version1 Human rust
+
+real	0m11.546s
+user	0m11.541s
+sys	0m0.004s
+
+real	0m11.394s
+user	0m11.388s
+sys	0m0.004s
+
+real	0m11.524s
+user	0m11.519s
+sys	0m0.004s
+
+real	0m11.525s
+user	0m11.516s
+sys	0m0.008s
+
+real	0m11.547s
+user	0m11.536s
+sys	0m0.010s
+
+real	0m11.340s
+user	0m11.335s
+sys	0m0.004s
+
+real	0m11.457s
+user	0m11.448s
+sys	0m0.008s
+kd-tree Version1 Human python
+
+real	9m24.089s
+user	9m23.977s
+sys	0m0.060s
+
+real	9m21.604s
+user	9m21.413s
+sys	0m0.108s
+
+real	9m20.660s
+user	9m20.585s
+sys	0m0.027s
+
+real	9m23.647s
+user	9m23.529s
+sys	0m0.060s
+
+real	9m23.067s
+user	9m22.919s
+sys	0m0.088s
+
+real	9m28.155s
+user	9m27.999s
+sys	0m0.104s
+
+real	9m20.692s
+user	9m20.542s
+sys	0m0.102s

@@ -4,6 +4,9 @@ c:
 rust:
 	cd *_rust; cargo build --release
 
+python:
+	echo "No Python build"
+
 run-c:
 	./c-version/kdtree-sim 100000 10
 

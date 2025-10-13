@@ -1,8 +1,3 @@
-#![feature(portable_simd)]
-
-//mod kd_tree_box;
-mod simd_particle;
-mod simd_kd_tree;
 mod array_particle;
 mod array_kd_tree;
 
@@ -31,8 +26,8 @@ fn main() {
     let dt = 1e-3; // * 2.0 * std::f64::consts::PI;
 
     let start = Instant::now();
-    simd_kd_tree::simple_sim(
-        &mut simd_particle::circular_orbits(number),
+    array_kd_tree::simple_sim(
+        &mut array_particle::circular_orbits(number),
         dt,
         steps,
     );

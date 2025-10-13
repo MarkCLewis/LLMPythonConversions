@@ -1,0 +1,145 @@
+photometry v1 ChatGPT c
+
+real	0m13.608s
+user	0m12.965s
+sys	0m0.642s
+
+real	0m13.493s
+user	0m12.942s
+sys	0m0.550s
+
+real	0m13.567s
+user	0m13.022s
+sys	0m0.544s
+
+real	0m13.563s
+user	0m13.035s
+sys	0m0.526s
+
+real	0m13.608s
+user	0m13.022s
+sys	0m0.584s
+
+real	0m13.502s
+user	0m12.973s
+sys	0m0.528s
+
+real	0m13.687s
+user	0m12.982s
+sys	0m0.704s
+photometry v1 Claude c
+
+real	0m8.438s
+user	0m15.534s
+sys	0m0.576s
+
+real	0m8.539s
+user	0m15.573s
+sys	0m0.654s
+
+real	0m8.460s
+user	0m15.508s
+sys	0m0.619s
+
+real	0m8.420s
+user	0m15.444s
+sys	0m0.628s
+
+real	0m8.560s
+user	0m15.615s
+sys	0m0.598s
+
+real	0m8.637s
+user	0m15.645s
+sys	0m0.721s
+
+real	0m8.439s
+user	0m15.441s
+sys	0m0.646s
+photometry v1 Claude rust
+
+real	0m10.064s
+user	0m45.956s
+sys	0m9.750s
+
+real	0m10.066s
+user	0m44.195s
+sys	0m7.406s
+
+real	0m9.967s
+user	0m50.360s
+sys	0m6.419s
+
+real	0m9.980s
+user	0m44.804s
+sys	0m7.676s
+
+real	0m10.091s
+user	0m44.390s
+sys	0m8.245s
+
+real	0m10.058s
+user	0m44.230s
+sys	0m9.593s
+
+real	0m10.084s
+user	0m44.986s
+sys	0m8.078s
+photometry v1 Gemini2.5 c
+
+real	0m22.067s
+user	0m21.472s
+sys	0m0.593s
+
+real	0m21.868s
+user	0m21.069s
+sys	0m0.797s
+
+real	0m21.934s
+user	0m21.303s
+sys	0m0.628s
+
+real	0m21.988s
+user	0m21.418s
+sys	0m0.566s
+
+real	0m22.047s
+user	0m21.381s
+sys	0m0.663s
+
+real	0m21.967s
+user	0m21.331s
+sys	0m0.633s
+
+real	0m21.960s
+user	0m21.097s
+sys	0m0.860s
+photometry v1 Human python
+
+real	0m16.696s
+user	0m15.611s
+sys	0m7.617s
+
+real	0m16.716s
+user	0m15.674s
+sys	0m7.562s
+
+real	0m16.662s
+user	0m15.683s
+sys	0m7.500s
+
+real	0m16.739s
+user	0m15.504s
+sys	0m7.757s
+
+real	0m16.766s
+user	0m15.796s
+sys	0m7.497s
+
+real	0m16.683s
+user	0m15.582s
+sys	0m7.624s
+
+real	0m16.678s
+user	0m15.771s
+sys	0m7.428s
